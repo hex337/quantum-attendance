@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  first_name: MyString
+  last_name: MyString
+  belt_id: 1
+  school_id: 1
+  comment: MyText
+  is_active: false
+  is_teacher: false
+  is_kid: false
+
+two:
+  first_name: MyString
+  last_name: MyString
+  belt_id: 1
+  school_id: 1
+  comment: MyText
+  is_active: false
+  is_teacher: false
+  is_kid: false

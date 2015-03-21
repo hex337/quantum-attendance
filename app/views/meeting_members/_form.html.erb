@@ -1,0 +1,32 @@
+<%= form_for @meeting_member, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :meeting_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :meeting_id, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :member_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :member_id, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :role_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :role_id, :class => 'text_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :belt_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :belt_id, :class => 'text_field' %>
+    </div>
+  </div>
+
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                meeting_members_path, :class => 'btn' %>
+  </div>
+<% end %>

@@ -1,0 +1,2 @@
+module BeltsHelper
+end

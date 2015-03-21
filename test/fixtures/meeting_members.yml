@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  meeting_id: 1
+  member_id: 1
+  role_id: 1
+  belt_id: 1
+
+two:
+  meeting_id: 1
+  member_id: 1
+  role_id: 1
+  belt_id: 1
