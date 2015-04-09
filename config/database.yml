@@ -22,4 +22,7 @@ test:
 
 production:
   <<: *default
-  database: quantum_attendance
+  database: djiqg9hrjpta1
+  user: mlayicwtjhyrea
+  password: 5OGJ-bQa6WJi2RfX6i7L9kGq3
+  port: 5432
