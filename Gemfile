@@ -43,3 +43,4 @@ gem "haml"
 
 gem 'erb2haml', group: :development
 gem 'dotenv'
+gem 'rails_12factor', group: :production
