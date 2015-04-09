@@ -1,0 +1,33 @@
+- model_class = MeetingMember
+.page-header
+  %h1= t '.title', :default => model_class.model_name.human.pluralize.titleize
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:id)
+      %th= model_class.human_attribute_name(:meeting_id)
+      %th= model_class.human_attribute_name(:member_id)
+      %th= model_class.human_attribute_name(:role_id)
+      %th= model_class.human_attribute_name(:belt_id)
+      %th= model_class.human_attribute_name(:created_at)
+      %th= t '.actions', :default => t("helpers.actions")
+  %tbody
+    - @meeting_members.each do |meeting_member|
+      %tr
+        %td= link_to meeting_member.id, meeting_member_path(meeting_member)
+        %td= meeting_member.meeting_id
+        %td= meeting_member.member_id
+        %td= meeting_member.role_id
+        %td= meeting_member.belt_id
+        %td= l meeting_member.created_at
+        %td
+          = link_to t('.edit', :default => t("helpers.links.edit")),           |
+            edit_meeting_member_path(meeting_member), :class => 'btn btn-mini' |
+          = link_to t('.destroy', :default => t("helpers.links.destroy")),                                               |
+            meeting_member_path(meeting_member),                                                                         |
+            :method => :delete,                                                                                          |
+            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, |
+            :class => 'btn btn-mini btn-danger'                                                                          |
+= link_to t('.new', :default => t("helpers.links.new")), |
+  new_meeting_member_path,                               |
+  :class => 'btn btn-primary'                            |

@@ -1,0 +1,32 @@
+- model_class = MeetingMember
+.page-header
+  %h1= t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
+
+  #find-student
+    %input{:type => "text", :class => "typeahead", :placeholder => "Find a Student"}
+
+:javascript
+$(document).ready(function() {
+  var members = [#{Member.members_for_typeahead.map{|mem| mem.to_json}.join(",")}]
+
+  var members = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: members
+  });
+
+  members.initialize();
+
+  $('#find-student .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 2
+  }, {
+    name: 'members',
+    displayKey: 'value',
+    source: members.ttAdapter(),
+    templates: {
+      suggestion: Handlebars.compile("<p><strong>{{value}}</strong> - {{belt}}</p>")
+    }
+  });
+});
