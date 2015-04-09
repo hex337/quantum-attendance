@@ -36,6 +36,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
+    dotenv (2.0.1)
     erb2haml (0.1.5)
       html2haml
     erubis (2.7.0)
@@ -138,6 +139,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  dotenv
   erb2haml
   haml
   jbuilder (~> 2.0)

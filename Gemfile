@@ -42,3 +42,4 @@ gem "twitter-typeahead-rails"
 gem "haml"
 
 gem 'erb2haml', group: :development
+gem 'dotenv'
