@@ -61,6 +61,9 @@ meeting_types = [
     name: "Tuesday Basics Class"
   },
   {
+    name: "Tuesday Sparring Class"
+  },
+  {
     name: "Wednesday Grappling Class"
   },
   {

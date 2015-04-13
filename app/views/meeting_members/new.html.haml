@@ -2,31 +2,41 @@
 .page-header
   %h1= t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
 
-  #find-student
-    %input{:type => "text", :class => "typeahead", :placeholder => "Find a Student"}
+  #carousel.carousel.slide{:data => {:ride => "carousel"}}
+    .carousel-inner{:role => "listbox"}
+      .item.active
+        #meeting-type-select-container
+          %h3 1. Choose a Meeting Type:
+          = render "meeting_types/meeting_types_select"
+
+      .item
+        #members-select-container
+          %h3
+            2. Select Who Attended
+            %span.meeting-name
+          = render "members/member_select"
+
+  .create-form
+    %form
+      %input{:type => "hidden", :id => "meeting_type_id", :name => "meeting_type_id"}
 
 :javascript
 $(document).ready(function() {
-  var members = [#{Member.members_for_typeahead.map{|mem| mem.to_json}.join(",")}]
-
-  var members = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: members
+  $("#carousel").carousel({
+    interval: false,
+    wrap: false,
+    keyboard: false
+  });
+  
+  $("#find-meeting-type .typeahead").on('typeahead:selected', function(evt, item) {
+    $("#meeting_type_id").value = item.id;
+    $.each($(".meeting-name"), function(key, value) {
+      $(value).html(item.value);
+    });
+    $("#carousel").carousel('next');
   });
 
-  members.initialize();
-
-  $('#find-student .typeahead').typeahead({
-    hint: true,
-    highlight: true,
-    minLength: 2
-  }, {
-    name: 'members',
-    displayKey: 'value',
-    source: members.ttAdapter(),
-    templates: {
-      suggestion: Handlebars.compile("<p><strong>{{value}}</strong> - {{belt}}</p>")
-    }
+  $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
+    alert("Selected " + item.id);
   });
 });

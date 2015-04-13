@@ -1,0 +1,29 @@
+-# To bind on select, use $("#find-meeting-type .typeahead).on('typeahead:selected', ...
+#find-meeting-type
+  %input{:type => "text", :class => "typeahead", :placeholder => "Meeting Type"}
+
+:javascript
+$(document).ready(function() {
+  var meeting_types = [#{MeetingType.meeting_types_for_typeahead.map{|type| type.to_json}.join(",")}]
+
+  var meeting_types = new Bloodhound({
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+    queryTokenizer: Bloodhound.tokenizers.whitespace,
+    local: meeting_types
+  });
+
+  meeting_types.initialize();
+
+  $('#find-meeting-type .typeahead').typeahead({
+    hint: true,
+    highlight: true,
+    minLength: 2
+  }, {
+    name: 'meeting_types',
+    displayKey: 'value',
+    source: meeting_types.ttAdapter(),
+    templates: {
+      suggestion: Handlebars.compile("<p>{{value}}</p>")
+    }
+  });
+});
