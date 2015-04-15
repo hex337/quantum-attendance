@@ -56,21 +56,8 @@ students.each do |student|
   member.save
 end
 
-meeting_types = [
-  {
-    name: "Tuesday Basics Class"
-  },
-  {
-    name: "Tuesday Sparring Class"
-  },
-  {
-    name: "Wednesday Grappling Class"
-  },
-  {
-    name: "Saturday General Class"
-  }
-]
+meeting_types = ['Advanced', 'Basics', 'Belt Test', 'Concepts/Spar', 'Conditioning', 'Forms', 'General', 'Grappling', 'Green']
 
 meeting_types.each do |type|
-  MeetingType.create_with(is_active: true).find_or_create_by(name: type[:name])
+  MeetingType.create_with(is_active: true).find_or_create_by(name: type)
 end

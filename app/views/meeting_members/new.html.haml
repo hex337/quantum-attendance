@@ -6,8 +6,18 @@
     .carousel-inner{:role => "listbox"}
       .item.active
         #meeting-type-select-container
-          %h3 1. Choose a Meeting Type:
-          = render "meeting_types/meeting_types_select"
+          %h3 1. Choose a Meeting Type and Time:
+          .input-group
+            %select#meeting-type.form-control
+              %option{:value => ""}
+                Class Type
+              - MeetingType.all.each do |type|
+                %option{:value => "#{type.id}"}
+                  = type.name
+
+          .input-group
+            #datetimepicker.input-append.date
+              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "text", :value => "#{Date.today().strftime("%m/%d/%Y %I:%M %P")}"}
 
       .item
         #members-select-container
