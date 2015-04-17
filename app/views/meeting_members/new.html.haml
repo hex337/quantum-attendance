@@ -17,7 +17,15 @@
 
           .input-group
             #datetimepicker.input-append.date
-              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "text", :value => "#{Date.today().strftime("%m/%d/%Y %I:%M %P")}"}
+              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "text", :value => "#{DateTime.now().strftime("%m/%d/%Y %I:%M %P")}"}
+
+          .input-group
+            %select#instructor.form-control
+              - Member.where(is_teacher: true).each do |member|
+                %option{:value => "#{member.id}"}
+                  = member.full_name
+
+          %a#next.btn{:href => "#"} Select Students &#x2771;
 
       .item
         #members-select-container
@@ -38,11 +46,7 @@ $(document).ready(function() {
     keyboard: false
   });
   
-  $("#find-meeting-type .typeahead").on('typeahead:selected', function(evt, item) {
-    $("#meeting_type_id").value = item.id;
-    $.each($(".meeting-name"), function(key, value) {
-      $(value).html(item.value);
-    });
+  $("#next").click(function() {
     $("#carousel").carousel('next');
   });
 

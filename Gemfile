@@ -39,6 +39,7 @@ gem 'spring',        group: :development
 
 gem "twitter-bootstrap-rails"
 gem "twitter-typeahead-rails"
+gem 'bootstrap-validator-rails'
 gem "haml"
 
 gem 'erb2haml', group: :development
