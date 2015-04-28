@@ -25,7 +25,7 @@
                 %option{:value => "#{member.id}"}
                   = member.full_name
 
-          %a#next.btn{:href => "#"} Select Students &#x2771;
+          %a.next-btn{:href => "#"} Select Students &#x2771;
 
       .item
         #members-select-container
@@ -33,6 +33,19 @@
             2. Select Who Attended
             %span.meeting-name
           = render "members/member_select"
+
+          #selected-members-container
+
+          %a.back-btn{:href => "#"} Back
+          %a.next-btn{:href => "#"} Confirm &#x2771;
+
+      .item
+        #members-confirm-container
+          %h3
+            3. Confirm
+
+          %a.back-btn{:href => "#"} Back
+          %a.submit-btn{:href => create_meeting_members_path()} Submit
 
   .create-form
     %form
@@ -46,11 +59,23 @@ $(document).ready(function() {
     keyboard: false
   });
   
-  $("#next").click(function() {
-    $("#carousel").carousel('next');
+  $.each($(".next-btn"), function(ndx, btn) {
+    btn.preventDefault();
+    btn.click(function() {
+      $("#carousel").carousel('next');
+    });
+  });
+  
+  $.each($(".back-btn"), function(ndx, btn) {
+    btn.preventDefault();
+    btn.click(function() {
+      $("#carousel").carousel('previous');
+    });
   });
 
+  members = Members.new($("#selected-members-container"));
+
   $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
-    alert("Selected " + item.id);
+    members.addMember(item);
   });
 });
