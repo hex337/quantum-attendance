@@ -16,4 +16,5 @@
 //= require twitter/typeahead
 //= require bootstrapValidator.min
 //= require turbolinks
+//= require members
 //= require_tree .

@@ -45,7 +45,7 @@
             3. Confirm
 
           %a.back-btn{:href => "#"} Back
-          %a.submit-btn{:href => create_meeting_members_path()} Submit
+          %a.submit-btn{:href => "#"} Submit
 
   .create-form
     %form
@@ -60,20 +60,19 @@ $(document).ready(function() {
   });
   
   $.each($(".next-btn"), function(ndx, btn) {
-    btn.preventDefault();
     btn.click(function() {
       $("#carousel").carousel('next');
     });
   });
   
   $.each($(".back-btn"), function(ndx, btn) {
-    btn.preventDefault();
     btn.click(function() {
       $("#carousel").carousel('previous');
     });
   });
 
-  members = Members.new($("#selected-members-container"));
+  var elem = $("#selected-members-container");
+  var mem = new Members(elem);
 
   $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
     members.addMember(item);

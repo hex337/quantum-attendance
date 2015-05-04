@@ -1,48 +1,43 @@
-var Members = function() {
-  var constructor = function(elem) {
-    this.elem = elem;
-    this.members = {};
+var Members = function(elem) {
+  this.elem = elem;
+  this.memberList = {};
+};
 
-    this.addMember = function(member) {
-      // make sure we don't already have this member
-      if (this.members[member.id]) {
-        return;
-      }
+Members.prototype.addMember = function(member) {
+  console.log("Adding a new member.");
 
-      this.members[member.id] = member;
-      this.createHTML();
-    };
+  if (this.members[member.id]) {
+    return;
+  }
 
-    this.removeMember = function(id) {
-      if (this.members[id]) {
-        this.members.delete(id);
-        //this.members[id] = null;
-        this.createHTML();
-      }
-    };
+  this.members[member.id] = member;
+  this.createHTML();
+};
 
-    /**
-     * There's probably a better way to do the member removal instead of
-     * overwriting the onclick and assuming there is a 'members' variable,
-     * but my javascript-foo isn't good enough yet to do that.
-     */
-    this.createHTML = function() {
-      // clear the existing list
-      elem.empty();
+Members.prototype.removeMember = function(id) {
+  console.log("Removing member with id: " + id);
 
-      // re-add each member
-      $.each(this.members, function(ndx, member) {
-        var memberHTML = '<span class="selected-member" data-member-id="' + member.id + '">'
-            + '<button class="btn btn-default">'
-              + member.value + " "
-              + '<a href="#" onclick="members.removeMember(' + member.id + '">'
-                + '<span class="glyphicon glyphicon-remove">'
-              + '</a>'
-            + '</button>'
-            + '</span>';
+  if (this.members[id]) {
+    delete this.members[id];
+    this.createHTML();
+  }
+};
 
-        elem.append(memberHTML);
-      });
-    };
-  };
-}();
+Members.prototype.createHTML = function() {
+  console.log("Rendering members HTML");
+
+  this.elem.empty();
+
+  $.each(this.members, function(ndx, member) {
+    var memberHTML = '<span class="selected-member" data-member-id="' + member.id + '">'
+        + '<button class="btn btn-default">'
+          + member.value + " "
+          + '<a href="#" onclick="members.removeMember(' + member.id + '">'
+            + '<span class="glyphicon glyphicon-remove">'
+          + '</a>'
+        + '</button>'
+        + '</span>';
+
+    elem.append(memberHTML);
+  });
+};
