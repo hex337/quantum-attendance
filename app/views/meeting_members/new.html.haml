@@ -25,7 +25,7 @@
                 %option{:value => "#{member.id}"}
                   = member.full_name
 
-          %a.next-btn{:href => "#"} Select Students &#x2771;
+          %a.btn.next-btn{:href => "#"} Select Students &#10095;
 
       .item
         #members-select-container
@@ -34,17 +34,37 @@
             %span.meeting-name
           = render "members/member_select"
 
-          #selected-members-container
+          %h4 Students - Click to Remove:
+          #selected-members-container{:style => ""}
+            None selected yet.
 
-          %a.back-btn{:href => "#"} Back
-          %a.next-btn{:href => "#"} Confirm &#x2771;
+          %br
+          %br
+
+          %a.btn.back-btn{:href => "#"} &#10094; Back
+          &nbsp;
+          %a.btn.next-btn.confirm{:href => "#"} Confirm &#10095;
 
       .item
         #members-confirm-container
           %h3
-            3. Confirm
+            3. Confirm Attendance
 
-          %a.back-btn{:href => "#"} Back
+          %h4 Class Info:
+          #class-info.container-fluid
+            .row
+              .col-md-6
+                Class Type:
+              .col-md-6
+                #meeting-type-confirm
+
+          %h4 Attending Students:
+          #attending-students
+
+          %br
+          %br
+
+          %a.back-btn{:href => "#"} &#10094; Back
           %a.submit-btn{:href => "#"} Submit
 
   .create-form
@@ -60,13 +80,20 @@ $(document).ready(function() {
   });
   
   $.each($(".next-btn"), function(ndx, btn) {
-    btn.click(function() {
+    $(btn).click(function(event) {
+      event.preventDefault();
+
+      if ($(btn).hasClass("confirm")) {
+        $("#meeting-type-confirm").html($("#meeting-type").val());
+      }
+
       $("#carousel").carousel('next');
     });
   });
   
   $.each($(".back-btn"), function(ndx, btn) {
-    btn.click(function() {
+    $(btn).click(function(event) {
+      event.preventDefault();
       $("#carousel").carousel('previous');
     });
   });
@@ -75,6 +102,9 @@ $(document).ready(function() {
   var mem = new Members(elem);
 
   $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
-    members.addMember(item);
+    mem.addMember(item);
+
+    $("#find-student span input.tt-input").val("");
+    $("#find-student span input.tt-input").focus();
   });
 });
