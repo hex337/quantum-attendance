@@ -51,12 +51,20 @@
             3. Confirm Attendance
 
           %h4 Class Info:
-          #class-info.container-fluid
-            .row
-              .col-md-6
-                Class Type:
-              .col-md-6
-                #meeting-type-confirm
+          #class-info.container
+            %table
+              %tr
+                %th{:style => "text-align: right;"}
+                  Class Type:
+                %td#meeting-type-confirm
+              %tr
+                %th{:style => "text-align: right;"}
+                  Date:
+                %td#date-confirm
+              %tr
+                %th{:style => "text-align: right;"}
+                  Instructor:
+                %td#instructor-confirm
 
           %h4 Attending Students:
           #attending-students
@@ -64,8 +72,8 @@
           %br
           %br
 
-          %a.back-btn{:href => "#"} &#10094; Back
-          %a.submit-btn{:href => "#"} Submit
+          %a.btn.back-btn{:href => "#"} &#10094; Back
+          %a.btn.submit-btn{:href => "#"} Submit
 
   .create-form
     %form
@@ -84,7 +92,18 @@ $(document).ready(function() {
       event.preventDefault();
 
       if ($(btn).hasClass("confirm")) {
-        $("#meeting-type-confirm").html($("#meeting-type").val());
+        var meetingType = $("#meeting-type").val();
+        $("#meeting-type-confirm").html($("#meeting-type option[value=" + String(meetingType) + "]").text());
+
+        var date = $("#meeting-date").val();
+        $("#date-confirm").html(date);
+
+        var instructor = $("#instructor").val();
+        $("#instructor-confirm").html($("#instructor option[value=" + String(instructor) + "]").text());
+
+        $.each(mem.list(), function(ndx, item) {
+          $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + "</span>");
+        });
       }
 
       $("#carousel").carousel('next');

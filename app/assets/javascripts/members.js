@@ -3,6 +3,10 @@ var Members = function(elem) {
   this.memberList = {};
 };
 
+Members.prototype.list = function() {
+  return this.memberList;
+}
+
 Members.prototype.addMember = function(member) {
   console.log("Adding a new member.");
 
