@@ -73,7 +73,7 @@
           %br
 
           %a.btn.back-btn{:href => "#"} &#10094; Back
-          %a.btn.submit-btn{:href => "#"} Submit
+          %a#submit-btn.btn.btn-primary{:href => "#"} Submit
 
   .create-form
     %form
@@ -101,8 +101,25 @@ $(document).ready(function() {
         var instructor = $("#instructor").val();
         $("#instructor-confirm").html($("#instructor option[value=" + String(instructor) + "]").text());
 
+        var memberIds = [];
         $.each(mem.list(), function(ndx, item) {
           $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + "</span>");
+          memberIds.push(item.id);
+        });
+
+        $("#submit-btn").click(function(event) {
+          $.ajax({
+            url: "#{meeting_members_path()}",
+            method: "post",
+            data: {
+              meeting_type: meetingType,
+              date: date,
+              instructor: instructor,
+              members: memberIds
+            }
+          }).done(function(json) {
+            alert("Yay, you submitted and stuff.");
+          });
         });
       }
 
@@ -113,7 +130,7 @@ $(document).ready(function() {
   $.each($(".back-btn"), function(ndx, btn) {
     $(btn).click(function(event) {
       event.preventDefault();
-      $("#carousel").carousel('previous');
+      $("#carousel").carousel('prev');
     });
   });
 
