@@ -24,6 +24,28 @@ class MeetingMembersController < ApplicationController
   # POST /meeting_members
   # POST /meeting_members.json
   def create
+    meeting = Meeting.new({
+      meeting_type: MeetingType.find(meeting_member_params[:meeting_type]),
+      met: meeting_member_params[:date]
+    })
+
+    meeting.save
+    memberIds = meeting_member_params[:members]
+
+    memberIds.each do |memId|
+      member = Member.find(memId)
+
+      if member
+        mm = MeetingMember.new({
+          meeting: meeting,
+          member: member,
+          belt: member.belt,
+        })
+
+        mm.save
+      end
+    end
+
     @meeting_member = MeetingMember.new(meeting_member_params)
 
     respond_to do |format|
@@ -69,6 +91,6 @@ class MeetingMembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_member_params
-      params.require(:meeting_member).permit(:meeting_id, :member_id, :role_id, :belt_id)
+      params.require(:meeting_member).permit(:meeting_type, :date, :instructor, :members)
     end
 end

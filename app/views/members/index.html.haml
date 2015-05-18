@@ -13,7 +13,6 @@
       %th= model_class.human_attribute_name(:is_active)
       %th= model_class.human_attribute_name(:is_teacher)
       %th= model_class.human_attribute_name(:is_kid)
-      %th= model_class.human_attribute_name(:created_at)
       %th= t '.actions', :default => t("helpers.actions")
   %tbody
     - @members.each do |member|
@@ -21,13 +20,12 @@
         %td= link_to member.id, member_path(member)
         %td= member.first_name
         %td= member.last_name
-        %td= member.belt_id
-        %td= member.school_id
+        %td= member.belt.name
+        %td= member.school.name
         %td= member.comment
         %td= member.is_active
         %td= member.is_teacher
         %td= member.is_kid
-        %td= l member.created_at
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(member), :class => 'btn btn-mini'
           = link_to t('.destroy', :default => t("helpers.links.destroy")), member_path(member), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger'

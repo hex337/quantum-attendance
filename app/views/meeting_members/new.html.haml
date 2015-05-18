@@ -25,7 +25,7 @@
                 %option{:value => "#{member.id}"}
                   = member.full_name
 
-          %a.btn.next-btn{:href => "#"} Select Students &#10095;
+          %a.btn.next-btn{:href => "#", :data => {:validate => "step_one"}} Select Students &#10095;
 
       .item
         #members-select-container
@@ -41,7 +41,7 @@
           %br
           %br
 
-          %a.btn.back-btn{:href => "#"} &#10094; Back
+          %a.btn.back-btn{:href => "#", :data => {:validate => "step_two"}} &#10094; Back
           &nbsp;
           %a.btn.next-btn.confirm{:href => "#"} Confirm &#10095;
 
@@ -90,6 +90,36 @@ $(document).ready(function() {
   $.each($(".next-btn"), function(ndx, btn) {
     $(btn).click(function(event) {
       event.preventDefault();
+
+      // handle validations, its heavy handed, but meh
+      var vald = $(btn).data("validate");
+      var isValid = true;
+      var errorMsg = [];
+
+      if (vald != undefined) {
+        if (vald == "step_one") {
+          if ($("#meeting-type").val() == "") {
+            isValid = false;
+            errorMsg.push("Must select a class type.");
+          }
+
+          if ($("#meeting-date").val() == "") {
+            isValid = false;
+            errorMsg.push("Must have a valid date and time.");
+          }
+
+          if ($("#instructor").val() == "") {
+            isValid = false;
+            errorMsg.push("Must select an instructor..");
+          }
+        } else if (vald == "step_two") {
+        }
+
+        if (!isValid) {
+          alert(errorMsg.join(", "));
+          return;
+        }
+      }
 
       if ($(btn).hasClass("confirm")) {
         var meetingType = $("#meeting-type").val();

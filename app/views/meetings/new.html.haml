@@ -1,4 +1,182 @@
 - model_class = Meeting
 .page-header
   %h1= t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
-= render :partial => 'form'
+
+  #carousel.carousel.slide{:data => {:ride => "carousel"}}
+    .carousel-inner{:role => "listbox"}
+      .item.active
+        #meeting-type-select-container
+          %h3 1. Choose a Meeting Type and Time:
+          .input-group
+            %select#meeting-type.form-control
+              %option{:value => ""}
+                Class Type
+              - MeetingType.all.each do |type|
+                %option{:value => "#{type.id}"}
+                  = type.name
+
+          .input-group
+            #datetimepicker.input-append.date
+              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "text", :value => "#{DateTime.now().strftime("%m/%d/%Y %I:%M %P")}"}
+
+          .input-group
+            %select#instructor.form-control
+              - Member.where(is_teacher: true).each do |member|
+                %option{:value => "#{member.id}"}
+                  = member.full_name
+
+          %a.btn.next-btn{:href => "#", :data => {:validate => "step_one"}} Select Students &#10095;
+
+      .item
+        #members-select-container
+          %h3
+            2. Select Who Attended
+            %span.meeting-name
+          = render "members/member_select"
+
+          %h4 Students - Click to Remove:
+          #selected-members-container{:style => ""}
+            None selected yet.
+
+          %br
+          %br
+
+          %a.btn.back-btn{:href => "#"} &#10094; Back
+          &nbsp;
+          %a.btn.next-btn.confirm{:href => "#", :data => {:validate => "step_two"}} Confirm &#10095;
+
+      .item
+        #members-confirm-container
+          %h3
+            3. Confirm Attendance
+
+          %h4 Class Info:
+          #class-info.container
+            %table
+              %tr
+                %th{:style => "text-align: right;"}
+                  Class Type:
+                %td#meeting-type-confirm
+              %tr
+                %th{:style => "text-align: right;"}
+                  Date:
+                %td#date-confirm
+              %tr
+                %th{:style => "text-align: right;"}
+                  Instructor:
+                %td#instructor-confirm
+
+          %h4 Attending Students:
+          #attending-students
+
+          %br
+          %br
+
+          %a.btn.back-btn{:href => "#"} &#10094; Back
+          %a#submit-btn.btn.btn-primary{:href => "#"} Submit
+
+  .create-form
+    %form
+      %input{:type => "hidden", :id => "meeting_type_id", :name => "meeting_type_id"}
+
+:javascript
+$(document).ready(function() {
+  $("#carousel").carousel({
+    interval: false,
+    wrap: false,
+    keyboard: false
+  });
+  
+  $.each($(".next-btn"), function(ndx, btn) {
+    $(btn).click(function(event) {
+      event.preventDefault();
+
+      // handle validations, its heavy handed, but meh
+      var vald = $(btn).data("validate");
+      var isValid = true;
+      var errorMsg = [];
+
+      if (vald != undefined) {
+        if (vald == "step_one") {
+          if ($("#meeting-type").val() == "") {
+            isValid = false;
+            errorMsg.push("Must select a class type.");
+          }
+
+          if ($("#meeting-date").val() == "") {
+            isValid = false;
+            errorMsg.push("Must have a valid date and time.");
+          }
+
+          if ($("#instructor").val() == "") {
+            isValid = false;
+            errorMsg.push("Must select an instructor..");
+          }
+        } else if (vald == "step_two") {
+          if (mem.length() <= 0) {
+            isValid = false;
+            errorMsg.push("Must have at least one student.");
+          }
+        }
+
+        if (!isValid) {
+          alert(errorMsg.join(", "));
+          return;
+        }
+      }
+
+      if ($(btn).hasClass("confirm")) {
+        var meetingType = $("#meeting-type").val();
+        $("#meeting-type-confirm").html($("#meeting-type option[value=" + String(meetingType) + "]").text());
+
+        var date = $("#meeting-date").val();
+        $("#date-confirm").html(date);
+
+        var instructor = $("#instructor").val();
+        $("#instructor-confirm").html($("#instructor option[value=" + String(instructor) + "]").text());
+
+        var memberIds = [];
+        $.each(mem.list(), function(ndx, item) {
+          $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + "</span>");
+          memberIds.push(item.id);
+        });
+
+        $("#submit-btn").click(function(event) {
+          $.ajax({
+            url: "#{meetings_path()}",
+            method: "post",
+            data: {
+              meeting: {
+                meeting_type: meetingType,
+                date: date,
+                instructor: instructor,
+                students: memberIds.join(",")
+              }
+            }
+          }).done(function(json) {
+            window.location = "#{meetings_path()}";
+          });
+        });
+      }
+
+      $("#carousel").carousel('next');
+    });
+  });
+  
+  $.each($(".back-btn"), function(ndx, btn) {
+    $(btn).click(function(event) {
+      event.preventDefault();
+      $("#carousel").carousel('prev');
+    });
+  });
+
+  var elem = $("#selected-members-container");
+  var mem = new Members(elem);
+
+  $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
+    mem.addMember(item);
+
+    $("#find-student span input.tt-input").val("");
+    $("#find-student span input.tt-input").focus();
+  });
+});

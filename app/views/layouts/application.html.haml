@@ -40,7 +40,7 @@
           .container-fluid.nav-collapse
             %ul.nav
               %li= link_to "Students", members_path
-              %li= link_to "Attendance", new_meeting_member_path
+              %li= link_to "Attendance", new_meeting_path
               %li= link_to "Reports", reports_path
           / /.nav-collapse
     .container-fluid
@@ -49,9 +49,11 @@
           .well.sidebar-nav
             %ul.nav.nav-list
               %li.nav-header Sidebar
-              %li= link_to "Link1", "/path1"
-              %li= link_to "Link2", "/path2"
-              %li= link_to "Link3", "/path3"
+              %li= link_to "New Student", new_member_path
+              %li= link_to "Meeting Types", meeting_types_path
+              %li= link_to "Schools", schools_path
+              %li= link_to "Belts", belts_path
+              %li= link_to "Meetings", meetings_path
           / /.well
         / /span
         .span9

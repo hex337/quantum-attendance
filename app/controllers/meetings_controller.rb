@@ -24,11 +24,30 @@ class MeetingsController < ApplicationController
   # POST /meetings
   # POST /meetings.json
   def create
-    @meeting = Meeting.new(meeting_params)
+    @meeting = Meeting.new({
+      meeting_type: MeetingType.find(meeting_params[:meeting_type]),
+      met: Time.new(meeting_params[:date])
+    })
+
+    memberIds = meeting_params[:students].split(",")
+
+    memberIds.each do |memId|
+      member = Member.find(memId)
+
+      if member
+        mm = MeetingMember.new({
+          meeting: @meeting,
+          member: member,
+          belt: member.belt,
+        })
+
+        mm.save
+      end
+    end
 
     respond_to do |format|
       if @meeting.save
-        format.html { redirect_to @meeting, notice: 'Meeting was successfully created.' }
+        format.html { redirect_to meetings_path(), notice: 'Meeting was successfully created.' }
         format.json { render :show, status: :created, location: @meeting }
       else
         format.html { render :new }
@@ -69,6 +88,6 @@ class MeetingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
-      params.require(:meeting).permit(:meeting_type_id, :met, :comment)
+      params.require(:meeting).permit(:meeting_type, :date, :instructor, :students)
     end
 end

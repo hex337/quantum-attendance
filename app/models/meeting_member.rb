@@ -1,6 +1,6 @@
 class MeetingMember < ActiveRecord::Base
-  has_one :member
-  has_one :meeting
-  has_one :belt
-  has_one :role
+  belongs_to :member
+  belongs_to :meeting
+  belongs_to :belt
+  belongs_to :role
 end

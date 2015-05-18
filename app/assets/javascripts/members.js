@@ -1,10 +1,16 @@
 var Members = function(elem) {
   this.elem = elem;
   this.memberList = {};
+  this.numMembers = 0;
 };
 
 Members.prototype.list = function() {
   return this.memberList;
+}
+
+Members.prototype.length = function() {
+  console.log("Number of members: " + String(this.numMembers));
+  return this.numMembers;
 }
 
 Members.prototype.addMember = function(member) {
@@ -14,6 +20,7 @@ Members.prototype.addMember = function(member) {
     return;
   }
 
+  this.numMembers = this.numMembers + 1;
   this.memberList[member.id] = member;
   this.createHTML();
 };
@@ -23,6 +30,7 @@ Members.prototype.removeMember = function(id) {
 
   if (this.memberList[id]) {
     delete this.memberList[id];
+    this.numMembers = this.numMembers - 1;
     this.createHTML();
   }
 };
