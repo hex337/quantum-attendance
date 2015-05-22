@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150321222438) do
+ActiveRecord::Schema.define(version: 20150522051600) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "belts", force: true do |t|
     t.string   "name"
@@ -31,10 +34,10 @@ ActiveRecord::Schema.define(version: 20150321222438) do
     t.datetime "updated_at"
   end
 
-  add_index "meeting_members", ["belt_id"], name: "index_meeting_members_on_belt_id"
-  add_index "meeting_members", ["meeting_id"], name: "index_meeting_members_on_meeting_id"
-  add_index "meeting_members", ["member_id"], name: "index_meeting_members_on_member_id"
-  add_index "meeting_members", ["role_id"], name: "index_meeting_members_on_role_id"
+  add_index "meeting_members", ["belt_id"], name: "index_meeting_members_on_belt_id", using: :btree
+  add_index "meeting_members", ["meeting_id"], name: "index_meeting_members_on_meeting_id", using: :btree
+  add_index "meeting_members", ["member_id"], name: "index_meeting_members_on_member_id", using: :btree
+  add_index "meeting_members", ["role_id"], name: "index_meeting_members_on_role_id", using: :btree
 
   create_table "meeting_types", force: true do |t|
     t.string   "name"
@@ -46,13 +49,13 @@ ActiveRecord::Schema.define(version: 20150321222438) do
 
   create_table "meetings", force: true do |t|
     t.integer  "meeting_type_id"
-    t.date     "met"
+    t.datetime "met"
     t.text     "comment"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "meetings", ["meeting_type_id"], name: "index_meetings_on_meeting_type_id"
+  add_index "meetings", ["meeting_type_id"], name: "index_meetings_on_meeting_type_id", using: :btree
 
   create_table "members", force: true do |t|
     t.string   "first_name"
@@ -67,8 +70,8 @@ ActiveRecord::Schema.define(version: 20150321222438) do
     t.datetime "updated_at"
   end
 
-  add_index "members", ["belt_id"], name: "index_members_on_belt_id"
-  add_index "members", ["school_id"], name: "index_members_on_school_id"
+  add_index "members", ["belt_id"], name: "index_members_on_belt_id", using: :btree
+  add_index "members", ["school_id"], name: "index_members_on_school_id", using: :btree
 
   create_table "roles", force: true do |t|
     t.string   "name"
