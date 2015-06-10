@@ -21,6 +21,8 @@ Rails.application.routes.draw do
 
   get 'home/reports' => 'home#reports', as: :reports
 
+  get 'attendance/(for/:city_name)', controller: :meetings, action: :new, as: :attendance
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -14,6 +14,17 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/new
   def new
+    @city = nil
+    @instructors = Member.where(is_teacher: true)
+
+    if params["city_name"]
+      @city = School.find_by_name(params["city_name"].capitalize)
+      
+      if @city
+        @instructors = Member.where(is_teacher: true, school: @city)
+      end
+    end
+
     @meeting = Meeting.new
   end
 

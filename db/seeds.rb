@@ -42,6 +42,18 @@ students = [
     belt: "red"
   },
   {
+    first_name: "Derrick",
+    last_name: "Louie",
+    school: "Seattle",
+    belt: "high white"
+  },
+  {
+    first_name: "Anthony",
+    last_name: "Hernandez",
+    school: "San Francisco",
+    belt: "high yellow"
+  },
+  {
     first_name: "Rachel",
     last_name: "Evans",
     school: "San Francisco",

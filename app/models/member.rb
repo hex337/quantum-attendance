@@ -2,8 +2,10 @@ class Member < ActiveRecord::Base
   belongs_to :belt
   belongs_to :school
 
-  def self.members_for_typeahead
-    Member.all.collect do |member|
+  def self.members_for_typeahead(school = nil)
+    members = school.nil? ? Member.all : Member.where(school: school)
+
+    members.collect do |member|
       {
         id: member.id,
         value: member.full_name,

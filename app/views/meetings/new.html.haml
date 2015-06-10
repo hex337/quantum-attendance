@@ -1,6 +1,11 @@
 - model_class = Meeting
 .page-header
-  %h1= t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
+  - if @city
+    %h1
+      = t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
+      = "for #{@city.name}"
+  - else
+    %h1= t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
 
   #carousel.carousel.slide{:data => {:ride => "carousel"}}
     .carousel-inner{:role => "listbox"}
@@ -21,7 +26,7 @@
 
           .input-group
             %select#instructor.form-control
-              - Member.where(is_teacher: true).each do |member|
+              - @instructors.each do |member|
                 %option{:value => "#{member.id}"}
                   = member.full_name
 
@@ -32,7 +37,7 @@
           %h3
             2. Select Who Attended
             %span.meeting-name
-          = render "members/member_select"
+          = render "members/member_select", city: @city
 
           %h4 Students - Click to Remove:
           #selected-members-container{:style => ""}
