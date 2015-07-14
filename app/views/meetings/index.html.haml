@@ -4,17 +4,15 @@
 %table.table.table-striped
   %thead
     %tr
-      %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:meeting_type_id)
       %th= model_class.human_attribute_name(:met)
-      %th Num Attendees
+      %th Num Students
       %th= model_class.human_attribute_name(:comment)
       %th= t '.actions', :default => t("helpers.actions")
   %tbody
     - @meetings.each do |meeting|
       %tr
-        %td= link_to meeting.id, meeting_path(meeting)
-        %td= meeting.meeting_type.name
+        %td= link_to meeting.meeting_type.name meeting_path(meeting)
         %td= meeting.met.in_time_zone('America/Los_Angeles') if meeting.met
         %td= meeting.members.count
         %td= meeting.comment

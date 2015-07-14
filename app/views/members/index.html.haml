@@ -4,7 +4,6 @@
 %table.table.table-striped
   %thead
     %tr
-      %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:first_name)
       %th= model_class.human_attribute_name(:last_name)
       %th= model_class.human_attribute_name(:belt_id)
@@ -17,9 +16,8 @@
   %tbody
     - @members.each do |member|
       %tr
-        %td= link_to member.id, member_path(member)
-        %td= member.first_name
-        %td= member.last_name
+        %td= link_to member.first_name, member_path(member)
+        %td= link_to member.last_name, member_path(member)
         %td= member.belt.name
         %td= member.school.name
         %td= member.comment

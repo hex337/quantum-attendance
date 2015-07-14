@@ -26,7 +26,7 @@
     %strong
       = model_class.human_attribute_name(:comment)
       \:
-  %dd= @member.comment.empty? ? "None" : @member.comment
+  %dd= @member.comment ? "None" : @member.comment
   %dt
     %strong
       = model_class.human_attribute_name(:is_active)
