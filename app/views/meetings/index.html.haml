@@ -12,7 +12,7 @@
   %tbody
     - @meetings.each do |meeting|
       %tr
-        %td= link_to meeting.meeting_type.name meeting_path(meeting)
+        %td= link_to meeting.meeting_type.name, meeting_path(meeting)
         %td= meeting.met.in_time_zone('America/Los_Angeles') if meeting.met
         %td= meeting.members.count
         %td= meeting.comment
