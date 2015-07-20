@@ -3,7 +3,7 @@ class Member < ActiveRecord::Base
   belongs_to :school
 
   def self.members_for_typeahead(school = nil)
-    members = school.nil? ? Member.all : Member.where(school: school)
+    members = school.nil? ? Member.where(is_active: true) : Member.where(school: school, is_active: true)
 
     members.collect do |member|
       {
