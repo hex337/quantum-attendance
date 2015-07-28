@@ -13,6 +13,12 @@ Members.prototype.length = function() {
   return this.numMembers;
 }
 
+Members.prototype.addMembers = function(members) {
+  for (var ndx = 0; ndx < members.length; ndx++) {
+    this.addMember(members[ndx]);
+  }
+}
+
 Members.prototype.addMember = function(member) {
   console.log("Adding a new member.");
 
