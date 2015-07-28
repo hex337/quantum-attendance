@@ -43,8 +43,8 @@ Members.prototype.removeMember = function(id) {
 
 Members.prototype.createHTML = function() {
   console.log("Rendering members HTML");
-
-  this.elem.empty();
+  var elem = this.elem;
+  elem.empty();
 
   $.each(this.memberList, function(ndx, member) {
     var memberHTML = '<span class="selected-member" data-member-id="' + member.id + '">'

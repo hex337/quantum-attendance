@@ -2,10 +2,14 @@
   .control-group
     = f.label :meeting_type_id, :class => 'control-label'
     .controls
-      = select_tag :meeting_type_id
+      %select#meeting_type_id.form-control{:name => "meeting[meeting_type_id]"}
         - MeetingType.all.each do |type|
-          %option{:value => "#{type.id}"}
-            = type.name
+          - if @meeting.meeting_type_id == type.id
+            %option{:value => "#{type.id}", :selected => ''}
+              = type.name
+          - else 
+            %option{:value => "#{type.id}"}
+              = type.name
   .control-group
     = f.label :met, :class => 'control-label'
     .controls
@@ -17,8 +21,3 @@
   .form-actions
     = f.submit nil, :id => 'submit-btn', :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), meetings_path, :class => 'btn'
-
-:javascript
-$(document).ready(function() {
-  $("#meeting-type-id").val(#{@meeting.meeting_type_id})
-});

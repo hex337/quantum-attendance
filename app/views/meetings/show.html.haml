@@ -10,7 +10,7 @@
     %strong
       = model_class.human_attribute_name(:met)
       \:
-  %dd= @meeting.met
+  %dd= @meeting.met.to_s(:long)
   %dt
     %strong
       Students:
@@ -22,7 +22,7 @@
     %strong
       = model_class.human_attribute_name(:comment)
       \:
-  %dd= @meeting.comment
+  %dd= (@meeting.comment && !@meeeting.comment.empty?) ? @meeting.comment : "None"
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), meetings_path, :class => 'btn'
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_meeting_path(@meeting), :class => 'btn'
