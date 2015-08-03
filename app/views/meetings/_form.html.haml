@@ -11,6 +11,13 @@
             %option{:value => "#{type.id}"}
               = type.name
   .control-group
+    = f.label :instructor, :class => 'control-label'
+    .controls
+      %select#instructor.form-control{:name => "meeting[instructor]"}
+        - Member.where(is_active: true, is_teacher: true).each do |inst|
+          %option{:value => "#{inst.id}"}
+            = inst.full_name
+  .control-group
     = f.label :met, :class => 'control-label'
     .controls
       = f.text_field :met, :class => 'text_field'
