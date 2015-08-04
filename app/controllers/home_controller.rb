@@ -41,12 +41,14 @@ class HomeController < ApplicationController
   end
 
   def poor_attendance
+    days = 90
+
     meetingIds = Meeting.find_by_sql("
       SELECT meeting_id as id, count(*)
       FROM meeting_members
       JOIN meetings ON meeting_members.meeting_id = meetings.id
       WHERE meeting_members.meeting_id = meetings.id
-        AND meetings.met > '#{(Time.now - 90.days).to_s(:db)}'
+        AND meetings.met > (NOW() - INTERVAL '#{days}' DAY)
       GROUP BY meeting_id
       HAVING count(*) <= #{POOR_COUNT}
       ORDER BY id DESC
