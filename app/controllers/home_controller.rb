@@ -9,22 +9,32 @@ class HomeController < ApplicationController
     recent_days = 14
 
     memberIds = Member.find_by_sql("
-      SELECT DISTINCT m3.id
-      FROM meetings m1
-      INNER JOIN meeting_members m2 ON m1.id = m2.meeting_id
-      INNER JOIN members m3 on m2.member_id = m3.id
-      WHERE m1.met > '#{(Time.now - history_days.days).to_s(:db)}' 
-        AND m3.id NOT IN
-        (
-          SELECT DISTINCT m6.id
-          FROM meetings m4
-          INNER JOIN meeting_members m5 ON m4.id = m5.meeting_id
-          INNER JOIN members m6 ON m5.member_id = m6.id
-          WHERE m1.met > '#{(Time.now - recent_days.days).to_s(:db)}'
-        )
-    ")
+      SELECT distinct mb.id, maxmet
+      FROM members mb
+      INNER JOIN
+      (
+        SELECT mm.member_id, max(mt.met) as maxmet
+        FROM meeting_members mm
+        INNER JOIN meetings mt on mm.meeting_id = mt.id
+        GROUP BY mm.member_id
+      ) mm2 ON mb.Id = mm2.member_id
+      WHERE mb.id IN
+      (
+        SELECT distinct member_id
+        FROM meeting_members mm
+        INNER JOIN meetings m ON mm.meeting_id = m.id
+        WHERE met > (NOW() - INTERVAL '#{history_days}' DAY)
+      )
+      AND mb.id NOT IN
+      (
+        SELECT distinct member_id
+        FROM meeting_members mm
+        INNER JOIN meetings m ON mm.meeting_id = m.id
+        WHERE met > (NOW() - INTERVAL '#{recent_days}' DAY)
+      ) ORDER BY maxmet;
+   ")
 
-    memberIds = memberIds.collect{|mem| mem.id}
+   memberIds = memberIds.collect{|mem| mem.id}
     @members = Member.find(memberIds)
 
     render 'members/index'

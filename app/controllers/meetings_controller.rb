@@ -37,8 +37,8 @@ class MeetingsController < ApplicationController
   def create
     @meeting = Meeting.new({
       meeting_type: MeetingType.find(meeting_params[:meeting_type]),
-      met: DateTime.strptime(meeting_params[:date], '%m/%d/%Y %I:%M %p'), # 05/21/2015 10:07 pm
-      instructor: Member.find(meeting_params[:instructor])
+      met: DateTime.strptime(meeting_params[:date], '%m/%d/%Y %I:%M %p') # 05/21/2015 10:07 pm
+      #instructor: Member.find(meeting_params[:instructor])
     })
 
     memberIds = meeting_params[:students].split(",")
