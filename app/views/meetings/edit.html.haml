@@ -29,18 +29,19 @@
       });
 
       $.ajax({
-        url: "#{url_for @meeting}",
+        url: "#{url_for @meeting}.json",
         method: "put",
         data: {
           meeting: {
             meeting_type: $("#meeting_type_id").val(),
             date: $("#meeting_met").val(),
-            instructor: instructor,
+            instructor: $("#instructor").val(),
             students: memberIds.join(",")
           }
         }
       }).done(function(json) {
-        window.location = "#{url_for @meeting}";
+        console.log(json);
+        window.location.href = "#{url_for @meeting}";
       });
     });
 

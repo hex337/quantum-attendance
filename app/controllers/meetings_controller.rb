@@ -67,9 +67,7 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
-    @meeting.meeting_members.each do |mm|
-      mm.destroy()
-    end
+    MeetingMember.delete(@meeting.meeting_members.collect {|mm| mm.id})
 
     memberIds = meeting_params[:students].split(",")
 
@@ -83,8 +81,8 @@ class MeetingsController < ApplicationController
       mm.save
     end
 
-    @meeting.met = meeting_params[:met]
-    @meeting.meeting_type = meeting_params[:meeting_type]
+    @meeting.met = meeting_params[:date]
+    @meeting.meeting_type_id = meeting_params[:meeting_type]
     #@meeting.instructor = meeting_params[:instructor]
 
     respond_to do |format|
