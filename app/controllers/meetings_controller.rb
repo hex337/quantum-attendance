@@ -18,7 +18,7 @@ class MeetingsController < ApplicationController
     @instructors = Member.where(is_teacher: true)
 
     if params["city_name"]
-      @city = School.find_by_name(params["city_name"].capitalize)
+      @city = School.find_by_slug(params["city_name"])
       
       if @city
         @instructors = Member.where(is_teacher: true, school: @city)
