@@ -1,6 +1,8 @@
 class Member < ActiveRecord::Base
   belongs_to :belt
   belongs_to :school
+  has_many :meeting_members
+  has_many :meetings, through: :meeting_members
 
   def self.members_for_typeahead(school = nil)
     members = school.nil? ? Member.where(is_active: true) : Member.where(school: school, is_active: true)

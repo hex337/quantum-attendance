@@ -42,6 +42,23 @@
       = model_class.human_attribute_name(:is_kid)
       \:
   %dd= @member.is_kid
+
+%h3 Last 10 classes
+%table.table.table-striped
+  %thead
+    %tr
+      %th= model_class.human_attribute_name(:meeting_type_id)
+      %th= model_class.human_attribute_name(:met)
+      %th Num Students
+      %th= model_class.human_attribute_name(:comment)
+  %tbody
+    - @member.meetings.order("met DESC").limit(10).each do |meeting|
+      %tr
+        %td= link_to meeting.meeting_type.name, meeting_path(meeting)
+        %td= meeting.met.in_time_zone('America/Los_Angeles') if meeting.met
+        %td= meeting.members.count
+        %td= meeting.comment
+
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), members_path, :class => 'btn'
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(@member), :class => 'btn'
