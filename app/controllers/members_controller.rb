@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.all
+    @members = Member.where(is_active: true).order("last_name")
   end
 
   # GET /members/1

@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require twitter/typeahead
+//= require jquery-tablesorter
 //= require bootstrapValidator.min
 //= require turbolinks
 //= require members
