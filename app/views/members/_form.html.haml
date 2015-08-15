@@ -10,11 +10,11 @@
   .control-group
     = f.label :belt_id, :class => 'control-label'
     .controls
-      = f.text_field :belt_id, :class => 'text_field'
+      = f.select(:belt_id, Belt.all.collect{|belt| [belt.name, belt.id]})
   .control-group
     = f.label :school_id, :class => 'control-label'
     .controls
-      = f.text_field :school_id, :class => 'text_field'
+      = f.select(:school_id, School.all.collect{|belt| [belt.name, belt.id]})
   .control-group
     = f.label :comment, :class => 'control-label'
     .controls
