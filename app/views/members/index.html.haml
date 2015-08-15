@@ -19,7 +19,7 @@
         %td= link_to member.first_name, member_path(member)
         %td= link_to member.last_name, member_path(member)
         %td= member.belt.name
-        %td= member.school.name
+        %td= member.school ? member.school.name : ''
         %td= member.comment
         %td= member.is_active
         %td= member.is_teacher

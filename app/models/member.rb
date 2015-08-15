@@ -12,7 +12,7 @@ class Member < ActiveRecord::Base
         id: member.id,
         value: member.full_name,
         belt: member.belt.name,
-        school: member.school.name
+        school: member.school ? member.school.name : ''
       }
     end
   end
