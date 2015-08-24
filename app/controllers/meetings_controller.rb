@@ -38,16 +38,28 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new({
       meeting_type: MeetingType.find(meeting_params[:meeting_type]),
       met: DateTime.strptime(meeting_params[:date], '%m/%d/%Y %I:%M %p') # 05/21/2015 10:07 pm
-      #instructor: Member.find(meeting_params[:instructor])
     })
 
     memberIds = meeting_params[:students].split(",")
+    studentRole = Role.find_by_name("Student")
+    instructorRole = Role.find_by_name("Teacher")
+
+    instructor = Member.find(meeting_params[:instructor])
+    instMeetingMem = MeetingMember.new({
+      meeting: @meeting,
+      member: instructor,
+      belt: instructor.belt,
+      role: instructorRole
+    })
+
+    instMeetingMem.save
 
     Member.find(memberIds).each do |member|
       mm = MeetingMember.new({
         meeting: @meeting,
         member: member,
         belt: member.belt,
+        role: studentRole,
       })
 
       mm.save
@@ -68,14 +80,27 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1.json
   def update
     MeetingMember.delete(@meeting.meeting_members.collect {|mm| mm.id})
+    instructor = Member.find_by_id(meeting_params[:instructor])
 
+    studentRole = Role.find_by_name("Student")
+    instructorRole = Rule.find_by_name("Teacher")
     memberIds = meeting_params[:students].split(",")
+
+    instMeetingMem = MeetingMember.new({
+      meeting: @meeting,
+      member: instructor,
+      belt: instructor.belt,
+      role: instructorRole,
+    })
+
+    instMeetingMem.save
 
     Member.find(memberIds).each do |member|
       mm = MeetingMember.new({
         meeting: @meeting,
         member: member,
         belt: member.belt,
+        role: studentRole,
       })
 
       mm.save
@@ -83,7 +108,7 @@ class MeetingsController < ApplicationController
 
     @meeting.met = meeting_params[:date]
     @meeting.meeting_type_id = meeting_params[:meeting_type]
-    #@meeting.instructor = meeting_params[:instructor]
+    instructor = meeting_params[:instructor]
 
     respond_to do |format|
       if @meeting.save()
