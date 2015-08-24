@@ -6,6 +6,7 @@
     %tr
       %th= model_class.human_attribute_name(:id)
       %th= model_class.human_attribute_name(:name)
+      %th= model_class.human_attribute_name(:slug)
       %th= model_class.human_attribute_name(:comment)
       %th= model_class.human_attribute_name(:is_active)
       %th= t '.actions', :default => t("helpers.actions")
@@ -14,6 +15,7 @@
       %tr
         %td= link_to school.id, school_path(school)
         %td= school.name
+        %td= school.slug
         %td= school.comment
         %td= school.is_active
         %td

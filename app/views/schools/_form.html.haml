@@ -4,6 +4,10 @@
     .controls
       = f.text_field :name, :class => 'text_field'
   .control-group
+    = f.label :slug, :class => 'control-label'
+    .controls
+      = f.text_field :slug, :class => 'text_field'
+  .control-group
     = f.label :comment, :class => 'control-label'
     .controls
       = f.text_field :comment, :class => 'text_field'
@@ -13,5 +17,4 @@
       = f.check_box :is_active, :class => 'check_box'
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
-    = link_to t('.cancel', :default => t("helpers.links.cancel")), |
-      schools_path, :class => 'btn'                                |
+    = link_to t('.cancel', :default => t("helpers.links.cancel")), schools_path, :class => 'btn'
