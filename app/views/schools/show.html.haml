@@ -9,6 +9,11 @@
   %dd= @school.name
   %dt
     %strong
+      = model_class.human_attribute_name(:slug)
+      \:
+  %dd= @school.slug
+  %dt
+    %strong
       = model_class.human_attribute_name(:comment)
       \:
   %dd= @school.comment
