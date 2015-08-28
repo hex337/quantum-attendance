@@ -1,0 +1,41 @@
+.page-header
+  %h1 Slacker Report
+
+.container
+  %table.condensed
+    %body
+      %tr
+        %td
+          School:
+        %td
+          %select#school
+            %option{:value => ""}
+              All Schools
+            - School.all.each do |school|
+              %option{:value => "#{school.slug}"}
+                = school.name
+        %td
+          Min Days:
+        %td
+          %input#min{:type => 'number', :value => @min, :style => "width: 4em;"}
+        %td
+          Max Days:
+        %td
+          %input#max{:type => 'number', :value => @max, :style => "width: 4em;"}
+        %td
+          %input#submit.btn{:type => 'submit', :value => 'Generate Report'}
+
+= render 'members/member_list'
+
+:javascript
+  $(document).ready(function() {
+    $("#submit").click(function(event) {
+      event.preventDefault();
+      var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
+        "min=" + String($("#min").val()) + "&max=" + String($("#max").val()) +
+        "&school=" + $("#school").val();
+
+      window.location.href = url;
+      return false;
+    });
+  });

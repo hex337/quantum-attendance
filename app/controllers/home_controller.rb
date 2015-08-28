@@ -4,8 +4,8 @@ class HomeController < ApplicationController
 
   def slacker_report
     school = params[:school] || nil
-    recent_days = params[:min] || 14
-    history_days = params[:max] || 90
+    recent_days = @min = params[:min] || 14
+    history_days = @max = params[:max] || 90
 
     school = School.find_by_slug(school) if not school.nil?
     school_statement = school ? "mb.school_id = #{school.id} AND" : ''
@@ -34,12 +34,10 @@ class HomeController < ApplicationController
         INNER JOIN meetings m ON mm.meeting_id = m.id
         WHERE met > (NOW() - INTERVAL '#{recent_days}' DAY)
       ) ORDER BY maxmet;
-   ")
+    ")
 
-   memberIds = memberIds.collect{|mem| mem.id}
+    memberIds = memberIds.collect{|mem| mem.id}
     @members = Member.find(memberIds)
-
-    render 'members/index'
   end
 
   def poor_attendance
