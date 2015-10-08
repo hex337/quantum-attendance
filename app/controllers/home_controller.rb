@@ -3,7 +3,7 @@ class HomeController < ApplicationController
   end
 
   def slacker_report
-    school = params[:school] || nil
+    school = @school = params[:school] || nil
     recent_days = @min = params[:min] || 14
     history_days = @max = params[:max] || 90
 
@@ -41,8 +41,12 @@ class HomeController < ApplicationController
   end
 
   def poor_attendance
-    days = params[:gap] || 90
-    threshold = params[:threshold] || 3
+    school = @school = params[:school] || nil
+    days = @gap = params[:gap] || 90
+    threshold = @threshold = params[:threshold] || 3
+
+    school = School.find_by_slug(school) if not school.nil?
+    school_statement = school ? "AND meetings.school_id = #{school.id}" : ''
 
     meetingIds = Meeting.find_by_sql("
       SELECT meeting_id as id, count(*)
@@ -50,6 +54,7 @@ class HomeController < ApplicationController
       JOIN meetings ON meeting_members.meeting_id = meetings.id
       WHERE meeting_members.meeting_id = meetings.id
         AND meetings.met > (NOW() - INTERVAL '#{days}' DAY)
+        #{school_statement}
       GROUP BY meeting_id
       HAVING count(*) <= #{threshold}
       ORDER BY id DESC
@@ -57,7 +62,5 @@ class HomeController < ApplicationController
 
     meetingIds = meetingIds.collect{|meeting| meeting.id}
     @meetings = Meeting.find(meetingIds)
-
-    render 'meetings/index'
   end
 end

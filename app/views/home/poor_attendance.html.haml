@@ -1,5 +1,5 @@
 .page-header
-  %h1 Slacker Report
+  %h1 Poor Attendance
 
 .container
   %table.condensed
@@ -10,24 +10,24 @@
         %td
           = select_tag :school, options_for_select(School.all.collect{|school| [school.name, school.slug]}.insert(0, ['All Schools', '']), @school)
         %td
-          Min Days:
+          Days to go Back:
         %td
-          %input#min{:type => 'number', :value => @min, :style => "width: 4em;"}
+          %input#gap{:type => 'number', :value => @gap, :style => "width: 4em;"}
         %td
-          Max Days:
+          Number of Students:
         %td
-          %input#max{:type => 'number', :value => @max, :style => "width: 4em;"}
+          %input#threshold{:type => 'number', :value => @threshold, :style => "width: 4em;"}
         %td
           %input#submit.btn{:type => 'submit', :value => 'Generate Report'}
 
-= render 'members/member_list'
+= render 'meetings/meeting_list'
 
 :javascript
   $(document).ready(function() {
     $("#submit").click(function(event) {
       event.preventDefault();
       var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
-        "min=" + String($("#min").val()) + "&max=" + String($("#max").val()) +
+        "gap=" + String($("#gap").val()) + "&threshold=" + String($("#threshold").val()) +
         "&school=" + $("#school").val();
 
       window.location.href = url;
