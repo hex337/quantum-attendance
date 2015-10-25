@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.all
+    @meetings = Meeting.for_school(@_current_school)
   end
 
   # GET /meetings/1
@@ -17,12 +17,8 @@ class MeetingsController < ApplicationController
     @city = nil
     @instructors = Member.where(is_teacher: true)
 
-    if params["city_name"]
-      @city = School.find_by_slug(params["city_name"])
-      
-      if @city
-        @instructors = Member.where(is_teacher: true, school: @city)
-      end
+    if current_school
+      @instructors = Member.where(is_teacher: true, school: current_school)
     end
 
     @meeting = Meeting.new

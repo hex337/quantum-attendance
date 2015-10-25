@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   get 'home/poor_attendance' => 'home#poor_attendance', as: :poor_attendance
   get 'home/slacker_report' => 'home#slacker_report', as: :slacker_report
 
-  get 'attendance/(for/:city_name)', controller: :meetings, action: :new, as: :attendance
+  get 'attendance/(for/:school)', controller: :meetings, action: :new, as: :attendance
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

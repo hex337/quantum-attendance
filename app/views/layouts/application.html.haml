@@ -36,18 +36,20 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand{:href => "#"} QuantumAttendance
+          %a.brand{:href => "#"} Quantum Martial Arts
           .container-fluid.nav-collapse
             %ul.nav
               %li= link_to "Students", members_path
               %li= link_to "Attendance", attendance_path
+              %li
+                = select_tag :school_select, options_for_select(School.all.collect{|school| [school.name, school.slug]}.insert(0, ['All Schools', 'none']), @_current_school ? @_current_school.slug : nil)
           / /.nav-collapse
     .container-fluid
       .row-fluid
         .span3
           .well.sidebar-nav
             %ul.nav.nav-list
-              %li.nav-header Sidebar
+              %li.nav-header Links
               %li= link_to "View/Edit Classes", meetings_path
               %li= link_to "Enter New Class", attendance_path
               %li= link_to "Active Members", members_path
@@ -63,3 +65,30 @@
       %footer
         %p © Quantum Martial Arts 2015
     / /container
+
+:javascript
+  $(document).ready(function() {
+    $("#school_select").change(function() {
+      var url = window.location.href;
+      var schoolVal = $("#school_select").val();
+
+      if (url.match(/school=/)) {
+        url = replaceUrlParam(url, "school", schoolVal);
+      }
+      else {
+        url += (url.match(/\?/) ? '&' : '?') + "school=" + $("#school_select").val();
+      }
+      
+      window.location = url;
+    });
+  });
+
+  function replaceUrlParam(url, paramName, paramValue) {
+    var pattern = new RegExp('\\b('+paramName+'=).*?(&|$)');
+
+    if(url.search(pattern)>=0){
+      return url.replace(pattern,'$1' + paramValue + '$2');
+    }
+
+    return url + (url.indexOf('?')>0 ? '&' : '?') + paramName + '=' + paramValue 
+  }

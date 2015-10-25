@@ -3,12 +3,10 @@ class HomeController < ApplicationController
   end
 
   def slacker_report
-    school = @school = params[:school] || nil
     recent_days = @min = params[:min] || 14
     history_days = @max = params[:max] || 90
 
-    school = School.find_by_slug(school) if not school.nil?
-    school_statement = school ? "mb.school_id = #{school.id} AND" : ''
+    school_statement = current_school ? "mb.school_id = #{current_school.id} AND" : ''
 
     memberIds = Member.find_by_sql("
       SELECT distinct mb.id, maxmet
@@ -41,12 +39,10 @@ class HomeController < ApplicationController
   end
 
   def poor_attendance
-    school = @school = params[:school] || nil
     days = @gap = params[:gap] || 90
     threshold = @threshold = params[:threshold] || 3
 
-    school = School.find_by_slug(school) if not school.nil?
-    school_statement = school ? "AND meetings.school_id = #{school.id}" : ''
+    school_statement = current_school ? "AND meetings.school_id = #{current_school.id}" : ''
 
     meetingIds = Meeting.find_by_sql("
       SELECT meeting_id as id, count(*)
