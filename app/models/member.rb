@@ -4,6 +4,10 @@ class Member < ActiveRecord::Base
   has_many :meeting_members
   has_many :meetings, through: :meeting_members
 
+  scope :for_school, lambda {|school|
+    where(school_id: school.id) unless school.nil?
+  }
+
   def self.members_for_typeahead(school = nil)
     members = school.nil? ? Member.where(is_active: true) : Member.where(school: school, is_active: true)
 

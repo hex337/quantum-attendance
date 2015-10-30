@@ -6,10 +6,6 @@
     %body
       %tr
         %td
-          School:
-        %td
-          = select_tag :school, options_for_select(School.all.collect{|school| [school.name, school.slug]}.insert(0, ['All Schools', '']), @school)
-        %td
           Min Days:
         %td
           %input#min{:type => 'number', :value => @min, :style => "width: 4em;"}
@@ -27,8 +23,7 @@
     $("#submit").click(function(event) {
       event.preventDefault();
       var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
-        "min=" + String($("#min").val()) + "&max=" + String($("#max").val()) +
-        "&school=" + $("#school").val();
+        "min=" + String($("#min").val()) + "&max=" + String($("#max").val());
 
       window.location.href = url;
       return false;

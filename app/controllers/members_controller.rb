@@ -4,7 +4,7 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.order("last_name")
+    @members = Member.order("last_name").for_school(current_school)
   end
 
   # GET /members/1
