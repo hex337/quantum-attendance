@@ -20,7 +20,7 @@
   .control-group
     = f.label :met, :class => 'control-label'
     .controls
-      = f.text_field :met, :class => 'text_field'
+      = f.datetime_local_field :met, {:type => "datetime-local", :data => {:format => "MM/dd/yyyy hh:mm PP"}}
   .control-group
     = f.label :comment, :class => 'control-label'
     .controls

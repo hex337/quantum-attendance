@@ -11,7 +11,7 @@
     %strong
       = model_class.human_attribute_name(:last_name)
       \:
-  %dd= @member.last_name
+  %dd= (@member.last_name && !@member.last_name.empty?) ? @member.last_name : "None"
   %dt
     %strong
       = model_class.human_attribute_name(:belt_id)
@@ -43,7 +43,7 @@
       \:
   %dd= @member.is_kid
 
-%h3 Last 10 classes
+%h3 Last 10 Classes
 %table.table.table-striped
   %thead
     %tr

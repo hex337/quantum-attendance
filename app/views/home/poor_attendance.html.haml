@@ -16,7 +16,7 @@
         %td
           %input#submit.btn{:type => 'submit', :value => 'Generate Report'}
 
-= render 'meetings/meeting_list'
+= render 'meetings/meeting_list', :locals => {}
 
 :javascript
   $(document).ready(function() {
