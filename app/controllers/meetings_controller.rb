@@ -15,10 +15,10 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @city = nil
-    @instructors = Member.where(is_teacher: true)
+    @instructors = Member.where(is_teacher: true).order(:first_name)
 
     if current_school
-      @instructors = Member.where(is_teacher: true, school: current_school)
+      @instructors = Member.where(is_teacher: true, school: current_school).order(:first_name)
     end
 
     @meeting = Meeting.new
