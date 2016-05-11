@@ -16,9 +16,11 @@
 = render :partial => 'form'
 
 :javascript
+  var mem;
+
   $(document).ready(function() {
-    var elem = $("#selected-members-container"),
-        mem = new Members(elem);
+    var elem = $("#selected-members-container");
+    mem = new Members(elem);
 
     $('#submit-btn').click(function(event) {
       event.preventDefault();

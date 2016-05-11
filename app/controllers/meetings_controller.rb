@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.for_school(@_current_school)
+    @meetings = Meeting.for_school(@_current_school).limit(100)
   end
 
   # GET /meetings/1
@@ -79,7 +79,7 @@ class MeetingsController < ApplicationController
     instructor = Member.find_by_id(meeting_params[:instructor])
 
     studentRole = Role.find_by_name("Student")
-    instructorRole = Rule.find_by_name("Teacher")
+    instructorRole = Role.find_by_name("Teacher")
     memberIds = meeting_params[:students].split(",")
 
     instMeetingMem = MeetingMember.new({
