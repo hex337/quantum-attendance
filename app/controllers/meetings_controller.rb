@@ -26,14 +26,24 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
+    @meeting[:met] = @meeting[:met].in_time_zone('America/Los_Angeles')
   end
 
   # POST /meetings
   # POST /meetings.json
   def create
+    dateFormats = ['%m/%d/%Y %I:%M %p', '%Y-%m-%dT%I:%M']
+    # 2016-05-10T10:10 or 05/21/2015 10:07 pm
+    dateStr = meeting_params[:date]
+    parsedDate = nil
+
+    dateFormats.each do |format|
+      parsedDate ||= DateTime.strptime(dateStr, format) rescue nil
+    end
+
     @meeting = Meeting.new({
       meeting_type: MeetingType.find(meeting_params[:meeting_type]),
-      met: DateTime.strptime(meeting_params[:date], '%m/%d/%Y %I:%M %p') # 05/21/2015 10:07 pm
+      met: parsedDate
     })
 
     memberIds = meeting_params[:students].split(",")
