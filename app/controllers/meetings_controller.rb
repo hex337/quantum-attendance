@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.for_school(@_current_school).limit(10)
+    @meetings = Meeting.for_school(@_current_school).limit(50)
   end
 
   # GET /meetings/1
