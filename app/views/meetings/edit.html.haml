@@ -38,7 +38,8 @@
             meeting_type: $("#meeting_type_id").val(),
             date: $("#meeting_met").val(),
             instructor: $("#instructor").val(),
-            students: memberIds.join(",")
+            students: memberIds.join(","),
+            comment: $("#meeting_comment").val()
           }
         }
       }).done(function(json) {

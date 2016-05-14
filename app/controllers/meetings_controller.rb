@@ -4,7 +4,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.for_school(@_current_school).limit(100)
+    @meetings = Meeting.for_school(@_current_school).limit(10)
   end
 
   # GET /meetings/1
@@ -43,7 +43,8 @@ class MeetingsController < ApplicationController
 
     @meeting = Meeting.new({
       meeting_type: MeetingType.find(meeting_params[:meeting_type]),
-      met: parsedDate
+      met: parsedDate,
+      comment: meeting_params[:comment]
     })
 
     memberIds = meeting_params[:students].split(",")
@@ -114,6 +115,7 @@ class MeetingsController < ApplicationController
 
     @meeting.met = meeting_params[:date]
     @meeting.meeting_type_id = meeting_params[:meeting_type]
+    @meeting.comment = meeting_params[:comment]
     instructor = meeting_params[:instructor]
 
     respond_to do |format|
@@ -145,6 +147,6 @@ class MeetingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
-      params.require(:meeting).permit(:meeting_type, :date, :instructor, :students)
+      params.require(:meeting).permit(:meeting_type, :date, :instructor, :students, :comment)
     end
 end

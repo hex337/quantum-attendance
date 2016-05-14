@@ -74,6 +74,9 @@
           %h4 Attending Students:
           #attending-students
 
+          %h4 Comment:
+          %textarea#comment
+
           %br
           %br
 
@@ -139,7 +142,7 @@ $(document).ready(function() {
 
         var instructor = $("#instructor").val();
         $("#instructor-confirm").html($("#instructor option[value=" + String(instructor) + "]").text());
-
+        
         var memberIds = [];
         $.each(mem.list(), function(ndx, item) {
           $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + "</span>");
@@ -147,6 +150,8 @@ $(document).ready(function() {
         });
 
         $("#submit-btn").click(function(event) {
+          var comment = $("#comment").val();
+
           $.ajax({
             url: "#{meetings_path()}",
             method: "post",
@@ -155,6 +160,7 @@ $(document).ready(function() {
                 meeting_type: meetingType,
                 date: date,
                 instructor: instructor,
+                comment: comment,
                 students: memberIds.join(",")
               }
             }
