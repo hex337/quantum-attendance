@@ -32,9 +32,9 @@ class MeetingsController < ApplicationController
   # POST /meetings
   # POST /meetings.json
   def create
-    dateFormats = ['%m/%d/%Y %I:%M %p', '%Y-%m-%dT%I:%M']
+    dateFormats = ['%m/%d/%Y %I:%M %p %Z', '%Y-%m-%dT%I:%M %Z']
     # 2016-05-10T10:10 or 05/21/2015 10:07 pm
-    dateStr = meeting_params[:date]
+    dateStr = meeting_params[:date] + " " + Time.zone.now.strftime('%Z')
     parsedDate = nil
 
     dateFormats.each do |format|
