@@ -4,7 +4,14 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    @members = Member.order("last_name").for_school(current_school)
+    show_inactive = params[:show_inactive] || false
+    members = Member.order("last_name").for_school(current_school)
+
+    if show_inactive && show_inactive == 'true'
+      members = Member.order("last_name").for_school(current_school).where(is_active: false)
+    end
+
+    @members = members
   end
 
   # GET /members/1
