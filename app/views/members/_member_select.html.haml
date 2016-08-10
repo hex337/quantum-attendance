@@ -7,7 +7,7 @@ $(document).ready(function() {
   var members = [#{Member.members_for_typeahead(city).map{|mem| mem.to_json}.join(",")}]
 
   var members = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value', 'belt'),
     queryTokenizer: Bloodhound.tokenizers.whitespace,
     local: members
   });

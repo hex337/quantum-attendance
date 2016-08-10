@@ -12,6 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require bootstrap
 //= require twitter/bootstrap
 //= require twitter/typeahead
 //= require jquery-tablesorter

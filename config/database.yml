@@ -23,3 +23,5 @@ test:
 production:
   <<: *default
   url: <%= ENV["DATABASE_URL"] %>
+  database: quantum_attendance
+  port: 5432

@@ -1,4 +1,5 @@
 - model_class = Meeting
+- date_format = "%Y-%m-%dT%H:%M" #%m/%d/%Y %I:%M %P
 .page-header
   - if @city
     %h1
@@ -22,7 +23,7 @@
 
           .input-group
             #datetimepicker.input-append.date
-              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now().strftime("%m/%d/%Y %I:%M %P")}"}
+              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now().strftime(date_format)}"}
 
           .input-group
             %select#instructor.form-control
@@ -89,6 +90,7 @@
 
 :javascript
 $(document).ready(function() {
+
   $("#carousel").carousel({
     interval: false,
     wrap: false,
