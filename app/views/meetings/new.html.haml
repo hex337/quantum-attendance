@@ -23,7 +23,7 @@
 
           .input-group
             #datetimepicker.input-append.date
-              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now().strftime(date_format)}"}
+              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now.in_time_zone('America/Los_Angeles').strftime(date_format)}"}
 
           .input-group
             %select#instructor.form-control
