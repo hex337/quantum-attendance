@@ -43,7 +43,7 @@ class MeetingsController < ApplicationController
       parsedDate ||= DateTime.strptime(dateStr, format) rescue nil
     end
 
-    if pasedDate.nil?
+    if parsedDate.nil?
       logger.error("No date found for input date: " + dateStr)
       raise ActiveRecord::RecordNotFound()
     end
