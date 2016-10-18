@@ -146,8 +146,17 @@ $(document).ready(function() {
         $("#instructor-confirm").html($("#instructor option[value=" + String(instructor) + "]").text());
         
         var memberIds = [];
+        var count = 0;
+        $("#attending-students").html("");
         $.each(mem.list(), function(ndx, item) {
-          $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + "</span>");
+          count++;
+
+          var comma = ", ";
+          if (count == mem.length()) {
+            comma = "";
+          }
+
+          $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + comma + "</span>");
           memberIds.push(item.id);
         });
 

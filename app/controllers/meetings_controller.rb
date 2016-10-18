@@ -32,13 +32,20 @@ class MeetingsController < ApplicationController
   # POST /meetings
   # POST /meetings.json
   def create
-    dateFormats = ['%m/%d/%Y %I:%M %p %Z', '%Y-%m-%dT%I:%M %Z']
+    dateFormats = ['%m/%d/%Y %I:%M %p %Z', '%Y-%m-%dT%H:%M %Z']
     # 2016-05-10T10:10 or 05/21/2015 10:07 pm
+    # 2016-10-18T00:24
     dateStr = meeting_params[:date] + " " + Time.zone.now.strftime('%Z')
+    logger.info("dateStr: " + dateStr)
     parsedDate = nil
 
     dateFormats.each do |format|
       parsedDate ||= DateTime.strptime(dateStr, format) rescue nil
+    end
+
+    if pasedDate.nil?
+      logger.error("No date found for input date: " + dateStr)
+      raise ActiveRecord::RecordNotFound()
     end
 
     @meeting = Meeting.new({

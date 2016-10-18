@@ -23,6 +23,7 @@ Members.prototype.addMember = function(member) {
   console.log("Adding a new member.");
 
   if (this.memberList[member.id]) {
+    console.log("Member already exists, don't add them.");
     return;
   }
 
