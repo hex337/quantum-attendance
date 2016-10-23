@@ -51,7 +51,7 @@ class MeetingsController < ApplicationController
     @meeting = Meeting.new({
       meeting_type: MeetingType.find(meeting_params[:meeting_type]),
       met: parsedDate,
-      school: @_current_school,
+      school_id: @_current_school.id,
       comment: meeting_params[:comment]
     })
 
