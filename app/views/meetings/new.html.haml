@@ -1,92 +1,97 @@
 - model_class = Meeting
 - date_format = "%Y-%m-%dT%H:%M" #%m/%d/%Y %I:%M %P
 .page-header
-  - if @city
+  - if @_current_school
     %h1
       = t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
-      = "for #{@city.name}"
+      = "for #{@_current_school.name}"
   - else
     %h1= t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
 
-  #carousel.carousel.slide{:data => {:ride => "carousel"}}
-    .carousel-inner{:role => "listbox"}
-      .item.active
-        #meeting-type-select-container
-          %h3 1. Choose a Meeting Type and Time:
-          .input-group
-            %select#meeting-type.form-control
-              %option{:value => ""}
-                Class Type
-              - MeetingType.all.each do |type|
-                %option{:value => "#{type.id}"}
-                  = type.name
+  - if @_current_school
+    #carousel.carousel.slide{:data => {:ride => "carousel"}}
+      .carousel-inner{:role => "listbox"}
+        .item.active
+          #meeting-type-select-container
+            %h3 1. Choose a Meeting Type and Time:
+            .input-group
+              %select#meeting-type.form-control
+                %option{:value => ""}
+                  Class Type
+                - MeetingType.all.each do |type|
+                  %option{:value => "#{type.id}"}
+                    = type.name
 
-          .input-group
-            #datetimepicker.input-append.date
-              %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now.in_time_zone('America/Los_Angeles').strftime(date_format)}"}
+            .input-group
+              #datetimepicker.input-append.date
+                %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now.in_time_zone('America/Los_Angeles').strftime(date_format)}"}
 
-          .input-group
-            %select#instructor.form-control
-              - @instructors.each do |member|
-                %option{:value => "#{member.id}"}
-                  = member.full_name
+            .input-group
+              %select#instructor.form-control
+                - @instructors.each do |member|
+                  %option{:value => "#{member.id}"}
+                    = member.full_name
 
-          %a.btn.next-btn{:href => "#", :data => {:validate => "step_one"}} Select Students &#10095;
+            %a.btn.next-btn{:href => "#", :data => {:validate => "step_one"}} Select Students &#10095;
 
-      .item
-        #members-select-container
-          %h3
-            2. Select Who Attended
-            %span.meeting-name
-          = render "members/member_select", city: @city
+        .item
+          #members-select-container
+            %h3
+              2. Select Who Attended
+              %span.meeting-name
+            = render "members/member_select", city: @city
 
-          %h4 Students - Click to Remove:
-          #selected-members-container{:style => ""}
-            None selected yet.
+            %h4 Students - Click to Remove:
+            #selected-members-container{:style => ""}
+              None selected yet.
 
-          %br
-          %br
+            %br
+            %br
 
-          %a.btn.back-btn{:href => "#"} &#10094; Back
-          &nbsp;
-          %a.btn.next-btn.confirm{:href => "#", :data => {:validate => "step_two"}} Confirm &#10095;
+            %a.btn.back-btn{:href => "#"} &#10094; Back
+            &nbsp;
+            %a.btn.next-btn.confirm{:href => "#", :data => {:validate => "step_two"}} Confirm &#10095;
 
-      .item
-        #members-confirm-container
-          %h3
-            3. Confirm Attendance
+        .item
+          #members-confirm-container
+            %h3
+              3. Confirm Attendance
 
-          %h4 Class Info:
-          #class-info.container
-            %table
-              %tr
-                %th{:style => "text-align: right;"}
-                  Class Type:
-                %td#meeting-type-confirm
-              %tr
-                %th{:style => "text-align: right;"}
-                  Date:
-                %td#date-confirm
-              %tr
-                %th{:style => "text-align: right;"}
-                  Instructor:
-                %td#instructor-confirm
+            %h4 Class Info:
+            #class-info.container
+              %table
+                %tr
+                  %th{:style => "text-align: right;"}
+                    Class Type:
+                  %td#meeting-type-confirm
+                %tr
+                  %th{:style => "text-align: right;"}
+                    Date:
+                  %td#date-confirm
+                %tr
+                  %th{:style => "text-align: right;"}
+                    Instructor:
+                  %td#instructor-confirm
 
-          %h4 Attending Students:
-          #attending-students
+            %h4 Attending Students:
+            #attending-students
 
-          %h4 Comment:
-          %textarea#comment
+            %h4 Comment:
+            %textarea#comment
 
-          %br
-          %br
+            %br
+            %br
 
-          %a.btn.back-btn{:href => "#"} &#10094; Back
-          %a#submit-btn.btn.btn-primary{:href => "#"} Submit
+            %a.btn.back-btn{:href => "#"} &#10094; Back
+            %a#submit-btn.btn.btn-primary{:href => "#"} Submit
 
-  .create-form
-    %form
-      %input{:type => "hidden", :id => "meeting_type_id", :name => "meeting_type_id"}
+    .create-form
+      %form
+        %input{:type => "hidden", :id => "meeting_type_id", :name => "meeting_type_id"}
+
+  - else
+    %p= "You must select a school from the dropdown to create a new meeting."
+    = image_tag("select_school.png")
 
 :javascript
 $(document).ready(function() {

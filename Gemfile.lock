@@ -169,5 +169,8 @@ DEPENDENCIES
   twitter-typeahead-rails
   uglifier (>= 1.3.0)
 
+RUBY VERSION
+   ruby 2.1.6p336
+
 BUNDLED WITH
-   1.10.6
+   1.13.5
