@@ -166,6 +166,7 @@ $(document).ready(function() {
         });
 
         $("#submit-btn").click(function(event) {
+          $(".page-header").block({ message: "Saving class..."});
           var comment = $("#comment").val();
 
           $.ajax({

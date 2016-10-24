@@ -19,4 +19,5 @@
 //= require bootstrapValidator.min
 //= require turbolinks
 //= require members
+//= require jquery_blockui
 //= require_tree .
