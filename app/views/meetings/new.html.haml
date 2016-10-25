@@ -164,33 +164,41 @@ $(document).ready(function() {
           $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + comma + "</span>");
           memberIds.push(item.id);
         });
-
-        $("#submit-btn").click(function(event) {
-          $(".page-header").block({ message: "Saving class..."});
-          var comment = $("#comment").val();
-
-          $.ajax({
-            url: "#{meetings_path()}",
-            method: "post",
-            data: {
-              meeting: {
-                meeting_type: meetingType,
-                date: date,
-                instructor: instructor,
-                comment: comment,
-                students: memberIds.join(",")
-              }
-            }
-          }).done(function(json) {
-            window.location = "#{meetings_path()}";
-          });
-        });
       }
 
       $("#carousel").carousel('next');
     });
   });
   
+  $("#submit-btn").click(function(event) {
+    $(".page-header").block({ message: "Saving class..."});
+    var comment = $("#comment").val();
+    var meetingType = $("#meeting-type").val();
+    var date = $("#meeting-date").val();
+    var instructor = $("#instructor").val();
+    var memberIds = [];
+
+    $.each(mem.list(), function(ndx, item) {
+      memberIds.push(item.id);
+    });
+
+    $.ajax({
+      url: "#{meetings_path()}",
+      method: "post",
+      data: {
+        meeting: {
+          meeting_type: meetingType,
+          date: date,
+          instructor: instructor,
+          comment: comment,
+          students: memberIds.join(",")
+        }
+      }
+    }).done(function(json) {
+      window.location = "#{meetings_path()}";
+    });
+  });
+
   $.each($(".back-btn"), function(ndx, btn) {
     $(btn).click(function(event) {
       event.preventDefault();
