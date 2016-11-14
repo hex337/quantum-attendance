@@ -1,0 +1,39 @@
+.page-header
+  %h1 Classes Per Student
+
+.container
+  %table.condensed
+    %body
+      %tr
+        %td
+          Number of Days:
+        %td
+          %input#days{:type => 'number', :value => @days, :style => "width: 4em;"}
+      %tr
+        %td
+        %td
+          %input#submit.btn{:type => 'submit', :value => 'Generate Report'}
+
+.container
+  %table.condensed
+    %head
+      %tr
+        %th Student
+        %th # Classes
+    %body
+      - @members_and_counts.each do |tuple|
+        %tr
+          %td
+            = link_to tuple[:member].full_name, member_path(tuple[:member])
+          %td{ style: "text-align:center"}= tuple[:count]
+
+:javascript
+  $(document).ready(function() {
+    $("#submit").click(function(event) {
+      event.preventDefault();
+      var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
+        "min=" + String($("#min").val()) + "&max=" + String($("#max").val());
+
+      window.location.href = url;
+      return false;
+    });

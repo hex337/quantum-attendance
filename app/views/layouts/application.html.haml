@@ -39,10 +39,6 @@
           %a.brand{:href => "#"} Quantum Martial Arts
           .container-fluid.nav-collapse
             %ul.nav
-              %li= link_to "Students", members_path
-              %li= link_to "Attendance", attendance_path
-              %li
-                = select_tag :school_select, options_for_select(School.all.collect{|school| [school.name, school.slug]}.insert(0, ['All Schools', 'none']), @_current_school ? @_current_school.slug : nil)
           / /.nav-collapse
     .container-fluid
       .row-fluid
@@ -56,6 +52,10 @@
               %li= link_to "New Member", new_member_path
               %li= link_to "Slacker Report", slacker_report_path
               %li= link_to "Poorly Attended Classes", poor_attendance_path
+              %li= link_to "Classes per Student", classes_per_student_path
+              %li= link_to "People per Class", people_per_class_path
+              %li
+                = select_tag :school_select, options_for_select(School.all.collect{|school| [school.name, school.slug]}.insert(0, ['All Schools', 'none']), @_current_school ? @_current_school.slug : nil)
           / /.well
         / /span
         .span9

@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   
   get 'home/poor_attendance' => 'home#poor_attendance', as: :poor_attendance
   get 'home/slacker_report' => 'home#slacker_report', as: :slacker_report
+  get 'home/classes_per_student' => 'home#classes_per_student', as: :classes_per_student
+  get 'home/people_per_class' => 'home#people_per_class', as: :people_per_class
 
   get 'attendance/(for/:school)', controller: :meetings, action: :new, as: :attendance
 
