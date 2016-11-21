@@ -5,7 +5,7 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     show_inactive = params[:show_inactive] || false
-    members = Member.order("last_name").for_school(current_school)
+    members = Member.active.order("last_name").for_school(current_school)
 
     if show_inactive && show_inactive == 'true'
       members = Member.order("last_name").for_school(current_school).where(is_active: false)
@@ -60,8 +60,9 @@ class MembersController < ApplicationController
 
   # DELETE /members/1
   # DELETE /members/1.json
+  # We don't want to support this.
   def destroy
-    @member.destroy
+    #@member.destroy
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
       format.json { head :no_content }

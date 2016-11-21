@@ -16,10 +16,7 @@ class MeetingsController < ApplicationController
   def new
     @city = nil
     @instructors = Member.for_school(@_current_school).where(is_teacher: true).order(:first_name)
-
-    if current_school
-      @instructors = Member.where(is_teacher: true, school: current_school).order(:first_name)
-    end
+    @members = Member.for_school(@_current_school)
 
     @meeting = Meeting.new
   end

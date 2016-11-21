@@ -49,3 +49,4 @@ gem 'rails_12factor', group: :production
 
 gem 'puma' # web server
 gem 'jquery-tablesorter'
+gem 'react-rails'

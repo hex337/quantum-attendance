@@ -4,7 +4,7 @@ class Member < ActiveRecord::Base
   has_many :meeting_members
   has_many :meetings, through: :meeting_members
 
-  default_scope { where(is_active: true) }
+  #default_scope { where(is_active: true) }
 
   scope :for_school, lambda {|school|
     where(school_id: school.id) unless school.nil?

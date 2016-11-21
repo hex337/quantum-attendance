@@ -20,4 +20,7 @@
 //= require turbolinks
 //= require members
 //= require jquery_blockui
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .

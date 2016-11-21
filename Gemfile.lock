@@ -28,6 +28,10 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bootstrap-validator-rails (0.5.3)
       jquery-rails (>= 3.0)
       railties (>= 3.0)
@@ -39,6 +43,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1)
+    connection_pool (2.2.1)
     dotenv (2.0.1)
     erb2haml (0.1.5)
       html2haml
@@ -100,6 +105,13 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
       json (~> 1.4)
+    react-rails (1.9.0)
+      babel-transpiler (>= 0.7.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     ruby_parser (3.6.5)
       sexp_processor (~> 4.1)
     sass (3.2.19)
@@ -161,6 +173,7 @@ DEPENDENCIES
   puma
   rails (= 4.1.0)
   rails_12factor
+  react-rails
   sass-rails (~> 4.0.3)
   sdoc (~> 0.4.0)
   spring
