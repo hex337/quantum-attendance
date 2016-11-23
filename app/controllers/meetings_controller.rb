@@ -15,7 +15,7 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @city = nil
-    @instructors = Member.for_school(@_current_school).where(is_teacher: true).order(:first_name)
+    @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
     @members = Member.for_school(@_current_school)
 
     @meeting = Meeting.new

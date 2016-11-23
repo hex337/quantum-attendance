@@ -12,6 +12,7 @@ class MembersController < ApplicationController
     end
 
     @members = members
+    @show_inactive = show_inactive
   end
 
   # GET /members/1

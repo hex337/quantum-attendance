@@ -2,4 +2,11 @@
 - @show_new = true
 .page-header
   %h1= t '.title', :default => model_class.model_name.human.pluralize.titleize
+
+.container
+  - if @show_inactive
+    = link_to "Show Active", members_path
+  - else
+    = link_to "Show Inactive", members_path(show_inactive: true)
+
 = render 'member_list'
