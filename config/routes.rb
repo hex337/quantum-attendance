@@ -11,6 +11,8 @@ Rails.application.routes.draw do
 
   resources :meetings
 
+  get 'test', controller: :meetings, action: :test, as: :test
+
   resources :meeting_types
 
   # The priority is based upon order of creation: first created -> highest priority.

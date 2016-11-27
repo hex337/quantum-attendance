@@ -1,6 +1,10 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
+  def test
+    @class = Meeting.new
+  end
+
   # GET /meetings
   # GET /meetings.json
   def index
