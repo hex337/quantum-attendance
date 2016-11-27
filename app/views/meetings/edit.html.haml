@@ -6,7 +6,7 @@
   %h3
     Edit Attendance
     %span.meeting-name
-  = render "members/member_select", city: @_current_city
+  = render "members/member_select", city: @meeting.school
 
   %h4 Students - Click to Remove:
   #selected-members-container{:style => ""}
