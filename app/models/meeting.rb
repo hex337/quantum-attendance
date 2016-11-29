@@ -9,4 +9,20 @@ class Meeting < ActiveRecord::Base
   belongs_to :school
   has_many :meeting_members
   has_many :members, :through => :meeting_members
+
+  @_instructor = nil
+
+  def instructor
+    @_instructor || self._get_instructor
+  end
+  
+  def _get_instructor
+    teacherRole = Role.find_by_name("Teacher")
+    self.meeting_members.each do |mm|
+      if mm.role_id == teacherRole.id
+        @_instructor = mm.member
+        return @_instructor
+      end
+    end
+  end
 end

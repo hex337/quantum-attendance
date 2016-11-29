@@ -14,9 +14,7 @@
     = f.label :instructor, :class => 'control-label'
     .controls
       %select#instructor.form-control{:name => "meeting[instructor]"}
-        - Member.where(is_active: true, is_teacher: true).each do |inst|
-          %option{:value => "#{inst.id}"}
-            = inst.full_name
+        = options_for_select(@instructors.collect{|inst| [inst.full_name, inst.id]}, @meeting.instructor.id)
   .control-group
     = f.label :met, :class => 'control-label'
     .controls

@@ -27,6 +27,7 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
+    @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
     @meeting[:met] = @meeting[:met].in_time_zone('America/Los_Angeles')
   end
 
