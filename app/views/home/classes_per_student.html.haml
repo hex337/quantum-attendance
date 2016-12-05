@@ -32,8 +32,9 @@
     $("#submit").click(function(event) {
       event.preventDefault();
       var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
-        "min=" + String($("#min").val()) + "&max=" + String($("#max").val());
+        "days=" + String($("#days").val());
 
       window.location.href = url;
       return false;
     });
+  });

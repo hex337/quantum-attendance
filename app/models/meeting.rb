@@ -16,6 +16,10 @@ class Meeting < ActiveRecord::Base
     @_instructor || self._get_instructor
   end
   
+  def pretty_name
+    "#{self.met.strftime('%a %b %d, %Y')}: #{self.meeting_type.name}"
+  end
+
   def _get_instructor
     teacherRole = Role.find_by_name("Teacher")
     self.meeting_members.each do |mm|

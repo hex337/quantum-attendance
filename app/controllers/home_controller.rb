@@ -79,5 +79,20 @@ class HomeController < ApplicationController
   end
 
   def people_per_class
+    days = @days = params[:days] || 7
+    school_statement = current_school ? "AND meetings.school_id = #{current_school.id}" : ''
+
+    query = MeetingMember.find_by_sql("
+      SELECT meeting_members.meeting_id, count(*)
+      FROM meeting_members
+      JOIN meetings ON meeting_members.meeting_id = meetings.id
+      WHERE meetings.met > (NOW() - INTERVAL '#{days}' DAY)
+      #{school_statement}
+      GROUP BY meeting_members.meeting_id
+      ORDER BY count(*) DESC
+    ")
+
+    meetings_and_counts = query.collect{|row| { meeting: Meeting.find_by_id(row.meeting_id), count: row.count}}
+    @meetings_and_counts = meetings_and_counts
   end
 end
