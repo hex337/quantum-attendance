@@ -44,9 +44,10 @@ gem 'bootstrap-validator-rails'
 gem "haml"
 
 gem 'erb2haml', group: :development
-gem 'dotenv'
+gem 'dotenv-rails', :groups => [:development, :test]
 gem 'rails_12factor', group: :production
 
 gem 'puma' # web server
 gem 'jquery-tablesorter'
 gem 'react-rails'
+gem 'keen'

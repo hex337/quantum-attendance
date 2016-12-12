@@ -70,6 +70,7 @@ class MeetingsController < ApplicationController
     })
 
     instMeetingMem.save
+    events = []
 
     Member.find(memberIds).each do |member|
       mm = MeetingMember.new({
@@ -80,7 +81,10 @@ class MeetingsController < ApplicationController
       })
 
       mm.save
+      events << mm.to_keen_props
     end
+
+    Keen.publish_batch(:class_attendance => events)
 
     respond_to do |format|
       if @meeting.save
@@ -96,37 +100,58 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
-    MeetingMember.delete(@meeting.meeting_members.collect {|mm| mm.id})
-    instructor = Member.find_by_id(meeting_params[:instructor])
-
+    instructorId = @meeting.instructor.id
+    currentMemberIds = @meeting.meeting_members.collect{|mm| mm.member_id}
+    currentMemberIds.delete(instructorId)
     studentRole = Role.find_by_name("Student")
     instructorRole = Role.find_by_name("Teacher")
-    memberIds = meeting_params[:students].split(",")
+    memberIds = meeting_params[:students].split(",").collect{|id| id.to_i}
 
-    instMeetingMem = MeetingMember.new({
-      meeting: @meeting,
-      member: instructor,
-      belt: instructor.belt,
-      role: instructorRole,
-    })
+    membersToDelete = currentMemberIds - memberIds
+    membersToAdd = memberIds - currentMemberIds
 
-    instMeetingMem.save
+    logger.info("*******************************")
+    logger.info("member ids: " + memberIds.inspect)
+    logger.info("current member ids: " + currentMemberIds.inspect)
+    logger.info("members to delete: " + membersToDelete.inspect)
+    logger.info("members to add:    " + membersToAdd.inspect)
 
-    Member.find(memberIds).each do |member|
-      mm = MeetingMember.new({
+    mmids = @meeting.meeting_members.select{|mm| membersToDelete.include?(mm.member_id)}.collect{|mm| mm.id}
+    logger.info("mmids:             " + mmids.inspect)
+    MeetingMember.delete(mmids)
+
+    if meeting_params[:instructor] != instructorId
+      instructor = Member.find_by_id(meeting_params[:instructor])
+      instMeetingMem = MeetingMember.new({
         meeting: @meeting,
-        member: member,
-        belt: member.belt,
-        role: studentRole,
+        member: instructor,
+        belt: instructor.belt,
+        role: instructorRole,
       })
 
-      mm.save
+      instMeetingMem.save
+    end
+
+    if !membersToAdd.empty?
+      events = []
+      Member.find(membersToAdd).each do |member|
+        mm = MeetingMember.new({
+          meeting: @meeting,
+          member: member,
+          belt: member.belt,
+          role: studentRole,
+        })
+
+        mm.save
+        events << mm.to_keen_props
+      end
+
+      Keen.publish_batch(:class_attendance => events)
     end
 
     @meeting.met = meeting_params[:date]
     @meeting.meeting_type_id = meeting_params[:meeting_type]
     @meeting.comment = meeting_params[:comment]
-    instructor = meeting_params[:instructor]
 
     respond_to do |format|
       if @meeting.save()
