@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :check_school
+  before_filter :authenticate
 
   def current_school
     @_current_school ||= session[:current_school_id] && School.find(session[:current_school_id])
@@ -23,5 +24,13 @@ class ApplicationController < ActionController::Base
     end
 
     current_school
+  end
+
+  def authenticate
+    if Rails.env.production?
+      authenticate_or_request_with_http_basic do |username, password|
+        username == ENV['AUTH_USER'] && password = ENV['AUTH_PWD']
+      end
+    end
   end
 end
