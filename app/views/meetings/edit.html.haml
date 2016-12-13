@@ -25,6 +25,7 @@
 
     $('#submit-btn').click(function(event) {
       event.preventDefault();
+      $("body").block({ message: "Updating class..."});
 
       var memberIds = [];
       $.each(mem.list(), function(ndx, item) {
