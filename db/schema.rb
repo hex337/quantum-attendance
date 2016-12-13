@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811041032) do
+ActiveRecord::Schema.define(version: 20161213062944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,7 @@ ActiveRecord::Schema.define(version: 20150811041032) do
 
   add_index "meeting_members", ["belt_id"], name: "index_meeting_members_on_belt_id", using: :btree
   add_index "meeting_members", ["meeting_id"], name: "index_meeting_members_on_meeting_id", using: :btree
+  add_index "meeting_members", ["member_id", "meeting_id", "role_id"], name: "index_meeting_members_on_member_id_and_meeting_id_and_role_id", unique: true, using: :btree
   add_index "meeting_members", ["member_id"], name: "index_meeting_members_on_member_id", using: :btree
   add_index "meeting_members", ["role_id"], name: "index_meeting_members_on_role_id", using: :btree
 
@@ -57,6 +58,7 @@ ActiveRecord::Schema.define(version: 20150811041032) do
   end
 
   add_index "meetings", ["meeting_type_id"], name: "index_meetings_on_meeting_type_id", using: :btree
+  add_index "meetings", ["met"], name: "index_meetings_on_met", using: :btree
 
   create_table "members", force: true do |t|
     t.string   "first_name"
