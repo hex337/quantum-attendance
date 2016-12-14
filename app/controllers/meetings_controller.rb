@@ -110,17 +110,10 @@ class MeetingsController < ApplicationController
     membersToDelete = currentMemberIds - memberIds
     membersToAdd = memberIds - currentMemberIds
 
-    logger.info("*******************************")
-    logger.info("member ids: " + memberIds.inspect)
-    logger.info("current member ids: " + currentMemberIds.inspect)
-    logger.info("members to delete: " + membersToDelete.inspect)
-    logger.info("members to add:    " + membersToAdd.inspect)
-
     mmids = @meeting.meeting_members.select{|mm| membersToDelete.include?(mm.member_id)}.collect{|mm| mm.id}
-    logger.info("mmids:             " + mmids.inspect)
-    MeetingMember.delete(mmids)
+    MeetingMember.delete(mmids) unless mmids.empty?
 
-    if meeting_params[:instructor] != instructorId
+    if meeting_params[:instructor].to_i != instructorId
       instructor = Member.find_by_id(meeting_params[:instructor])
       instMeetingMem = MeetingMember.new({
         meeting: @meeting,
