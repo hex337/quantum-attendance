@@ -21,9 +21,8 @@ class Meeting < ActiveRecord::Base
   end
 
   def _get_instructor
-    teacherRole = Role.find_by_name("Teacher")
     self.meeting_members.each do |mm|
-      if mm.role_id == teacherRole.id
+      if mm.role_id == Role::TEACHER
         @_instructor = mm.member
         return @_instructor
       end
