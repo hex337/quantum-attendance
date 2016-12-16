@@ -84,7 +84,7 @@ class MeetingsController < ApplicationController
       events << mm.to_keen_props
     end
 
-    Keen.publish_batch(:class_attendance => events)
+    Keen.publish_batch(:attendance => events)
 
     respond_to do |format|
       if @meeting.save
@@ -139,7 +139,7 @@ class MeetingsController < ApplicationController
         events << mm.to_keen_props
       end
 
-      Keen.publish_batch(:class_attendance => events)
+      Keen.publish_batch(:attendance => events)
     end
 
     @meeting.met = meeting_params[:date]
