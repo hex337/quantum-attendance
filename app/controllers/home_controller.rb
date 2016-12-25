@@ -2,6 +2,9 @@ class HomeController < ApplicationController
   def index
   end
 
+  def dashboard
+  end
+
   def slacker_report
     recent_days = @min = params[:min] || 14
     history_days = @max = params[:max] || 90

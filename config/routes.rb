@@ -30,6 +30,8 @@ Rails.application.routes.draw do
 
   get 'attendance/(for/:school)', controller: :meetings, action: :new, as: :attendance
 
+  get 'dashboard/(for/:school)', controller: :home, action: :dashboard, as: :dashboard
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

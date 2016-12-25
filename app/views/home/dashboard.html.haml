@@ -1,0 +1,90 @@
+.page-header
+  %h1 Attendance Dashboard
+
+.container-fluid
+  .row-fluid
+    .span8
+      .chart-wrapper
+        .chart-title
+          Attendence this Week
+        .chart-stage
+          #grid-1-1
+        .chart-notes
+          Date range:
+    .span4
+      .chart-wrapper
+        .chart-title
+          Cell Title
+        .chart-stage
+          %img{"data-src" => "holder.js/100%x240/white"}/
+        .chart-notes
+          Notes about this chart
+  .row-fluid
+    .span4
+      .chart-wrapper
+        .chart-title
+          Cell Title
+        .chart-stage
+          %img{"data-src" => "holder.js/100%x120/white"}/
+        .chart-notes
+          Notes about this chart
+    .span4
+      .chart-wrapper
+        .chart-title
+          Cell Title
+        .chart-stage
+          %img{"data-src" => "holder.js/100%x120/white"}/
+        .chart-notes
+          Notes about this chart
+    .span4
+      .chart-wrapper
+        .chart-title
+          Cell Title
+        .chart-stage
+          %img{"data-src" => "holder.js/100%x120/white"}/
+        .chart-notes
+          Notes about this chart
+    / end of three
+    .span4
+      .chart-wrapper
+        .chart-title
+          Cell Title
+        .chart-stage
+          %img{"data-src" => "holder.js/100%x120/white"}/
+        .chart-notes
+          Notes about this chart
+    .span4
+      .chart-wrapper
+        .chart-title
+          Cell Title
+        .chart-stage
+          %img{"data-src" => "holder.js/100%x120/white"}/
+        .chart-notes
+          Notes about this chart
+    .span4
+      .chart-wrapper
+        .chart-title
+          Cell Title
+        .chart-stage
+          %img{"data-src" => "holder.js/100%x120/white"}/
+        .chart-notes
+          Notes about this chart
+
+:javascript
+  Keen.ready(function() {
+    var client = new Keen({
+      projectId: "#{ENV['KEEN_PROJECT_ID']}",
+      readKey: "#{ENV['KEEN_READ_KEY']}"
+    });
+
+    var thisWeekQuery = new Keen.Query("count", {
+      event_collection: "attendance",
+      timeframe: "this_7_days",
+      group_by: "meeting.school.name",
+      interval: "daily"
+    });
+
+    var thisWeekChart = client.draw(thisWeekQuery, document.getElementById("grid-1-1"), {
+      title: "Students per Day"
+    });
+  });
