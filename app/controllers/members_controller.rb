@@ -19,7 +19,11 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
-    @meetings_to_show = params[:meetings_to_show] || MEETINGS_TO_SHOW_DEFAULT
+    if params.has_key?(:meetings_to_show)
+      session[:meetings_to_show] = params[:meetings_to_show]
+    end
+
+    @meetings_to_show = session[:meetings_to_show] || MEETINGS_TO_SHOW_DEFAULT
   end
 
   # GET /members/new
