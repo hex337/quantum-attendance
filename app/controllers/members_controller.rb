@@ -1,4 +1,5 @@
 class MembersController < ApplicationController
+  MEETINGS_TO_SHOW_DEFAULT = 10
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   # GET /members
@@ -18,6 +19,7 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
+    @meetings_to_show = params[:meetings_to_show] || MEETINGS_TO_SHOW_DEFAULT
   end
 
   # GET /members/new

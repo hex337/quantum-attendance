@@ -1,17 +1,7 @@
 - model_class = Member
 .page-header
-  %h1= t '.title', :default => model_class.model_name.human.titleize
+  %h1= t '.title', :default => model_class.model_name.human.titleize + ": " + @member.full_name
 %dl.dl-horizontal
-  %dt
-    %strong
-      = model_class.human_attribute_name(:first_name)
-      \:
-  %dd= @member.first_name
-  %dt
-    %strong
-      = model_class.human_attribute_name(:last_name)
-      \:
-  %dd= (@member.last_name && !@member.last_name.empty?) ? @member.last_name : "None"
   %dt
     %strong
       = model_class.human_attribute_name(:belt_id)
@@ -43,7 +33,14 @@
       \:
   %dd= @member.is_kid
 
-%h3 Last 10 Classes
+.container
+  %form{action: member_path(@member), method: "get", id: "meetings_to_show_form", name: "meetings_to_show_form"}
+    %label{for: "meetings_to_show"}
+      Number of classes to show:
+    %select#meetings_to_show.form-input{name: "meetings_to_show"}
+      = options_for_select([10, 50, 100].collect{|num| [num.to_s, num]}, @meetings_to_show)
+
+%h3= "Last #{@meetings_to_show} Classes"
 %table.table.table-striped
   %thead
     %tr
@@ -52,7 +49,7 @@
       %th Num Students
       %th= model_class.human_attribute_name(:comment)
   %tbody
-    - @member.meetings.order("met DESC").limit(10).each do |meeting|
+    - @member.meetings.order("met DESC").limit(@meetings_to_show).each do |meeting|
       %tr
         %td= link_to meeting.meeting_type.name, meeting_path(meeting)
         %td= meeting.met.in_time_zone('America/Los_Angeles') if meeting.met
@@ -62,3 +59,10 @@
 .form-actions
   = link_to t('.back', :default => t("helpers.links.back")), members_path, :class => 'btn'
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(@member), :class => 'btn'
+
+:javascript
+$(document).ready(function() {
+  $("#meetings_to_show").change(function() {
+    this.form.submit();
+  });
+});
