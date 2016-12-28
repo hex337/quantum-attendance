@@ -30,4 +30,12 @@ class Member < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def meetings_for_last_30_days
+    MeetingMember.meetings_for_member(self).met_after(Time.now - 30.days)
+  end
+
+  def meetings_for_previous_30_days
+    MeetingMember.meetings_for_member(self).met_between(Time.now - 30.days, Time.now - 60.days)
+  end
 end

@@ -1,37 +1,51 @@
 - model_class = Member
 .page-header
   %h1= t '.title', :default => model_class.model_name.human.titleize + ": " + @member.full_name
-%dl.dl-horizontal
-  %dt
-    %strong
-      = model_class.human_attribute_name(:belt_id)
-      \:
-  %dd= @member.belt.name
-  %dt
-    %strong
-      = model_class.human_attribute_name(:school_id)
-      \:
-  %dd= @member.school.name
-  %dt
-    %strong
-      = model_class.human_attribute_name(:comment)
-      \:
-  %dd= (@member.comment && !@member.comment.empty?) ? @member.comment : "None"
-  %dt
-    %strong
-      = model_class.human_attribute_name(:is_active)
-      \:
-  %dd= @member.is_active
-  %dt
-    %strong
-      = model_class.human_attribute_name(:is_teacher)
-      \:
-  %dd= @member.is_teacher
-  %dt
-    %strong
-      = model_class.human_attribute_name(:is_kid)
-      \:
-  %dd= @member.is_kid
+
+.container-fluid
+  .row-fluid
+    .span6
+      %dl.dl-horizontal
+        %dt
+          %strong
+            = model_class.human_attribute_name(:belt_id)
+            \:
+        %dd= @member.belt.name
+        %dt
+          %strong
+            = model_class.human_attribute_name(:school_id)
+            \:
+        %dd= @member.school.name
+        %dt
+          %strong
+            = model_class.human_attribute_name(:comment)
+            \:
+        %dd= (@member.comment && !@member.comment.empty?) ? @member.comment : "None"
+        %dt
+          %strong
+            = model_class.human_attribute_name(:is_active)
+            \:
+        %dd= @member.is_active
+        %dt
+          %strong
+            = model_class.human_attribute_name(:is_teacher)
+            \:
+        %dd= @member.is_teacher
+        %dt
+          %strong
+            = model_class.human_attribute_name(:is_kid)
+            \:
+        %dd= @member.is_kid
+    .span6
+      .container-fluid
+        .row-fluid
+          .span6
+            #classes-last-30-days
+          .span6
+            #classes-previous-30-days
+        .row-fluid
+          .span12
+            #class-types
 
 .container
   %form{action: member_path(@member), method: "get", id: "meetings_to_show_form", name: "meetings_to_show_form"}
@@ -65,4 +79,50 @@ $(document).ready(function() {
   $("#meetings_to_show").change(function() {
     this.form.submit();
   });
-});
+
+  var last30 = new Keen.Dataviz()
+    .el("#classes-last-30-days")
+    .colors(['blue'])
+    .height(120)
+    .title("Classes Last 30 Days")
+    .type('metric')
+    .data({'result': #{@member.meetings_for_last_30_days.length}})
+    .render();
+
+  var prev30 = new Keen.Dataviz()
+    .el("#classes-previous-30-days")
+    .colors(['grey'])
+    .height(120)
+    .title("Classes Prev 30 Days")
+    .type('metric')
+    .data({'result': #{@member.meetings_for_previous_30_days.length}})
+    .render();
+
+  var client = new Keen({
+    projectId: "#{ENV['KEEN_PROJECT_ID']}",
+    readKey: "#{ENV['KEEN_READ_KEY']}"
+  });
+
+  var classTypes = new Keen.Dataviz()
+    .el("#class-types")
+    .height(150)
+    .title("Class Types Last 60 Days")
+    .type('pie')
+    .prepare();
+
+  client
+    .query('count', {
+      event_collection: 'attendance',
+      timeframe: 'this_60_days',
+      group_by: 'meeting.meeting_type.name',
+      filters: [
+        {
+          "operator": "eq",
+          "property_name": "member.id",
+          "property_value": #{@member.id}
+        }
+      ],
+    })
+    .then(function(res) {
+      classTypes.data(res).render();
+    });

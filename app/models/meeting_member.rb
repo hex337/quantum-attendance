@@ -4,7 +4,9 @@ class MeetingMember < ActiveRecord::Base
   belongs_to :belt
   belongs_to :role
 
-  scope :met_after, ->(time) { where("met > ?", time) }
+  scope :met_after, ->(time) { joins(:meeting).merge(Meeting.met_after(time)) }
+  scope :met_between, ->(start_time, end_time) { joins(:meeting).merge(Meeting.met_between(start_time, end_time)) }
+  scope :meetings_for_member, ->(member) { where("member_id = ?", member.id) }
 
   def to_keen_props
     {
