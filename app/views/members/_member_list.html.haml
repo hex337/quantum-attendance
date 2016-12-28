@@ -2,8 +2,8 @@
 %table.table.table-striped.tablesorter#members-table
   %thead
     %tr
-      %th= model_class.human_attribute_name(:first_name)
-      %th= model_class.human_attribute_name(:last_name)
+      %th
+        Name
       %th= model_class.human_attribute_name(:belt_id)
       %th= model_class.human_attribute_name(:school_id)
       %th= model_class.human_attribute_name(:comment)
@@ -14,8 +14,7 @@
   %tbody
     - @members.each do |member|
       %tr
-        %td= link_to member.first_name, member_path(member)
-        %td= link_to member.last_name, member_path(member)
+        %td= link_to member.full_name, member_path(member)
         %td= member.belt.name
         %td= member.school ? member.school.name : ''
         %td= member.comment
