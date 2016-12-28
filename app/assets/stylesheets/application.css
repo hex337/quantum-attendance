@@ -63,3 +63,13 @@
 .tt-suggestion p {
     margin: 0;
 }
+
+.nav>li>a:hover, .nav>li>a:focus {
+    text-decoration:none;
+    background-color:#0088cc;
+}
+
+.nav-list>.active>a, .nav-list>.active>a:hover, .nav-list>.active>a:focus {
+    color:#ccc;
+    text-decoration:none;
+}
