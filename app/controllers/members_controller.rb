@@ -29,6 +29,7 @@ class MembersController < ApplicationController
   # GET /members/new
   def new
     @member = Member.new
+    @member.is_active = true
   end
 
   # GET /members/1/edit
