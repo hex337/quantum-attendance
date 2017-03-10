@@ -3,8 +3,7 @@
 .page-header
   - if @_current_school
     %h1
-      = t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
-      = "for #{@_current_school.name}"
+      = "Enter a Class for #{@_current_school.name}"
   - else
     %h1= t '.title', :default => [:'helpers.titles.new', 'New %{model}'], :model => model_class.model_name.human.titleize
 

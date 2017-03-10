@@ -1,0 +1,9 @@
+.page_header
+  %h1
+    = "Pick a Month for #{@year}"
+
+.container
+  - @months.each do |num, name|
+    = link_to("#{name} Stats", controller: 'home', action: 'attendance_for_month', year: @year, month: num, format: "csv")
+    %br
+

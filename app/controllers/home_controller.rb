@@ -1,8 +1,94 @@
+require 'csv'
+
 class HomeController < ApplicationController
   def index
   end
 
   def dashboard
+  end
+
+  def attendance_for_all_time
+    firstYear = 2014
+
+    if current_school
+      firstRecord = Meeting.where(school_id: current_school.id).order(met: :asc).limit(1).first
+      puts firstRecord.met
+      firstYear = firstRecord.met.to_date.year
+      puts firstYear
+    end
+
+    thisYear = Date.today.year
+    @years =* (firstYear..thisYear)
+  end
+
+  def attendance_for_year
+    @year = params[:year]
+    @months = {
+      1 => "January",
+      2 => "February",
+      3 => "March",
+      4 => "April",
+      5 => "May",
+      6 => "June",
+      7 => "July",
+      8 => "August",
+      9 => "September",
+      10 => "October",
+      11 => "November",
+      12 => "December"
+    }
+  end
+
+  def attendance_for_month
+    year = params[:year].to_i
+    month = params[:month].to_i
+    school_clause = ""
+
+    startTime = DateTime.new(year, month)
+    endTime = DateTime.new(year, month + 1)
+
+    if current_school
+      school_clause = " AND meetings.school_id = #{current_school.id} "
+    end
+
+    attendance = MeetingMember.find_by_sql("
+      SELECT members.first_name as first_name, members.last_name as last_name, roles.name as role,
+        belts.name as belt_rank, schools.name as school, meetings.met as class_date,
+        meeting_types.name as class_type
+      FROM meeting_members
+      INNER JOIN members ON (members.id = meeting_members.member_id)
+      INNER JOIN meetings ON (meetings.id = meeting_members.meeting_id)
+      INNER JOIN meeting_types ON (meetings.meeting_type_id = meeting_types.id)
+      INNER JOIN roles ON (meeting_members.role_id = roles.id)
+      INNER JOIN belts ON (meeting_members.belt_id = belts.id)
+      INNER JOIN schools ON (meetings.school_id = schools.id)
+      WHERE meetings.met >= '#{startTime}' AND meetings.met < '#{endTime}' #{school_clause}
+    ")
+
+    doHeader = true
+
+    csvInfo = CSV.generate(headers: true) do |csv|
+      attendance.each do |row|
+        if doHeader
+          csv << row.attribute_names
+          doHeader = false
+        end
+
+        puts row.attributes.inspect
+        time = row.attributes["class_date"]
+        date = DateTime.parse(time.to_s).in_time_zone('America/Los_Angeles')
+        puts date
+        formattedDate = date.strftime("%Y-%m-%d %H:%M")
+        vals = row.attributes.values
+        vals[5] = formattedDate
+        puts vals.inspect
+        csv << vals
+      end
+    end
+
+    respond_to do |format|
+      format.csv { send_data csvInfo, filename: "quantum-attendance-#{year}-#{month}.csv" }
+    end
   end
 
   def slacker_report

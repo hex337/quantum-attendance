@@ -32,6 +32,10 @@ Rails.application.routes.draw do
 
   get 'dashboard/(for/:school)', controller: :home, action: :dashboard, as: :dashboard
 
+  get 'home/attendance', controller: :home, action: :attendance_for_all_time
+  get 'home/attendance/:year', controller: :home, action: :attendance_for_year
+  get 'home/attendance/:year/:month', controller: :home, action: :attendance_for_month
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
