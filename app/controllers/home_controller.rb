@@ -10,12 +10,10 @@ class HomeController < ApplicationController
   def attendance_for_all_time
     firstYear = 2014
 
-    if current_school
-      firstRecord = Meeting.where(school_id: current_school.id).order(met: :asc).limit(1).first
-      puts firstRecord.met
-      firstYear = firstRecord.met.to_date.year
-      puts firstYear
-    end
+    #if current_school
+    #  firstRecord = Meeting.where(school_id: current_school.id).order(met: :asc).limit(1).first
+    #  firstYear = firstRecord.met.to_date.year
+    #end
 
     thisYear = Date.today.year
     @years =* (firstYear..thisYear)
@@ -45,7 +43,7 @@ class HomeController < ApplicationController
     school_clause = ""
 
     startTime = DateTime.new(year, month)
-    endTime = DateTime.new(year, month + 1)
+    endTime = startTime + 1.month
 
     if current_school
       school_clause = " AND meetings.school_id = #{current_school.id} "
@@ -74,14 +72,11 @@ class HomeController < ApplicationController
           doHeader = false
         end
 
-        puts row.attributes.inspect
         time = row.attributes["class_date"]
         date = DateTime.parse(time.to_s).in_time_zone('America/Los_Angeles')
-        puts date
         formattedDate = date.strftime("%Y-%m-%d %H:%M")
         vals = row.attributes.values
         vals[5] = formattedDate
-        puts vals.inspect
         csv << vals
       end
     end
