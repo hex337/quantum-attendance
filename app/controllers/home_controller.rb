@@ -52,7 +52,7 @@ class HomeController < ApplicationController
     attendance = MeetingMember.find_by_sql("
       SELECT members.first_name as first_name, members.last_name as last_name, roles.name as role,
         belts.name as belt_rank, schools.name as school, meetings.met as class_date,
-        meeting_types.name as class_type
+        meeting_types.name as class_type, meetings.comment as comment
       FROM meeting_members
       INNER JOIN members ON (members.id = meeting_members.member_id)
       INNER JOIN meetings ON (meetings.id = meeting_members.meeting_id)
