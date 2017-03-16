@@ -32,10 +32,22 @@ class Member < ActiveRecord::Base
   end
 
   def meetings_for_last_30_days
-    MeetingMember.meetings_for_member(self).met_after(Time.now - 30.days)
+    meetings = MeetingMember.meetings_for_member(self)
+
+    if meetings.length > 0
+      return MeetingMember.meetings_for_member(self).met_after(Time.now - 30.days)
+    else
+      []
+    end
   end
 
   def meetings_for_previous_30_days
-    MeetingMember.meetings_for_member(self).met_between(Time.now - 30.days, Time.now - 60.days)
+    meetings = MeetingMember.meetings_for_member(self)
+
+    if meetings.length > 0
+      MeetingMember.meetings_for_member(self).met_between(Time.now - 30.days, Time.now - 60.days)
+    else
+      []
+    end
   end
 end
