@@ -86,7 +86,7 @@ $(document).ready(function() {
     .height(120)
     .title("Classes Last 30 Days")
     .type('metric')
-    .data({'result': #{@member.meetings_for_last_30_days.length}})
+    .data({'result': 0})
     .render();
 
   var prev30 = new Keen.Dataviz()
@@ -95,7 +95,7 @@ $(document).ready(function() {
     .height(120)
     .title("Classes Prev 30 Days")
     .type('metric')
-    .data({'result': #{@member.meetings_for_previous_30_days.length}})
+    .data({'result': 0})
     .render();
 
   var client = new Keen({
