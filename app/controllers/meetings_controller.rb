@@ -12,7 +12,7 @@ class MeetingsController < ApplicationController
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.paginate(page: params[:page], per_page: 50)
+    @meetings = Meeting.for_school(@_current_school).paginate(page: params[:page], per_page: 50)
   end
 
   # GET /meetings/1
