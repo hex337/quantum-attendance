@@ -1,7 +1,7 @@
 class Meeting < ActiveRecord::Base
   default_scope { order("met DESC") }
 
-  scope :met_btwn, ->(start_time, end_time) { where("met >= ? AND met < ?", start_time, end_time) }
+  scope :met_between, ->(start_time, end_time) { where("met >= ? AND met < ?", start_time, end_time) }
   scope :met_after, ->(time) { where("met > ?", time) }
 
   scope :for_school, lambda {|school|
@@ -25,7 +25,7 @@ class Meeting < ActiveRecord::Base
 
   def _get_instructor
     self.meeting_members.each do |mm|
-      if mm.role_id == Role::TEACHER
+      if mm.role_id == Role::teacher_role_id
         @_instructor = mm.member
         return @_instructor
       end

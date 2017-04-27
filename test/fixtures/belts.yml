@@ -1,13 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  comment: MyText
+  name: White
+  comment: null
   is_active: false
   order_by: 1
 
 two:
-  name: MyString
-  comment: MyText
+  name: High White
+  comment: null
   is_active: false
-  order_by: 1
+  order_by: 2

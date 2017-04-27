@@ -1,12 +1,8 @@
-- members = @meeting.members.collect{|mem| mem}.delete_if{|mem| mem.id == @meeting.instructor.id}
 - model_class = Meeting
 .page-header
   %h1= t '.title', :default => [:'helpers.titles.edit', 'Edit %{model}'], :model => model_class.model_name.human.titleize
 
 #members-select-container
-  %h3
-    Edit Attendance
-    %span.meeting-name
   = render "members/member_select", city: @meeting.school
 
   %h4 Students - Click to Remove:
@@ -50,7 +46,7 @@
       });
     });
 
-    mem.addMembers([#{members.collect{|mem| "{id:" + mem.id.to_s + ", value: \"" + mem.full_name + "\"}"}.join(',')}]);
+    mem.addMembers([#{@students.collect{|mem| "{id:" + mem.id.to_s + ", value: \"" + mem.full_name + "\"}"}.join(',')}]);
 
     $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
       mem.addMember(item);

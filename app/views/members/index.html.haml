@@ -4,6 +4,9 @@
   %h1= t '.title', :default => model_class.model_name.human.pluralize.titleize
 
 .container
+  = link_to "Create New Member", new_member_path, { class: "btn btn-primary" }
+
+.container
   - if @show_inactive
     = link_to "Show Active", members_path
   - else

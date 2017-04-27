@@ -18,7 +18,7 @@ class SchoolsControllerTest < ActionController::TestCase
 
   test "should create school" do
     assert_difference('School.count') do
-      post :create, school: { comment: @school.comment, is_active: @school.is_active, name: @school.name }
+      post :create, school: { comment: @school.comment, is_active: @school.is_active, name: @school.name, slug: 'school-slug' }
     end
 
     assert_redirected_to school_path(assigns(:school))

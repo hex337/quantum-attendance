@@ -1,4 +1,5 @@
 class SchoolsController < ApplicationController
+  skip_before_action :check_school
   before_action :set_school, only: [:show, :edit, :update, :destroy]
 
   # GET /schools

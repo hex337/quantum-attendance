@@ -21,13 +21,6 @@
         %td= meeting_member.belt_id
         %td= l meeting_member.created_at
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")),           |
-            edit_meeting_member_path(meeting_member), :class => 'btn btn-mini' |
-          = link_to t('.destroy', :default => t("helpers.links.destroy")),                                               |
-            meeting_member_path(meeting_member),                                                                         |
-            :method => :delete,                                                                                          |
-            :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, |
-            :class => 'btn btn-mini btn-danger'                                                                          |
-= link_to t('.new', :default => t("helpers.links.new")), |
-  new_meeting_member_path,                               |
-  :class => 'btn btn-primary'                            |
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_meeting_member_path(meeting_member), :class => 'btn btn-mini'
+          = link_to t('.destroy', :default => t("helpers.links.destroy")), meeting_member_path(meeting_member), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-mini btn-danger' 
+= link_to t('.new', :default => t("helpers.links.new")), new_meeting_member_path, :class => 'btn btn-primary'

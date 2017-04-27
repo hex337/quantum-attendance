@@ -3,12 +3,16 @@ class MeetingsController < ApplicationController
 
   def test
     @class = Meeting.new
+
+    respond_to do |format|
+      format.html { render :test, {layout: "mobile"} }
+    end
   end
 
   # GET /meetings
   # GET /meetings.json
   def index
-    @meetings = Meeting.for_school(@_current_school).limit(50)
+    @meetings = Meeting.paginate(page: params[:page], per_page: 50)
   end
 
   # GET /meetings/1
@@ -19,14 +23,16 @@ class MeetingsController < ApplicationController
   # GET /meetings/new
   def new
     @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
+    @inst_for_select = @instructors.collect{|inst| [inst.full_name, inst.id]}
     @members = Member.for_school(@_current_school)
-
     @meeting = Meeting.new
   end
 
   # GET /meetings/1/edit
   def edit
     @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
+    @inst_for_select = @instructors.collect{|inst| [inst.full_name, inst.id]}
+    @students = @meeting.members.collect{|mem| mem}.delete_if{|mem| mem.id == @meeting.instructor.id}
     @meeting[:met] = @meeting[:met].in_time_zone('America/Los_Angeles')
   end
 
@@ -57,8 +63,8 @@ class MeetingsController < ApplicationController
     })
 
     memberIds = meeting_params[:students].split(",")
-    studentRole = Role.find_by_name("Student")
-    instructorRole = Role.find_by_name("Teacher")
+    studentRole = Role.student_role
+    instructorRole = Role.teacher_role
 
     instructor = Member.find(meeting_params[:instructor])
     instMeetingMem = MeetingMember.new({
@@ -102,8 +108,8 @@ class MeetingsController < ApplicationController
     instructorId = @meeting.instructor.id
     currentMemberIds = @meeting.meeting_members.collect{|mm| mm.member_id}
     currentMemberIds.delete(instructorId)
-    studentRole = Role.find_by_name("Student")
-    instructorRole = Role.find_by_name("Teacher")
+    studentRole = Role.student_role
+    instructorRole = Role.teacher_role
     memberIds = meeting_params[:students].split(",").collect{|id| id.to_i}
 
     membersToDelete = currentMemberIds - memberIds

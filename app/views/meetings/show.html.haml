@@ -23,7 +23,7 @@
       Students:
   %dd
     - @meeting.meeting_members.each do |mm|
-      - next if mm.role_id == Role::TEACHER
+      - next if mm.role_id == Role.teacher_role_id
       = link_to mm.member.full_name, mm.member
       %br
   %dt
@@ -32,6 +32,6 @@
       \:
   %dd= (@meeting.comment && !@meeting.comment.empty?) ? @meeting.comment : "None"
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), meetings_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_meeting_path(@meeting), :class => 'btn'
+  = link_to t('.back', :default => t("helpers.links.back")), meetings_path, :class => 'btn btn-default'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_meeting_path(@meeting), :class => 'btn btn-default'
   = link_to t('.destroy', :default => t("helpers.links.destroy")), meeting_path(@meeting), :method => 'delete', :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger'

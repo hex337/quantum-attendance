@@ -51,3 +51,5 @@ gem 'puma' # web server
 gem 'jquery-tablesorter'
 gem 'react-rails'
 gem 'keen'
+
+gem 'will_paginate', '~> 3.1'

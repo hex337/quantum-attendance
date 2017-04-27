@@ -4,7 +4,7 @@
 
 .container-fluid
   .row-fluid
-    .span6
+    .col-md-6
       %dl.dl-horizontal
         %dt
           %strong
@@ -36,23 +36,24 @@
             = model_class.human_attribute_name(:is_kid)
             \:
         %dd= @member.is_kid
-    .span6
+    .col-md-6
       .container-fluid
-        .row-fluid
-          .span6
+        .row
+          .col-md-6
             #classes-last-30-days
-          .span6
+          .col-md-6
             #classes-previous-30-days
-        .row-fluid
-          .span12
+        .row
+          .col-md-12
             #class-types
 
 .container
-  %form{action: member_path(@member), method: "get", id: "meetings_to_show_form", name: "meetings_to_show_form"}
-    %label{for: "meetings_to_show"}
-      Number of classes to show:
-    %select#meetings_to_show.form-input{name: "meetings_to_show"}
-      = options_for_select([10, 50, 100].collect{|num| [num.to_s, num]}, @meetings_to_show)
+  %form.form-inline{action: member_path(@member), method: "get", id: "meetings_to_show_form", name: "meetings_to_show_form"}
+    .form-group
+      %label{for: "meetings_to_show"}
+        Number of classes to show:
+      %select#meetings_to_show.form-control{name: "meetings_to_show"}
+        = options_for_select([10, 50, 100].collect{|num| [num.to_s, num]}, @meetings_to_show)
 
 %h3= "Last #{@meetings_to_show} Classes"
 %table.table.table-striped
@@ -71,8 +72,8 @@
         %td= meeting.comment
 
 .form-actions
-  = link_to t('.back', :default => t("helpers.links.back")), members_path, :class => 'btn'
-  = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(@member), :class => 'btn'
+  = link_to t('.back', :default => t("helpers.links.back")), members_path, :class => 'btn btn-default'
+  = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(@member), :class => 'btn btn-default'
 
 :javascript
 $(document).ready(function() {
@@ -86,7 +87,7 @@ $(document).ready(function() {
     .height(120)
     .title("Classes Last 30 Days")
     .type('metric')
-    .data({'result': 0})
+    .data({'result': #{@member.meetings_for_last_30_days.length}})
     .render();
 
   var prev30 = new Keen.Dataviz()
@@ -95,7 +96,7 @@ $(document).ready(function() {
     .height(120)
     .title("Classes Prev 30 Days")
     .type('metric')
-    .data({'result': 0})
+    .data({'result': #{@member.meetings_for_previous_30_days.length}})
     .render();
 
   var client = new Keen({

@@ -2,19 +2,17 @@
   %h1 Slacker Report
 
 .container
-  %table.condensed
-    %body
-      %tr
-        %td
-          Min Days:
-        %td
-          %input#min{:type => 'number', :value => @min, :style => "width: 4em;"}
-        %td
-          Max Days:
-        %td
-          %input#max{:type => 'number', :value => @max, :style => "width: 4em;"}
-        %td
-          %input#submit.btn{:type => 'submit', :value => 'Generate Report'}
+  %form.form-inline
+    .form-group
+      %label{ "for" => "min" }
+        Min
+      %input.form-control#min{:type => 'number', :value => @min, :style => "width: 5em;"}
+    .form-group
+      %label{ "for" => "max" }
+        Max
+      %input.form-control#max{:type => 'number', :value => @max, :style => "width: 5em;"}
+    .form-group
+      %input#submit.btn.btn-primary{:type => 'submit', :value => 'Generate Report'}
 
 = render 'members/member_list', :locals => {}
 

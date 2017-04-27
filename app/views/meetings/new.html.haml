@@ -13,25 +13,29 @@
         .item.active
           #meeting-type-select-container
             %h3 1. Choose a Meeting Type and Time:
-            .input-group
-              %select#meeting-type.form-control
-                %option{:value => ""}
-                  Class Type
-                - MeetingType.all.each do |type|
-                  %option{:value => "#{type.id}"}
-                    = type.name
+            .form-group
+              %label{"for" => "meeting-type"}
+                Class Type:
+                %select#meeting-type.form-control
+                  - MeetingType.all.each do |type|
+                    %option{:value => "#{type.id}"}
+                      = type.name
 
             .input-group
               #datetimepicker.input-append.date
-                %input#meeting-date{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now.in_time_zone('America/Los_Angeles').strftime(date_format)}"}
+                %label{"for" => "meeting-date"}
+                  Class Time:
+                  %input#meeting-date.form-control{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now.in_time_zone('America/Los_Angeles').strftime(date_format)}"}
 
             .input-group
-              %select#instructor.form-control
-                - @instructors.each do |member|
-                  %option{:value => "#{member.id}"}
-                    = member.full_name
+              %label
+                Instructor:
+                %select#instructor.form-control
+                  - @instructors.each do |member|
+                    %option{:value => "#{member.id}"}
+                      = member.full_name
 
-            %a.btn.next-btn{:href => "#", :data => {:validate => "step_one"}} Select Students &#10095;
+            %a.btn.btn-primary.next-btn{:href => "#", :data => {:validate => "step_one"}} Select Students &#10095;
 
         .item
           #members-select-container
@@ -47,9 +51,9 @@
             %br
             %br
 
-            %a.btn.back-btn{:href => "#"} &#10094; Back
+            %a.btn.btn-default.back-btn{:href => "#"} &#10094; Back
             &nbsp;
-            %a.btn.next-btn.confirm{:href => "#", :data => {:validate => "step_two"}} Confirm &#10095;
+            %a.btn.btn-primary.next-btn.confirm{:href => "#", :data => {:validate => "step_two"}} Confirm &#10095;
 
         .item
           #members-confirm-container
@@ -76,12 +80,13 @@
             #attending-students
 
             %h4 Comment:
-            %textarea#comment
+            .form-group
+              %textarea#comment.form-control
 
             %br
             %br
 
-            %a.btn.back-btn{:href => "#"} &#10094; Back
+            %a.btn.btn-default.back-btn{:href => "#"} &#10094; Back
             %a#submit-btn.btn.btn-primary{:href => "#"} Submit
 
     .create-form

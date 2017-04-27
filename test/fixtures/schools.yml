@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  comment: MyText
+  name: San Francisco
+  slug: san-francisco
+  comment: null
   is_active: false
 
 two:
-  name: MyString
-  comment: MyText
+  name: Seattle
+  slug: seattle
+  comment: null
   is_active: false

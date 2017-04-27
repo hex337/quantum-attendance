@@ -1,11 +1,11 @@
 class Member extends React.Component {
   render () {
     return (
-      <div>
+      <div key={this.props.id}>
         <div>Id: {this.props.id}</div>
-        <div>First Name: {this.props.firstName}</div>
-        <div>Last Name: {this.props.lastName}</div>
-        <div>Current Belt: {this.props.currentBelt}</div>
+        <div>First Name: {this.props.first_name}</div>
+        <div>Last Name: {this.props.last_name}</div>
+        <Belt id={this.props.belt.id} name={this.props.belt.name} />
       </div>
     );
   }
@@ -13,7 +13,7 @@ class Member extends React.Component {
 
 Member.propTypes = {
   id: React.PropTypes.number,
-  firstName: React.PropTypes.string,
-  lastName: React.PropTypes.string,
-  currentBelt: React.PropTypes.instanceOf(Belt)
+  first_name: React.PropTypes.string,
+  last_name: React.PropTypes.string,
+  current_belt: React.PropTypes.instanceOf(Belt)
 };

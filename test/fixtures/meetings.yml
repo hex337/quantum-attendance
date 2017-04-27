@@ -1,11 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  meeting_type_id: 1
+  school: one
+  meeting_type: one
   met: 2015-03-21
   comment: MyText
 
 two:
-  meeting_type_id: 1
-  met: 2015-03-21
+  school: two
+  meeting_type: two
+  met: 2015-03-22
   comment: MyText

@@ -40,7 +40,8 @@ class MembersControllerTest < ActionController::TestCase
   end
 
   test "should destroy member" do
-    assert_difference('Member.count', -1) do
+    # For now we don't actually delete members
+    assert_difference('Member.count', 0) do
       delete :destroy, id: @member
     end
 

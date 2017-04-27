@@ -21,42 +21,34 @@
     = javascript_include_tag "//d26b395fwzu5fz.cloudfront.net/keen-analysis-1.2.0.js"
     :javascript
       //!function(a,b){a("Keen","https://d26b395fwzu5fz.cloudfront.net/3.4.1/keen.min.js",b)}(function(a,b,c){var d,e,f;c["_"+a]={},c[a]=function(b){c["_"+a].clients=c["_"+a].clients||{},c["_"+a].clients[b.projectId]=this,this._config=b},c[a].ready=function(b){c["_"+a].ready=c["_"+a].ready||[],c["_"+a].ready.push(b)},d=["addEvent","setGlobalProperties","trackExternalLink","on"];for(var g=0;g<d.length;g++){var h=d[g],i=function(a){return function(){return this["_"+a]=this["_"+a]||[],this["_"+a].push(arguments),this}};c[a].prototype[h]=i(h)}e=document.createElement("script"),e.async=!0,e.src=b,f=document.getElementsByTagName("script")[0],f.parentNode.insertBefore(e,f)},this);
-  %body
-    .navbar.navbar-fluid-top
-      .navbar-inner
-        .container-fluid
-          %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-            %span.icon-bar
-            %span.icon-bar
-            %span.icon-bar
-          %a.brand{:href => "#"} Quantum Martial Arts
-          .container-fluid.nav-collapse
-            %ul.nav
-          / /.nav-collapse
+  %body{"style" => "margin-top: 45px"}
+    = nav_bar fixed: :top, brand: "Quantum", responsive: true do
+      = menu_group do
+        = menu_item "Classes", meetings_path
+        = menu_divider
+        = menu_item "Members", members_path
+        = menu_divider
+        = drop_down "Reports" do
+          = menu_item "Slacker Report", slacker_report_path
+          = menu_item "Poor Attendance", poor_attendance_path
+          = menu_item "Classes Per Student", classes_per_student_path
+          = menu_item "People Per Class", people_per_class_path
+
+      .navbar-form.navbar-right
+        .form-group
+          = select_tag :school_select, options_for_select(School.all.collect{|school| [school.name, school.slug]}.insert(0, ['All Schools', 'none']), @_current_school ? @_current_school.slug : nil), class: "form-control"
+
     .container-fluid
-      .row-fluid
-        .span3
-          .well.sidebar-nav
-            %ul.nav.nav-list
-              %li.nav-header Links
-              %li= link_to "View/Edit Classes", meetings_path
-              %li= link_to "Enter New Class", attendance_path
-              %li= link_to "Members", members_path
-              %li= link_to "New Member", new_member_path
-              %li= link_to "Slacker Report", slacker_report_path
-              %li= link_to "Poorly Attended Classes", poor_attendance_path
-              %li= link_to "Classes per Student", classes_per_student_path
-              %li= link_to "People per Class", people_per_class_path
-              %li
-                = select_tag :school_select, options_for_select(School.all.collect{|school| [school.name, school.slug]}.insert(0, ['All Schools', 'none']), @_current_school ? @_current_school.slug : nil)
-          / /.well
-        / /span
-        .span9
-          = bootstrap_flash
-          = yield
-      / /row
-      %footer
-        %p © Quantum Martial Arts 2015
+      .row
+        .col-md-1
+        .col-md-10
+          .row
+            = bootstrap_flash
+            = yield
+          .row{"style" => "padding-top: 10px;"}
+            %footer
+              %p © Quantum Martial Arts 2017
+        .col-md-1
     / /container
 
 :javascript

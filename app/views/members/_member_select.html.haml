@@ -1,16 +1,18 @@
 -# To bind on select, use $("#find-student .typeahead).on('typeahead:selected', ...
 #find-student
   .dataset-selector{:style => "padding-bottom: 3px"}
-    = check_box_tag "use_all_students", 1, false
-    %label{:for => "use_all_students", :class => "checkbox inline"} Use all Students
+    .checkbox
+      %label
+        = check_box_tag "use_all_students", 1, false
+        Use All Students
   .find-input
-    %input{:type => "text", :class => "typeahead", :placeholder => "Find a Student"}
+    %input{:type => "text", :class => "typeahead form-control", :placeholder => "Find a Student"}
 
 :javascript
 $(document).ready(function() {
   var useAllStudentsBox = $("#use_all_students");
   var allMembers = [#{Member.members_for_typeahead().map{|mem| mem.to_json}.join(",")}];
-  var members = [#{Member.members_for_typeahead(city).map{|mem| mem.to_json}.join(",")}];
+  var members = [#{Member.members_for_typeahead(@_current_school).map{|mem| mem.to_json}.join(",")}];
 
   var engine = new Bloodhound({
     datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value', 'belt'),

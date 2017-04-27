@@ -1,36 +1,34 @@
 = form_for @member, :html => { :class => 'form-horizontal' } do |f|
-  .control-group
-    = f.label :first_name, :class => 'control-label'
-    .controls
-      = f.text_field :first_name, :class => 'text_field'
-  .control-group
-    = f.label :last_name, :class => 'control-label'
-    .controls
-      = f.text_field :last_name, :class => 'text_field'
-  .control-group
-    = f.label :belt_id, :class => 'control-label'
-    .controls
-      = f.select(:belt_id, Belt.all.collect{|belt| [belt.name, belt.id]})
-  .control-group
-    = f.label :school_id, :class => 'control-label'
-    .controls
-      = f.select(:school_id, School.all.collect{|belt| [belt.name, belt.id]})
-  .control-group
-    = f.label :comment, :class => 'control-label'
-    .controls
-      = f.text_field :comment, :class => 'text_field'
-  .control-group
-    = f.label :is_active, :class => 'control-label'
-    .controls
-      = f.check_box :is_active, :class => 'check_box'
-  .control-group
-    = f.label :is_teacher, :class => 'control-label'
-    .controls
-      = f.check_box :is_teacher, :class => 'check_box'
-  .control-group
-    = f.label :is_kid, :class => 'control-label'
-    .controls
-      = f.check_box :is_kid, :class => 'check_box'
+  .form-group
+    = f.label :first_name
+    = f.text_field :first_name, :class => 'form-control'
+  .form-group
+    = f.label :last_name
+    = f.text_field :last_name, :class => 'form-control'
+  .form-group
+    = f.label :belt_id
+    = f.select(:belt_id, Belt.all.collect{|belt| [belt.name, belt.id]}, {}, {class: "form-control"})
+  .form-group
+    = f.label :school_id
+    = f.select(:school_id, School.all.collect{|belt| [belt.name, belt.id]}, {}, {class: "form-control"})
+  .form-group
+    = f.label :comment
+    = f.text_field :comment, :class => 'form-control'
+  .form-group
+    .checkbox
+      %label
+        = f.check_box :is_active, :class => 'check_box'
+        Is Active
+  .form-group
+    .checkbox
+      %label
+        = f.check_box :is_teacher, :class => 'check_box'
+        Is Teacher
+  .form-group
+    .checkbox
+      %label
+        = f.check_box :is_kid, :class => 'check_box'
+        Is Kid
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), |

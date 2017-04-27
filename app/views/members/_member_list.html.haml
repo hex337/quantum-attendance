@@ -22,8 +22,7 @@
         %td= member.is_teacher
         %td= member.is_kid
         %td
-          = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(member), :class => 'btn btn-mini'
-= link_to t('.new', :default => t("helpers.links.new")), new_member_path, :class => 'btn btn-primary' if defined?(@show_new) && @show_new
+          = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(member), :class => 'btn btn-default'
 
 :javascript
   $(document).ready(function() {

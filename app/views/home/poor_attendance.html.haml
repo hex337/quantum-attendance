@@ -2,19 +2,17 @@
   %h1 Poor Attendance
 
 .container
-  %table.condensed
-    %body
-      %tr
-        %td
-          Days to go Back:
-        %td
-          %input#gap{:type => 'number', :value => @gap, :style => "width: 4em;"}
-        %td
-          Number of Students:
-        %td
-          %input#threshold{:type => 'number', :value => @threshold, :style => "width: 4em;"}
-        %td
-          %input#submit.btn{:type => 'submit', :value => 'Generate Report'}
+  %form.form-inline
+    .form-group
+      %label{ "for" => "gap" }
+        Days to go Back:
+      %input.form-control#gap{:type => 'number', :value => @gap, :style => "width: 5em;"}
+    .form-group
+      %label{ "for" => "threshold" }
+        Number of Students:
+      %input.form-control#threshold{:type => 'number', :value => @threshold, :style => "width: 5em;"}
+    .form-group
+      %input#submit.btn.btn-primary{:type => 'submit', :value => 'Generate Report'}
 
 = render 'meetings/meeting_list', :locals => {}
 

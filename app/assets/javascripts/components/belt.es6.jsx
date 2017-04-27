@@ -1,9 +1,9 @@
 class Belt extends React.Component {
   render () {
     return (
-      <div>
+      <div key={this.props.id}>
         <div>Id: {this.props.id}</div>
-        <div>Name: {this.props.name}</div>
+        <div>Belt Name: {this.props.name}</div>
       </div>
     );
   }

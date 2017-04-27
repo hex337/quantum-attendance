@@ -12,12 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require twitter/bootstrap
 //= require twitter/typeahead
 //= require jquery-tablesorter
 //= require bootstrapValidator.min
-//= require turbolinks
 //= require members
 //= require jquery_blockui
 //= require react
