@@ -32,7 +32,8 @@ class MeetingsController < ApplicationController
   def edit
     @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
     @inst_for_select = @instructors.collect{|inst| [inst.full_name, inst.id]}
-    @students = @meeting.members.collect{|mem| mem}.delete_if{|mem| mem.id == @meeting.instructor.id}
+    @students = @meeting.students
+    @assistants = @meeting.assistants
     @meeting[:met] = @meeting[:met].in_time_zone('America/Los_Angeles')
   end
 
@@ -63,33 +64,37 @@ class MeetingsController < ApplicationController
     })
 
     memberIds = meeting_params[:students].split(",")
+    assistIds = meeting_params[:assistants].split(",")
     studentRole = Role.student_role
     instructorRole = Role.teacher_role
+    assistantRole = Role.assistant_role
 
+    # Create an array of tuples, role to member to then add.
+    students = Member.find(memberIds)
+    assistants = Member.find(assistIds)
     instructor = Member.find(meeting_params[:instructor])
-    instMeetingMem = MeetingMember.new({
-      meeting: @meeting,
-      member: instructor,
-      belt: instructor.belt,
-      role: instructorRole
-    })
 
-    instMeetingMem.save
+    mmembs = students.collect {|mem| [studentRole, mem]} + assistants.collect {|mem| [assistantRole, mem]} + [instructor].collect {|mem| [instructorRole, mem]}
+
     events = []
 
-    Member.find(memberIds).each do |member|
+    mmembs.each do |mmem|
+      puts mmem.inspect
+      role, member = mmem
       mm = MeetingMember.new({
         meeting: @meeting,
         member: member,
         belt: member.belt,
-        role: studentRole,
+        role: role,
       })
 
       mm.save
       events << mm.to_keen_props
     end
 
-    Keen.publish_batch(:attendance => events)
+    if Rails.env.production?
+      Keen.publish_batch(:attendance => events)
+    end
 
     respond_to do |format|
       if @meeting.save
@@ -106,17 +111,39 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1.json
   def update
     instructorId = @meeting.instructor.id
-    currentMemberIds = @meeting.meeting_members.collect{|mm| mm.member_id}
-    currentMemberIds.delete(instructorId)
     studentRole = Role.student_role
     instructorRole = Role.teacher_role
-    memberIds = meeting_params[:students].split(",").collect{|id| id.to_i}
+    assistantRole = Role.assistant_role
 
-    membersToDelete = currentMemberIds - memberIds
-    membersToAdd = memberIds - currentMemberIds
+    currentStudentIds = []
+    currentAssistantIds = []
 
-    mmids = @meeting.meeting_members.select{|mm| membersToDelete.include?(mm.member_id)}.collect{|mm| mm.id}
-    MeetingMember.delete(mmids) unless mmids.empty?
+    @meeting.meeting_members.each do |mm|
+      case mm.role_id
+      when studentRole.id
+        currentStudentIds << mm.member_id
+      when assistantRole.id
+        currentAssistantIds << mm.member_id
+      end
+    end
+
+    currentMemberIds = @meeting.meeting_members.collect{|mm| mm.member_id}
+    currentMemberIds.delete(instructorId)
+
+    studentIds = meeting_params[:students].split(",").collect{|id| id.to_i}
+    assistantIds = meeting_params[:assistants].split(",").collect{|id| id.to_i}
+
+    studentsToDelete = currentStudentIds - studentIds
+    studentsToAdd = studentIds - currentStudentIds
+
+    assistantsToDelete = currentAssistantIds - assistantIds
+    assistantsToAdd = assistantIds - currentAssistantIds
+
+    # Grab the rows we want to delete, then delete 'em
+    mmStudentIds = @meeting.meeting_members.select{|mm| studentsToDelete.include?(mm.member_id)}.collect{|mm| mm.id}
+    mmAssistantIds = @meeting.meeting_members.select{|mm| assistantsToDelete.include?(mm.member_id)}.collect{|mm| mm.id}
+    MeetingMember.delete(mmStudentIds) unless mmStudentIds.empty?
+    MeetingMember.delete(mmAssistantIds) unless mmAssistantIds.empty?
 
     if meeting_params[:instructor].to_i != instructorId
       instructor = Member.find_by_id(meeting_params[:instructor])
@@ -130,22 +157,36 @@ class MeetingsController < ApplicationController
       instMeetingMem.save
     end
 
-    if !membersToAdd.empty?
-      events = []
-      Member.find(membersToAdd).each do |member|
-        mm = MeetingMember.new({
-          meeting: @meeting,
-          member: member,
-          belt: member.belt,
-          role: studentRole,
-        })
+    mmembs = []
 
-        mm.save
-        events << mm.to_keen_props
+    if !studentsToAdd.empty?
+      Member.find(studentsToAdd).each do |mem|
+        mmembs << [studentRole, mem]
       end
-
-      Keen.publish_batch(:attendance => events)
     end
+
+    if !assistantsToAdd.empty?
+      Member.find(assistantsToAdd).each do |mem|
+        mmembs << [assistantRole, mem]
+      end
+    end
+
+    events = []
+    mmembs.each do |mmem|
+      role, member = mmem
+
+      mm = MeetingMember.new({
+        meeting: @meeting,
+        member: member,
+        belt: member.belt,
+        role: role,
+      })
+
+      mm.save
+      events << mm.to_keen_props
+    end
+
+    Keen.publish_batch(:attendance => events)
 
     @meeting.met = meeting_params[:date]
     @meeting.meeting_type_id = meeting_params[:meeting_type]
@@ -180,6 +221,6 @@ class MeetingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def meeting_params
-      params.require(:meeting).permit(:meeting_type, :date, :instructor, :students, :comment)
+      params.require(:meeting).permit(:meeting_type, :date, :instructor, :assistants, :students, :comment)
     end
 end

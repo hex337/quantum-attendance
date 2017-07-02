@@ -9,23 +9,67 @@
   #selected-members-container{:style => ""}
     None selected yet.
 
+
+  #assistants-select-container
+    %h4 Assistants:
+
+    .find-input
+      %input{:type => "text", :class => "typeahead form-control", :placeholder => "Find an Assistant"}
+
+    %h4 Selected Assistants:
+    #selected-assistants-container
+      None selected yet.
+
 %br
 = render :partial => 'form'
 
 :javascript
-  var mem;
-
   $(document).ready(function() {
     var elem = $("#selected-members-container");
-    mem = new Members(elem);
+    window.mem = new Members(elem);
+
+    var assistMembers = [#{Member.members_for_typeahead(@_current_school).map{|mem| mem.to_json}.join(",").html_safe}];
+
+    var assistEngine = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value', 'belt'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: assistMembers
+    });
+
+    $('#assistants-select-container .typeahead').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 2
+    }, {
+      name: 'assistants',
+      displayKey: 'value',
+      source: assistEngine.ttAdapter(),
+      templates: {
+        suggestion: Handlebars.compile("<p><strong>{{value}}</strong> - {{belt}} (<i>{{school}}</i>)</p>")
+      }
+    });
+
+    var assistElem = $("#selected-assistants-container");
+    window.assist = new Assistants(assistElem);
+
+    $("#assistants-select-container .typeahead").on('typeahead:selected', function(evt, item) {
+      window.assist.addAssistant(item);
+      $('#assistants-select-container .typeahead').typeahead('val', '');
+    });
 
     $('#submit-btn').click(function(event) {
       event.preventDefault();
       $("body").block({ message: "Updating class..."});
 
       var memberIds = [];
-      $.each(mem.list(), function(ndx, item) {
+      var assistantIds = [];
+
+      $.each(window.mem.list(), function(ndx, item) {
         memberIds.push(item.id);
+      });
+
+      $.each(window.assist.list(), function(ndx, item) {
+        assistantIds.push(item.id);
       });
 
       $.ajax({
@@ -37,21 +81,28 @@
             date: $("#meeting_met").val(),
             instructor: $("#instructor").val(),
             students: memberIds.join(","),
+            assistants: assistantIds.join(","),
             comment: $("#meeting_comment").val()
           }
         }
       }).done(function(json) {
-        console.log(json);
+        $("body").unblock();
         window.location.href = "#{url_for @meeting}";
       });
     });
 
-    mem.addMembers([#{@students.collect{|mem| "{id:" + mem.id.to_s + ", value: \"" + mem.full_name + "\"}"}.join(',')}]);
+    window.mem.addMembers([#{@students.collect{|mm| "{id:" + mm.member.id.to_s + ", value: \"" + mm.member.full_name + "\"}"}.join(',').html_safe}]);
 
     $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
-      mem.addMember(item);
+      window.mem.addMember(item);
 
-      $("#find-student span input.tt-input").val("");
-      $("#find-student span input.tt-input").focus();
+      $(".typeahead").typeahead("val", "");
+    });
+
+    window.assist.addAssistants([#{@assistants.collect{|mm| "{id:" + mm.member.id.to_s + ", value: \"" + mm.member.full_name + "\"}"}.join(',').html_safe}]);
+
+    $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
+      window.mem.addMember(item);
+      $(".typeahead").typeahead("val", "");
     });
   });

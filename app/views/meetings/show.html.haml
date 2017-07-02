@@ -20,10 +20,19 @@
   %dd= link_to @meeting.instructor.full_name, @meeting.instructor
   %dt
     %strong
+      Teaching Assistants:
+  %dd
+    - if @meeting.assistants.empty?
+      None
+    - else
+      - @meeting.assistants.each do |mm|
+        = link_to mm.member.full_name, mm.member
+        %br
+  %dt
+    %strong
       Students:
   %dd
-    - @meeting.meeting_members.each do |mm|
-      - next if mm.role_id == Role.teacher_role_id
+    - @meeting.students.each do |mm|
       = link_to mm.member.full_name, mm.member
       %br
   %dt

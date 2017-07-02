@@ -6,46 +6,44 @@
         = check_box_tag "use_all_students", 1, false
         Use All Students
   .find-input
-    %input{:type => "text", :class => "typeahead form-control", :placeholder => "Find a Student"}
+    %input#student-search-input{:type => "text", :class => "typeahead form-control", :placeholder => "Find a Student"}
 
 :javascript
-$(document).ready(function() {
-  var useAllStudentsBox = $("#use_all_students");
-  var allMembers = [#{Member.members_for_typeahead().map{|mem| mem.to_json}.join(",")}];
-  var members = [#{Member.members_for_typeahead(@_current_school).map{|mem| mem.to_json}.join(",")}];
+  $(document).ready(function() {
+    var useAllStudentsBox = $("#use_all_students");
+    var allMembers = [#{Member.members_for_typeahead().map{|mem| mem.to_json}.join(",").html_safe}];
+    var members = [#{Member.members_for_typeahead(@_current_school).map{|mem| mem.to_json}.join(",").html_safe}];
 
-  var engine = new Bloodhound({
-    datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value', 'belt'),
-    queryTokenizer: Bloodhound.tokenizers.whitespace,
-    local: members
+    var engine = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value', 'belt'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: members
+    });
+
+    // Set up a way to toggle between data sets.
+    useAllStudentsBox.change(function() {
+      if ($(this).is(":checked")) {
+        engine.clear();
+        engine.add(allMembers);
+        console.log("Member Search: updated to have all members.");
+      }
+      else {
+        engine.clear();
+        engine.add(members);
+        console.log("Member Search: updated to only have current school's members.");
+      }
+    });
+
+    $('#find-student .typeahead').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 2
+    }, {
+      name: 'members',
+      displayKey: 'value',
+      source: engine.ttAdapter(),
+      templates: {
+        suggestion: Handlebars.compile("<p><strong>{{value}}</strong> - {{belt}} (<i>{{school}}</i>)</p>")
+      }
+    });
   });
-
-  engine.initialize();
-
-  // Set up a way to toggle between data sets.
-  useAllStudentsBox.change(function() {
-    if ($(this).is(":checked")) {
-      engine.clear();
-      engine.add(allMembers);
-      console.log("Member Search: updated to have all members.");
-    }
-    else {
-      engine.clear();
-      engine.add(members);
-      console.log("Member Search: updated to only have current school's members.");
-    }
-  });
-
-  $('#find-student .typeahead').typeahead({
-    hint: true,
-    highlight: true,
-    minLength: 2
-  }, {
-    name: 'members',
-    displayKey: 'value',
-    source: engine.ttAdapter(),
-    templates: {
-      suggestion: Handlebars.compile("<p><strong>{{value}}</strong> - {{belt}} (<i>{{school}}</i>)</p>")
-    }
-  });
-});

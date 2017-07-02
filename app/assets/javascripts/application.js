@@ -17,6 +17,7 @@
 //= require jquery-tablesorter
 //= require bootstrapValidator.min
 //= require members
+//= require assistants
 //= require jquery_blockui
 //= require react
 //= require react_ujs

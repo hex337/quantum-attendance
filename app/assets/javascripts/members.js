@@ -49,7 +49,7 @@ Members.prototype.createHTML = function() {
 
   $.each(this.memberList, function(ndx, member) {
     var memberHTML = '<span class="selected-member" data-member-id="' + member.id + '">'
-        + '<button class="btn btn-default" style="margin: 3px;" onclick="mem.removeMember(' + member.id + ');">'
+        + '<button class="btn btn-default" style="margin: 3px;" onclick="window.mem.removeMember(' + member.id + ');">'
           + member.value
         + '</button>'
         + '</span>'

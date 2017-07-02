@@ -18,6 +18,14 @@ class Meeting < ActiveRecord::Base
   def instructor
     @_instructor || self._get_instructor
   end
+
+  def students
+    @students ||= self.meeting_members.select { |mm| mm.role_id == Role::student_role_id }
+  end
+
+  def assistants
+    @assistants ||= self.meeting_members.select { |mm| mm.role_id == Role::assistant_role_id }
+  end
   
   def pretty_name
     "#{self.met.strftime('%a %b %d, %Y')}: #{self.meeting_type.name}"

@@ -35,6 +35,18 @@
                     %option{:value => "#{member.id}"}
                       = member.full_name
 
+            #assistants-select-container
+              %h4 Add Assistants:
+
+              .find-input
+                %input{:type => "text", :class => "typeahead form-control", :placeholder => "Find an Assistant"}
+
+              %h4 Selected Assistants:
+              #selected-assistants-container
+                None selected yet.
+
+              %br
+
             %a.btn.btn-primary.next-btn{:href => "#", :data => {:validate => "step_one"}} Select Students &#10095;
 
         .item
@@ -75,6 +87,11 @@
                   %th{:style => "text-align: right;"}
                     Instructor:
                   %td#instructor-confirm
+                %tr
+                  %th{:style => "text-align: right;"}
+                    Teaching Assistants:
+                  %td
+                    #assisting-students
 
             %h4 Attending Students:
             #attending-students
@@ -98,125 +115,176 @@
     = image_tag("select_school.png")
 
 :javascript
-$(document).ready(function() {
+  $(document).ready(function() {
 
-  $("#carousel").carousel({
-    interval: false,
-    wrap: false,
-    keyboard: false
-  });
-  
-  $.each($(".next-btn"), function(ndx, btn) {
-    $(btn).click(function(event) {
-      event.preventDefault();
+    $("#carousel").carousel({
+      interval: false,
+      wrap: false,
+      keyboard: false
+    });
+    
+    $.each($(".next-btn"), function(ndx, btn) {
+      $(btn).click(function(event) {
+        event.preventDefault();
 
-      // handle validations, its heavy handed, but meh
-      var vald = $(btn).data("validate");
-      var isValid = true;
-      var errorMsg = [];
+        // handle validations, its heavy handed, but meh
+        var vald = $(btn).data("validate");
+        var isValid = true;
+        var errorMsg = [];
 
-      if (vald != undefined) {
-        if (vald == "step_one") {
-          if ($("#meeting-type").val() == "") {
-            isValid = false;
-            errorMsg.push("Must select a class type.");
+        if (vald != undefined) {
+          if (vald == "step_one") {
+            if ($("#meeting-type").val() == "") {
+              isValid = false;
+              errorMsg.push("Must select a class type.");
+            }
+
+            if ($("#meeting-date").val() == "") {
+              isValid = false;
+              errorMsg.push("Must have a valid date and time.");
+            }
+
+            if ($("#instructor").val() == "") {
+              isValid = false;
+              errorMsg.push("Must select an instructor..");
+            }
+          } else if (vald == "step_two") {
+            if (mem.length() <= 0) {
+              isValid = false;
+              errorMsg.push("Must have at least one student.");
+            }
           }
 
-          if ($("#meeting-date").val() == "") {
-            isValid = false;
-            errorMsg.push("Must have a valid date and time.");
-          }
-
-          if ($("#instructor").val() == "") {
-            isValid = false;
-            errorMsg.push("Must select an instructor..");
-          }
-        } else if (vald == "step_two") {
-          if (mem.length() <= 0) {
-            isValid = false;
-            errorMsg.push("Must have at least one student.");
+          if (!isValid) {
+            alert(errorMsg.join(", "));
+            return;
           }
         }
 
-        if (!isValid) {
-          alert(errorMsg.join(", "));
-          return;
+        if ($(btn).hasClass("confirm")) {
+          var meetingType = $("#meeting-type").val();
+          $("#meeting-type-confirm").html($("#meeting-type option[value=" + String(meetingType) + "]").text());
+
+          var date = $("#meeting-date").val();
+          $("#date-confirm").html(date);
+
+          var instructor = $("#instructor").val();
+          $("#instructor-confirm").html($("#instructor option[value=" + String(instructor) + "]").text());
+          
+          var memberIds = [];
+          var count = 0;
+          $("#attending-students").html("");
+          $.each(window.mem.list(), function(ndx, item) {
+            count++;
+
+            var comma = ", ";
+            if (count == window.mem.length()) {
+              comma = "";
+            }
+
+            $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + comma + "</span>");
+            memberIds.push(item.id);
+          });
+          
+          var assistIds = [];
+          var assistCount = 0;
+          $("#assisting-students").html("");
+          $.each(window.assist.list(), function(ndx, item) {
+            assistCount++;
+
+            var comma = ", ";
+            if (assistCount == window.assist.length()) {
+              comma = "";
+            }
+
+            $("#assisting-students").append("<span style=\"margin-right: 5px;\">" + item.value + comma + "</span>");
+            assistIds.push(item.id);
+          });
         }
-      }
 
-      if ($(btn).hasClass("confirm")) {
-        var meetingType = $("#meeting-type").val();
-        $("#meeting-type-confirm").html($("#meeting-type option[value=" + String(meetingType) + "]").text());
+        $("#carousel").carousel('next');
+      });
+    });
+    
+    $("#submit-btn").click(function(event) {
+      $("body").block({ message: "Saving class..."});
 
-        var date = $("#meeting-date").val();
-        $("#date-confirm").html(date);
+      var comment = $("#comment").val();
+      var meetingType = $("#meeting-type").val();
+      var date = $("#meeting-date").val();
+      var instructor = $("#instructor").val();
+      var memberIds = [];
+      var assistantIds = [];
 
-        var instructor = $("#instructor").val();
-        $("#instructor-confirm").html($("#instructor option[value=" + String(instructor) + "]").text());
-        
-        var memberIds = [];
-        var count = 0;
-        $("#attending-students").html("");
-        $.each(mem.list(), function(ndx, item) {
-          count++;
+      $.each(window.mem.list(), function(ndx, item) {
+        memberIds.push(item.id);
+      });
 
-          var comma = ", ";
-          if (count == mem.length()) {
-            comma = "";
+      $.each(window.assist.list(), function(ndx, item) {
+        assistantIds.push(item.id);
+      });
+
+      $.ajax({
+        url: "#{meetings_path(format: :json)}",
+        method: "post",
+        data: {
+          meeting: {
+            meeting_type: meetingType,
+            date: date,
+            instructor: instructor,
+            comment: comment,
+            students: memberIds.join(","),
+            assistants: assistantIds.join(",")
           }
-
-          $("#attending-students").append("<span style=\"margin-right: 5px;\">" + item.value + comma + "</span>");
-          memberIds.push(item.id);
-        });
-      }
-
-      $("#carousel").carousel('next');
-    });
-  });
-  
-  $("#submit-btn").click(function(event) {
-    $("body").block({ message: "Saving class..."});
-    var comment = $("#comment").val();
-    var meetingType = $("#meeting-type").val();
-    var date = $("#meeting-date").val();
-    var instructor = $("#instructor").val();
-    var memberIds = [];
-
-    $.each(mem.list(), function(ndx, item) {
-      memberIds.push(item.id);
-    });
-
-    $.ajax({
-      url: "#{meetings_path()}",
-      method: "post",
-      data: {
-        meeting: {
-          meeting_type: meetingType,
-          date: date,
-          instructor: instructor,
-          comment: comment,
-          students: memberIds.join(",")
         }
+      }).done(function(json) {
+        $("body").unblock();
+        window.location = "#{meetings_path()}";
+      });
+    });
+
+    $.each($(".back-btn"), function(ndx, btn) {
+      $(btn).click(function(event) {
+        event.preventDefault();
+        $("#carousel").carousel('prev');
+      });
+    });
+
+    var elem = $("#selected-members-container");
+    window.mem = new Members(elem);
+
+    $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
+      mem.addMember(item);
+
+      $('.typeahead').typeahead('val', '');
+    });
+
+    var assistMembers = [#{Member.members_for_typeahead(@_current_school).map{|mem| mem.to_json}.join(",").html_safe}];
+
+    var assistEngine = new Bloodhound({
+      datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value', 'belt'),
+      queryTokenizer: Bloodhound.tokenizers.whitespace,
+      local: assistMembers
+    });
+
+    $('#assistants-select-container .typeahead').typeahead({
+      hint: true,
+      highlight: true,
+      minLength: 2
+    }, {
+      name: 'assistants',
+      displayKey: 'value',
+      source: assistEngine.ttAdapter(),
+      templates: {
+        suggestion: Handlebars.compile("<p><strong>{{value}}</strong> - {{belt}} (<i>{{school}}</i>)</p>")
       }
-    }).done(function(json) {
-      window.location = "#{meetings_path()}";
+    });
+
+    var assistElem = $("#selected-assistants-container");
+    window.assist = new Assistants(assistElem);
+
+    $("#assistants-select-container .typeahead").on('typeahead:selected', function(evt, item) {
+      window.assist.addAssistant(item);
+      $('#assistants-select-container .typeahead').typeahead('val', '');
     });
   });
-
-  $.each($(".back-btn"), function(ndx, btn) {
-    $(btn).click(function(event) {
-      event.preventDefault();
-      $("#carousel").carousel('prev');
-    });
-  });
-
-  var elem = $("#selected-members-container");
-  var mem = new Members(elem);
-
-  $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
-    mem.addMember(item);
-
-    $("#find-student span input.tt-input").val("");
-    $("#find-student span input.tt-input").focus();
-  });
-});
