@@ -1,7 +1,7 @@
 class Meeting < ActiveRecord::Base
   default_scope { order("met DESC") }
 
-  scope :met_between, ->(start_time, end_time) { where("met >= ? AND met < ?", start_time, end_time) }
+  scope :met_between, ->(start_time, end_time) { where("met >= ? AND met < ?", end_time, start_time) }
   scope :met_after, ->(time) { where("met > ?", time) }
 
   scope :for_school, lambda {|school|
