@@ -76,54 +76,54 @@
   = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(@member), :class => 'btn btn-default'
 
 :javascript
-$(document).ready(function() {
-  $("#meetings_to_show").change(function() {
-    this.form.submit();
-  });
-
-  var last30 = new Keen.Dataviz()
-    .el("#classes-last-30-days")
-    .colors(['blue'])
-    .height(120)
-    .title("Classes Last 30 Days")
-    .type('metric')
-    .data({'result': #{@member.meetings_for_last_30_days.length}})
-    .render();
-
-  var prev30 = new Keen.Dataviz()
-    .el("#classes-previous-30-days")
-    .colors(['grey'])
-    .height(120)
-    .title("Classes Prev 30 Days")
-    .type('metric')
-    .data({'result': #{@member.meetings_for_previous_30_days.length}})
-    .render();
-
-  var client = new Keen({
-    projectId: "#{ENV['KEEN_PROJECT_ID']}",
-    readKey: "#{ENV['KEEN_READ_KEY']}"
-  });
-
-  var classTypes = new Keen.Dataviz()
-    .el("#class-types")
-    .height(175)
-    .title("Class Types Last 60 Days")
-    .type('pie')
-    .prepare();
-
-  client
-    .query('count', {
-      event_collection: 'attendance',
-      timeframe: 'this_60_days',
-      group_by: 'meeting.meeting_type.name',
-      filters: [
-        {
-          "operator": "eq",
-          "property_name": "member.id",
-          "property_value": #{@member.id}
-        }
-      ],
-    })
-    .then(function(res) {
-      classTypes.data(res).render();
+  $(document).ready(function() {
+    $("#meetings_to_show").change(function() {
+      this.form.submit();
     });
+
+    var last30 = new Keen.Dataviz()
+      .el("#classes-last-30-days")
+      .colors(['blue'])
+      .height(120)
+      .title("Classes Last 30 Days")
+      .type('metric')
+      .data({'result': #{@member.meetings_for_last_30_days.length}})
+      .render();
+
+    var prev30 = new Keen.Dataviz()
+      .el("#classes-previous-30-days")
+      .colors(['grey'])
+      .height(120)
+      .title("Classes Prev 30 Days")
+      .type('metric')
+      .data({'result': #{@member.meetings_for_previous_30_days.length}})
+      .render();
+
+    var client = new Keen({
+      projectId: "#{ENV['KEEN_PROJECT_ID']}",
+      readKey: "#{ENV['KEEN_READ_KEY']}"
+    });
+
+    var classTypes = new Keen.Dataviz()
+      .el("#class-types")
+      .height(175)
+      .title("Class Types Last 60 Days")
+      .type('pie')
+      .prepare();
+
+    client
+      .query('count', {
+        event_collection: 'attendance',
+        timeframe: 'this_60_days',
+        group_by: 'meeting.meeting_type.name',
+        filters: [
+          {
+            "operator": "eq",
+            "property_name": "member.id",
+            "property_value": #{@member.id}
+          }
+        ],
+      })
+      .then(function(res) {
+        classTypes.data(res).render();
+      });
