@@ -51,3 +51,6 @@ gem 'keen'
 gem 'will_paginate', '~> 3.1'
 gem 'quiet_safari'
 gem 'react_on_rails', "8.0.5"
+
+gem 'mini_racer', platforms: :ruby
+gem 'webpacker_lite'
