@@ -49,8 +49,8 @@ gem 'rails_12factor', group: :production
 
 gem 'puma' # web server
 gem 'jquery-tablesorter'
-gem 'react-rails'
 gem 'keen'
 
 gem 'will_paginate', '~> 3.1'
 gem 'quiet_safari'
+gem 'react_on_rails', "8.0.5"
