@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-const HelloWorld = ({ name, updateName }) => (
+const Attendance = ({ name, updateName }) => (
   <div>
+    <h2>Attendance App</h2>
     <h3>
       Hello, {name}!
     </h3>
@@ -21,9 +22,9 @@ const HelloWorld = ({ name, updateName }) => (
   </div>
 );
 
-HelloWorld.propTypes = {
+Attendance.propTypes = {
   name: PropTypes.string.isRequired,
   updateName: PropTypes.func.isRequired,
 };
 
-export default HelloWorld;
+export default Attendance;

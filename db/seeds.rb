@@ -7,7 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 order = 0
-['white', 'high white', 'yellow', 'high yellow', 'green', 'high green', 'blue', 'high blue', 'red', 'high red', 'black'].each do |belt|
+['White', 'High White', 'Yellow', 'High Yellow', 'Green', 'High Green', 'Blue', 'High Blue', 'Red', 'High Red', 'Black'].each do |belt|
   order = order + 1
   Belt.create_with(is_active: true, order_by: order).find_or_create_by(name: belt)
 end
@@ -18,9 +18,6 @@ schools = [
   },
   {
     name: "San Francisco"
-  },
-  {
-    name: "Black Rock City"
   }
 ]
 
@@ -33,31 +30,31 @@ students = [
     first_name: "Alex",
     last_name: "Kleissner",
     school: "Seattle",
-    belt: "high yellow"
+    belt: "High Yellow"
   },
   {
     first_name: "Tony",
     last_name: "Evans",
     school: "Seattle",
-    belt: "red"
+    belt: "Red"
   },
   {
     first_name: "Derrick",
     last_name: "Louie",
     school: "Seattle",
-    belt: "high white"
+    belt: "High White"
   },
   {
     first_name: "Anthony",
     last_name: "Hernandez",
     school: "San Francisco",
-    belt: "high yellow"
+    belt: "High Yellow"
   },
   {
     first_name: "Rachel",
     last_name: "Evans",
     school: "San Francisco",
-    belt: "black"
+    belt: "Black"
   }
 ]
 
@@ -72,4 +69,9 @@ meeting_types = ['Advanced', 'Basics', 'Belt Test', 'Concepts/Spar', 'Conditioni
 
 meeting_types.each do |type|
   MeetingType.create_with(is_active: true).find_or_create_by(name: type)
+end
+
+roles = ["Student", "Teacher", "Teaching Assistant"]
+roles.each do |role|
+  Role.create_with(is_active: true).find_or_create_by(name: role)
 end
