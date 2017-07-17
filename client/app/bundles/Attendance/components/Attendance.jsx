@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
+import Nav from './Nav'
+
 const Attendance = ({ name, updateName }) => (
   <div>
+    <Nav currentPath="create" />
     <h2>Attendance App</h2>
     <h3>
       Hello, {name}!
