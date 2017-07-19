@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'hello_world', to: 'hello_world#index'
   resources :members
 
   resources :meeting_members
@@ -12,7 +11,7 @@ Rails.application.routes.draw do
 
   resources :meetings
 
-  get 'test', controller: :meetings, action: :test, as: :test
+  get 'test', controller: :home, action: :test, as: :test
 
   resources :meeting_types
 

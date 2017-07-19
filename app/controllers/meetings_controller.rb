@@ -1,14 +1,6 @@
 class MeetingsController < ApplicationController
   before_action :set_meeting, only: [:show, :edit, :update, :destroy]
 
-  def test
-    @class = Meeting.new
-
-    respond_to do |format|
-      format.html { render :test, {layout: "mobile"} }
-    end
-  end
-
   # GET /meetings
   # GET /meetings.json
   def index
