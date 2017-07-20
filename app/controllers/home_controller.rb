@@ -1,6 +1,10 @@
 require 'csv'
 
 class HomeController < ApplicationController
+  def test
+    render "test", layout: "react"
+  end
+
   def index
   end
 
