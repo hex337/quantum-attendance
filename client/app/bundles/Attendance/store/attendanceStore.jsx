@@ -1,8 +1,27 @@
-import { createStore } from 'redux';
-import attendanceReducer from '../reducers/attendanceReducer';
+import { applyMiddleware, compose, createStore, combineReducers } from 'redux';
+import { routerReducer } from 'react-router-redux';
+import thunkMiddleware from 'redux-thunk';
 
-const configureStore = (railsProps) => (
-  createStore(attendanceReducer, railsProps)
-);
+import reducers, { initialStates } from '../reducers';
 
-export default configureStore;
+export default (props, railsContext) => {
+  const initialClasses = props.classes;
+  const { $$classesState } = initialStates;
+  const initialState = {
+    $$attendanceStore: $$classesState.merge({
+      $$classes: initialClasses
+    }),
+    railsContext,
+  };
+
+  const reducer = combineReducers({
+    ...reducers,
+    routing: routerReducer,
+  });
+
+  const finalCreateStore = compose(
+    applyMiddleware(thunkMiddleware)
+  )(createStore);
+
+  return finalCreateStore(reducer, initialState);
+};

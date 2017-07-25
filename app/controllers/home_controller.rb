@@ -1,7 +1,11 @@
 require 'csv'
 
 class HomeController < ApplicationController
+  include ReactOnRails::Controller
+
   def test
+    redux_store("attendanceStore", props: "{}")
+
     render "test", layout: "react"
   end
 
