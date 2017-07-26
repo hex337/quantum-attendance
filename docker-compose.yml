@@ -1,0 +1,17 @@
+version: '2'
+services:
+  web:
+    build: .
+    ports:
+     - "3000:3000"
+    volumes:
+     - .:/usr/src/quantum
+    #  - ./.gemcache:/usr/local/bundle
+    #  - ./.yarncache:/usr/local/share/.cache/yarn/v1
+  postgresql:
+    image: "postgres:9.6.3"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+    ports:
+     - "5432:5432"
