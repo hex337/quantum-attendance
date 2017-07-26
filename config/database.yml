@@ -11,6 +11,9 @@ default: &default
 
 development:
   <<: *default
+  host: postgresql
+  user: postgres
+  password: postgres
   database: quantum_attendance_dev
 
 # Warning: The database defined as "test" will be erased and

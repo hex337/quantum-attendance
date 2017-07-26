@@ -1,7 +1,16 @@
 # quantum-attendance
 An attendance program for any type of martial arts dojo.
 
-# Set up for local development
+# Set up for local development (with Docker)
+
+ 1. Install Docker
+ 2. run `docker-compose up`
+
+The first run might take a while due to dependencies being installed.
+In case dependencies change and the docker image needs to be rebuilt, just use 
+`docker-compose up --build`.
+
+# Set up for local development (without Docker)
 
 These set up instructions are written for a mac development environment, and should work similarly in any linux/unix dev environment.
 
