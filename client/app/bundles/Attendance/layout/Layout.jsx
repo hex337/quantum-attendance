@@ -14,13 +14,13 @@ export default class Layout extends BaseComponent {
         <header>
           <ul>
             <li>
-              <IndexLink to="/" activeClassName="active">Home</IndexLink>
+              <IndexLink to="/test" activeClassName="active">Home</IndexLink>
             </li>
             <li>
-              <Link to="/classes" activeClassName="active">Classes</Link>
+              <Link to="/test/classes" activeClassName="active">Classes</Link>
             </li>
             <li>
-              <Link to="/students" activeClassName="active">Students</Link>
+              <Link to="/test/students" activeClassName="active">Students</Link>
             </li>
           </ul>
         </header>

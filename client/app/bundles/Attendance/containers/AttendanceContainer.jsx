@@ -3,7 +3,7 @@
 import React, { PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Attendance from '../components/ClassScreen/ClassScreen';
+import ClassScreen from '../components/ClassScreen/ClassScreen';
 import * as attActions from '../actions/attendanceActionCreators';
 
 import BaseComponent from '../components/BaseComponent';
@@ -17,14 +17,18 @@ class AttendanceContainer extends BaseComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
+    location: PropTypes.shape({
+      state: PropTypes.object,
+    }).isRequired,
   };
 
   render() {
     const { dispatch, data } = this.props;
     const actions = bindActionCreators(attActions, dispatch);
+    const locationState = this.props.location.state;
     
     return (
-      <ClassScreen {...{ actions, data}} />
+      <ClassScreen {...{ actions, data, locationState}} />
     );
   }
 } 

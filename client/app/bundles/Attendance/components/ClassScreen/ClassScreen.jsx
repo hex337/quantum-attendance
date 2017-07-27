@@ -5,7 +5,8 @@ import BaseComponent from '../../components/BaseComponent';
 export default class ClassScreen extends BaseComponent {
   static propTypes = {
     actions: PropTypes.object.isRequired,
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    locationState: PropTypes.object,
   };
 
   render() {
