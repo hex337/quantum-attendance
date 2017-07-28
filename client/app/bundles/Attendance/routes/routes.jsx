@@ -3,7 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 
 import Layout from '../layout/Layout';
 import Attendance from '../components/Attendance';
-import ClassScreen from '../components/ClassScreen/ClassScreen';
+import ClassesContainer from '../containers/ClassesContainer';
 import StudentScreen from '../components/StudentScreen/StudentScreen';
 
 import AttendanceContainer from '../containers/AttendanceContainer';
