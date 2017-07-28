@@ -2,6 +2,10 @@ import React, { PropTypes } from 'react';
 import { IndexLink, Link } from 'react-router';
 
 import BaseComponent from '../components/BaseComponent';
+import NavigationBar from '../components/NavigationBar/NavigationBar';
+
+import NavigationBarContainer from '../containers/NavigationBarContainer';
+import * as paths from '../constants/paths';
 
 export default class Layout extends BaseComponent {
   static propTypes = {
@@ -12,17 +16,7 @@ export default class Layout extends BaseComponent {
     return (
       <section>
         <header>
-          <ul>
-            <li>
-              <IndexLink to="/test" activeClassName="active">Home</IndexLink>
-            </li>
-            <li>
-              <Link to="/test/classes" activeClassName="active">Classes</Link>
-            </li>
-            <li>
-              <Link to="/test/students" activeClassName="active">Students</Link>
-            </li>
-          </ul>
+          <NavigationBarContainer />
         </header>
         {this.props.children}
       </section>
