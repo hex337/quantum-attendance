@@ -11,7 +11,7 @@ import AttendanceContainer from '../containers/AttendanceContainer';
 export default (
   <Route path="/test" component={Layout}>
     <IndexRoute component="AttendanceContainer" />
-    <Route path="/test/classes" component={ClassScreen} />
+    <Route path="/test/classes" component={ClassesContainer} />
     <Route path="/test/students" component={StudentScreen} />
   </Route>
 );
