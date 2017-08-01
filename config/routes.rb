@@ -36,6 +36,8 @@ Rails.application.routes.draw do
   get 'home/attendance/:year', controller: :home, action: :attendance_for_year
   get 'home/attendance/:year/:month', controller: :home, action: :attendance_for_month
 
+  get '*path', to: 'home#test'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

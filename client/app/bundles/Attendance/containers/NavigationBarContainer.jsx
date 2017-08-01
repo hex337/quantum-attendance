@@ -17,14 +17,15 @@ function stateToProps(state) {
 
 class NavigationBarContainer extends BaseComponent {
   static PropTypes = {
-    pathname: PropTypes.string.isRequired
+    pathname: PropTypes.string.isRequired,
+    location: PropTypes.object.isRequired,
   };
 
   render() {
-    const { pathname } = this.props;
+    const { pathname, location } = this.props;
 
     return (
-      <NavigationBar {...{ pathname }} />
+      <NavigationBar {...{ pathname, location }} />
     );
   };
 }

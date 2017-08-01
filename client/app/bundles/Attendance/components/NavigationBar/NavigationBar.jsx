@@ -1,12 +1,14 @@
 import classNames from 'classnames';
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
+import NavLink from './NavLink';
+
 import { Link } from 'react-router';
 
 import * as paths from '../../constants/paths';
 
 const NavigationBar = (props) => {
-  const { pathname } = props;
+  const { pathname, location } = props;
 
   return (
     <nav className="navbar navbar-default" role="navigation">

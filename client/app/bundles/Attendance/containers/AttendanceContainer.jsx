@@ -17,18 +17,16 @@ class AttendanceContainer extends BaseComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
     data: PropTypes.object.isRequired,
-    location: PropTypes.shape({
-      state: PropTypes.object,
-    }).isRequired,
+    location: PropTypes.object.isRequired,
   };
 
   render() {
     const { dispatch, data } = this.props;
     const actions = bindActionCreators(attActions, dispatch);
-    const locationState = this.props.location.state;
+    const locationState = this.props.location;
     
     return (
-      <ClassScreen {...{ actions, data, locationState}} />
+      <ClassScreen {...{ actions, data, location}} />
     );
   }
 } 

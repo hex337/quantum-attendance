@@ -13,15 +13,17 @@ function select(state) {
 class ClassesContainer extends BaseComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
   };
 
   render() {
-    const { dispatch, data } = this.props;
+    const { dispatch, data, location, params } = this.props;
     const actions = bindActionCreators(classesActionCreators, dispatch);
 
     return (
-      <ClassScreen {...{ actions, data }} />
+      <ClassScreen {...{ actions, data, location, params }} />
     );
   }
 }
