@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import BaseComponent from '../components/BaseComponent';
 
-import ClassScreen from '../components/ClassScreen/ClassScreen';
+import ClassesScreen from '../components/ClassesScreen/ClassesScreen';
 import * as classesActionCreators from '../actions/classesActionCreators';
 
 function select(state) {
@@ -23,7 +23,7 @@ class ClassesContainer extends BaseComponent {
     const actions = bindActionCreators(classesActionCreators, dispatch);
 
     return (
-      <ClassScreen {...{ actions, data, location, params }} />
+      <ClassesScreen {...{ actions, data, location, params }} />
     );
   }
 }

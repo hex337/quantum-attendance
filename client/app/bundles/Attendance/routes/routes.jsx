@@ -8,8 +8,6 @@ import ClassContainer from '../containers/ClassContainer';
 import StudentsContainer from '../containers/StudentsContainer';
 import StudentContainer from '../containers/StudentContainer';
 
-import AttendanceContainer from '../containers/AttendanceContainer';
-
 export default (
   <Route path="/test" component={Layout}>
     <IndexRoute component={ClassesContainer} />

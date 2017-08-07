@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import _ from 'lodash';
 import React, { PropTypes } from 'react';
-import NavLink from './NavLink';
 
 import { Link } from 'react-router';
 
