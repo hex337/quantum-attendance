@@ -14,15 +14,17 @@ end
 
 schools = [
   {
-    name: "Seattle"
+    name: "Seattle",
+    slug: "seattle"
   },
   {
-    name: "San Francisco"
+    name: "San Francisco",
+    slug: "san-francisco"
   }
 ]
 
 schools.each do |school|
-  School.create_with(is_active: true).find_or_create_by(name: school[:name])
+  School.create_with(is_active: true).find_or_create_by(name: school[:name], slug: school[:slug])
 end
 
 students = [

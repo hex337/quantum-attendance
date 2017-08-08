@@ -5,6 +5,10 @@ class MeetingsController < ApplicationController
   # GET /meetings.json
   def index
     @meetings = Meeting.for_school(@_current_school).paginate(page: params[:page], per_page: 50)
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @meetings.to_json }
+    end
   end
 
   # GET /meetings/1

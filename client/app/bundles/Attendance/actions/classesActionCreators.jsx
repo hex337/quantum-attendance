@@ -18,7 +18,7 @@ export function setIsSaving() {
 export function fetchClassesSuccess(data) {
   return {
     type: actionTypes.FETCH_CLASSES_SUCCESS,
-    classes: data.classes,
+    classes: data,
   };
 }
 
@@ -44,6 +44,7 @@ export function submitClassFailure(error) {
 }
 
 export function fetchClasses() {
+  console.log("in fetchClasses()");
   return (dispatch) => {
     dispatch(setIsFetching());
     return (
