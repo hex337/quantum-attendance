@@ -20,15 +20,12 @@ export default class ClassesList extends BaseComponent {
 
   render() {
     const { $$classes } = this.props
-      /*
-    const clsRows = $$classes.map(($$cls, index) =>
-      <tr>
-        <td>{$$cls.id}</td>
-        <td>{$$cls.met}</td>
+    const clsRows = $$classes ? $$classes.map(($$cls, index) =>
+      <tr key={$$cls.get('id')}>
+        <td>{$$cls.get('id')}</td>
+        <td>{$$cls.get('met')}</td>
       </tr>
-    );
-    */
-    const clsRows = '';
+    ) : '';
 
     return (
       <table className="table">

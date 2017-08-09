@@ -44,7 +44,6 @@ export function submitClassFailure(error) {
 }
 
 export function fetchClasses() {
-  console.log("in fetchClasses()");
   return (dispatch) => {
     dispatch(setIsFetching());
     return (

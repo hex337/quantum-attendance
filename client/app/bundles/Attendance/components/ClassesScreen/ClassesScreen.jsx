@@ -19,16 +19,12 @@ class ClassesScreen extends BaseComponent {
   };
 
   componentDidMount() {
-    console.log("classes screen mounted");
     const { fetchClasses } = this.props.actions;
-    console.log(fetchClasses);
     fetchClasses();
   }
 
   render() {
     const { data, actions, location, params } = this.props;
-    console.log("data is:");
-    console.log(data);
 
     return (
       <div>
