@@ -62,6 +62,9 @@ students = [
 
 students.each do |student|
   member = Member.create_with(is_active: true).find_or_create_by(first_name: student[:first_name], last_name: student[:last_name])
+  if student[:last_name] == "Evans"
+    member.is_teacher = true
+  end
   member.belt = Belt.find_by_name(student[:belt])
   member.school = School.find_by_name(student[:school])
   member.save
@@ -76,4 +79,23 @@ end
 roles = ["Student", "Teacher", "Teaching Assistant"]
 roles.each do |role|
   Role.create_with(is_active: true).find_or_create_by(name: role)
+end
+
+# Create a few classes so that we have something there
+meeting_types.each do |type|
+  school = School.find_by_slug("san-francisco")
+  mt = MeetingType.find_by_name(type)
+  meeting = Meeting.create_with(meeting_type_id: mt.id, school_id: school.id).find_or_create_by(met: Time.now)
+  meeting.save
+
+  # add instructor
+  inst = Member.find_by_first_name("Rachel")
+  ir = Role.find_by_name("Teacher")
+  mm = MeetingMember.find_or_create_by(meeting_id: meeting.id, member_id: inst.id, role_id: ir.id, belt_id: inst.belt.id)
+  mm.save
+
+  stu = Member.find_by_last_name("Hernandez")
+  sr = Role.find_by_name("Student")
+  mm = MeetingMember.find_or_create_by(meeting_id: meeting.id, member_id: stu.id, role_id: ir.id, belt_id: stu.belt.id)
+  mm.save
 end
