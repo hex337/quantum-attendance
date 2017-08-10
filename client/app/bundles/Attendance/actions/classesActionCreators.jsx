@@ -1,7 +1,7 @@
 import requestsManager from './requestsManager';
 import * as actionTypes from '../constants/classesConstants';
 
-const url = 'meetings.json'
+const url = '/meetings.json'
 
 export function setIsFetching() {
   return {
