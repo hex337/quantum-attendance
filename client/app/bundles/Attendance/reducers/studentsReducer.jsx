@@ -15,7 +15,6 @@ export default function studentsReducer($$state = $$studentsInitialState, action
 
   switch(type) {
     case actionTypes.FETCH_STUDENTS_SUCCESS: {
-      console.log(students);
       return $$state.merge({
         $$students: students,
         fetchStudentError: null,

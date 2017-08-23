@@ -10,7 +10,9 @@ export const classPropTypes = {
 
 export default class ClassesList extends BaseComponent {
   static propTypes = {
-    $$classes: PropTypes.instanceOf(Immutable.List),
+    $$classes: PropTypes.shape({
+      classes: PropTypes.objectOf(PropTypes.shape(classPropTypes)),
+    }),
   };
 
   constructor(props, context) {
@@ -21,12 +23,13 @@ export default class ClassesList extends BaseComponent {
 
   render() {
     const { $$classes } = this.props
-    const clsRows = $$classes ? $$classes.map(($$cls, index) =>
+    const classes = $$classes && $$classes.get('classes') ? $$classes.get('classes').valueSeq() : [];
+    const clsRows = classes.map(($$cls) =>
       <tr key={$$cls.get('id')}>
         <td><Link to={'/test/classes/' + $$cls.get('id')}>{$$cls.get('id')}</Link></td>
         <td>{$$cls.get('met')}</td>
       </tr>
-    ) : '';
+    );
 
     return (
       <table className="table">

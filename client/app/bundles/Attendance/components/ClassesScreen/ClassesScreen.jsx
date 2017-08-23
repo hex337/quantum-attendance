@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 
 import BaseComponent from '../../components/BaseComponent';
-import ClassesList, { classPropType } from './ClassesList/ClassesList';
+import ClassesList, { classPropTypes } from './ClassesList/ClassesList';
 
 class ClassesScreen extends BaseComponent {
   static propTypes = {
@@ -12,7 +12,9 @@ class ClassesScreen extends BaseComponent {
     data: PropTypes.shape({
       isFetching: PropTypes.boolean,
       isSaving: PropTypes.boolean,
-      $$classes: PropTypes.arrayOf(classPropType),
+      $$classes: PropTypes.shape({
+        classes: PropTypes.objectOf(PropTypes.shape(classPropTypes)),
+      }),
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
@@ -25,11 +27,12 @@ class ClassesScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
+    let classes = data.get('$$classes');
 
     return (
       <div>
         <div className="container">
-          <ClassesList $$classes={data.get('$$classes')} />
+          <ClassesList $$classes={classes} />
         </div>
       </div>
     );
