@@ -3,25 +3,27 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import BaseComponent from '../components/BaseComponent';
 
-import StudentScreen from '../components/StudentScreen/StudentScreen';
+import StudentsScreen from '../components/StudentsScreen/StudentsScreen';
 import * as studentsActionCreators from '../actions/studentsActionCreators';
 
 function select(state) {
-  return { data: state.$$attendanceStore };
+  return { data: state.students };
 }
 
 class StudentsContainer extends BaseComponent {
   static propTypes = {
     dispatch: PropTypes.func.isRequired,
-    data: PropTypes.object.isRequired
+    data: PropTypes.object.isRequired,
+    location: PropTypes.object.isRequired,
+    params: PropTypes.object.isRequired,
   };
 
   render() {
-    const { dispatch, data } = this.props;
+    const { dispatch, data, location, params } = this.props;
     const actions = bindActionCreators(studentsActionCreators, dispatch);
 
     return (
-      <ClassScreen {...{ actions, data }} />
+      <StudentsScreen {...{ actions, data, location, params }} />
     );
   }
 }

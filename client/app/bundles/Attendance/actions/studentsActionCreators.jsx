@@ -18,7 +18,7 @@ export function setIsSaving() {
 export function fetchStudentsSuccess(data) {
   return {
     type: actionTypes.FETCH_STUDENTS_SUCCESS,
-    students: data.members,
+    students: data,
   };
 }
 

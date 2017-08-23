@@ -6,11 +6,11 @@ import reducers, { initialStates } from '../reducers';
 
 export default (props, railsContext) => {
   const initialClasses = props.classes;
-  const { $$classesState } = initialStates;
+  const initialStudents = props.students;
+  const { $$classesState, $$studentsState } = initialStates;
   const initialState = {
-    $$attendanceStore: $$classesState.merge({
-      $$classes: initialClasses
-    }),
+    classes: $$classesState,
+    students: $$studentsState,
     railsContext,
   };
 

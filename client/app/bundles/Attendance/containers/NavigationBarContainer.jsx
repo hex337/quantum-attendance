@@ -6,7 +6,7 @@ import BaseComponent from '../components/BaseComponent';
 import NavigationBar from '../components/NavigationBar/NavigationBar';
 
 function stateToProps(state) {
-  if (state.$$attendanceStore) {
+  if (state.railsContext) {
     return {
       pathname: state.railsContext.pathname,
     };

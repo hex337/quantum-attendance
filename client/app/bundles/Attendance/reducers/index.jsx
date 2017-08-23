@@ -1,14 +1,16 @@
+import { combineReducers } from 'redux';
 import classesReducer, { $$initialState as $$classesState } from './classesReducer';
-//import studentsReducer, { $$initialState as $$studentsState } from './studentsReducer';
+import studentsReducer, { $$studentsInitialState as $$studentsState } from './studentsReducer';
 import railsContextReducer, { initialState as railsContextState } from './railsContextReducer';
 
 export default {
-  $$attendanceStore: classesReducer,
-  //$$studentsStore: studentsReducer,
+  classes: classesReducer,
+  students: studentsReducer,
   railsContext: railsContextReducer,
 };
 
 export const initialStates = {
   $$classesState,
+  $$studentsState,
   railsContextState,
 };
