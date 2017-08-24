@@ -1,6 +1,4 @@
 import Immutable from 'immutable';
-import { normalize } from 'normalizr';
-import { classesSchema } from '../store/schema';
 
 import * as actionTypes from '../constants/classesConstants';
 

@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import * as actionTypes from '../constants/studentsConstants';
 
 export const $$studentsInitialState = Immutable.fromJS({
-  $$students: [],
+  $$students: {},
   fetchStudentError: null,
   submitStudentError: null,
   isFetchingStudent: false,

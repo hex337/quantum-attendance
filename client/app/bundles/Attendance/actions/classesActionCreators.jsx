@@ -1,7 +1,7 @@
 import requestsManager from './requestsManager';
 import * as actionTypes from '../constants/classesConstants';
 
-import { schema, normalize } from 'normalizr';
+import { normalize } from 'normalizr';
 import { clsSchema } from '../store/schema';
 
 const url = '/meetings.json'
@@ -72,11 +72,4 @@ export function submitClass(cls) {
         .catch(error => dispatch(submitClassFailure(error)))
     );
   }
-}
-
-export function deserializeClasses(classes) {
-  return {
-    type: actionTypes.DESERIALIZE_CLASSES,
-    classes: classes,
-  };
 }
