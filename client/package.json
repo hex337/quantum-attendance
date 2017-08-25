@@ -4,7 +4,8 @@
   "scripts": {
     "build:test": "NODE_ENV=test webpack --config webpack.config.js",
     "build:production": "NODE_ENV=production webpack --config webpack.config.js",
-    "build:development": "NODE_ENV=development webpack -w --config webpack.config.js"
+    "build:development": "NODE_ENV=development webpack -w --config webpack.config.js",
+    "test": "jest"
   },
   "cacheDirectories": [
     "node_modules",
@@ -20,11 +21,14 @@
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-runtime": "^6.23.0",
+    "classnames": "^2.2.5",
     "es5-shim": "^4.5.9",
     "expose-loader": "^0.7.3",
+    "immutable": "^3.8.1",
     "imports-loader": "^0.7.1",
     "js-yaml": "^3.8.2",
     "normalizr": "^3.2.3",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "react-on-rails": "8.0.5",
@@ -32,8 +36,17 @@
     "react-router": "3.0.2",
     "react-router-redux": "^4.0.8",
     "redux": "^3.6.0",
+    "redux-thunk": "^2.2.0",
     "webpack": "^2.3.3",
     "webpack-manifest-plugin": "^1.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "enzyme": "^2.9.1",
+    "is-ci": "^1.0.10",
+    "jest": "^20.0.4",
+    "jest-enzyme": "^3.8.0",
+    "jest-runtime": "^19.0.4",
+    "jest-util": "^20.0.3",
+    "react-test-renderer": "^15.5.4"
+  }
 }
