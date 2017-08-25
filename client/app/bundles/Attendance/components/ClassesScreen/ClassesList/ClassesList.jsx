@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 export const classPropTypes = {
   id: PropTypes.number.isRequired,
   met: PropTypes.string.isRequired,
-}
+};
 
 export default class ClassesList extends BaseComponent {
   static propTypes = {
@@ -20,10 +20,10 @@ export default class ClassesList extends BaseComponent {
   }
 
   render() {
-    const { $$classes } = this.props
+    const { $$classes } = this.props;
     const clsRows = $$classes ? $$classes.map(($$cls, index) =>
       <tr key={$$cls.get('id')}>
-        <td><Link to={'/test/classes/' + $$cls.get('id')}>{$$cls.get('id')}</Link></td>
+        <td><Link to={'/test/classes/' + $$cls.get('id')}>{$$cls.get('meeting_type').get('name')}</Link></td>
         <td>{$$cls.get('met')}</td>
       </tr>
     ) : '';
@@ -32,8 +32,8 @@ export default class ClassesList extends BaseComponent {
       <table className="table">
         <thead>
           <tr>
-            <th>id</th>
-            <th>met</th>
+            <th>Meeting Type</th>
+            <th>Met</th>
           </tr>
         </thead>
         <tbody>
