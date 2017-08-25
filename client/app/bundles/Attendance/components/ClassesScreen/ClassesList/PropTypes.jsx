@@ -8,6 +8,8 @@ const MeetingTypePropType = ImmutablePropTypes.contains({
 
 const ClassPropType = ImmutablePropTypes.contains({
   id: PropTypes.number.isRequired,
+  member_count: PropTypes.number.isRequired,
+  comment: PropTypes.string,
   met: PropTypes.string.isRequired,
   meeting_type: MeetingTypePropType.isRequired
 });

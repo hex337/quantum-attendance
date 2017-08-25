@@ -26,6 +26,10 @@ class Meeting < ActiveRecord::Base
   def assistants
     @assistants ||= self.meeting_members.select { |mm| mm.role_id == Role::assistant_role_id }
   end
+
+  def member_count
+    @member_count ||= self.meeting_members.count
+  end
   
   def pretty_name
     "#{self.met.strftime('%a %b %d, %Y')}: #{self.meeting_type.name}"
