@@ -1,5 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
+import Immutable from 'immutable';
 import ClassesList from "./ClassesList";
 
 describe("ClassesList", () => {
@@ -16,9 +17,7 @@ describe("ClassesList", () => {
 
   beforeEach(() => {
     props = {
-      wallpaperPath: undefined,
-      userInfoMessage: undefined,
-      onUnlocked: undefined,
+      $$classes: Immutable.List()
     };
     mountedClassesList = undefined;
   });
