@@ -7,7 +7,7 @@ class MeetingsController < ApplicationController
     @meetings = Meeting.for_school(@_current_school).paginate(page: params[:page], per_page: 50)
     respond_to do |format|
       format.html { render :index }
-      format.json { render json: @meetings.to_json }
+      format.json { render json: @meetings.to_json({:include => :meeting_type, :methods => :member_count}) }
     end
   end
 

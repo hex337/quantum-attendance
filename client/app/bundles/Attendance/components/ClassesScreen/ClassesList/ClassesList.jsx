@@ -1,23 +1,14 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
+import ClassesListPropTypes from './PropTypes';
 import BaseComponent from '../../BaseComponent';
-import Immutable from 'immutable';
 import { Link } from 'react-router';
-
-export const classPropTypes = {
-  id: PropTypes.number.isRequired,
-  met: PropTypes.string.isRequired,
-}
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 export default class ClassesList extends BaseComponent {
-  static propTypes = {
-    $$classes: PropTypes.shape({
-      classes: PropTypes.objectOf(PropTypes.shape(classPropTypes)),
-    }),
-  };
-
+  static propTypes = ClassesListPropTypes;
   constructor(props, context) {
     super(props, context);
-
     this.state = {};
   }
 
@@ -26,8 +17,11 @@ export default class ClassesList extends BaseComponent {
     const classes = $$classes && $$classes.get('classes') ? $$classes.get('classes').valueSeq() : [];
     const clsRows = classes.map(($$cls) =>
       <tr key={$$cls.get('id')}>
-        <td><Link to={'/test/classes/' + $$cls.get('id')}>{$$cls.get('id')}</Link></td>
-        <td>{$$cls.get('met')}</td>
+        <td><Link to={'/test/classes/' + $$cls.get('id')}>{$$cls.get('meeting_type').get('name')}</Link></td>
+        {/* August 30, 2017 15:44 */}
+        <td><Moment format="MMMM DD, YYYY HH:mm" tz="America/Los_Angeles">{$$cls.get('met')}</Moment></td>
+        <td>{$$cls.get('member_count')}</td>
+        <td>{$$cls.get('comment')}</td>
       </tr>
     );
 
@@ -35,8 +29,10 @@ export default class ClassesList extends BaseComponent {
       <table className="table">
         <thead>
           <tr>
-            <th>id</th>
-            <th>met</th>
+            <th>Meeting Type</th>
+            <th>Met</th>
+            <th>Num Students</th>
+            <th>Comment</th>
           </tr>
         </thead>
         <tbody>
