@@ -13,7 +13,9 @@ export const studentPropTypes = {
 
 export default class StudentsList extends BaseComponent {
   static propTypes = {
-    $$students: PropTypes.instanceOf(Immutable.List),
+    $$students: PropTypes.shape({
+      students: PropTypes.objectOf(PropTypes.shape(studentPropTypes)),
+    }),
   };
 
   constructor(props, context) {
@@ -24,12 +26,13 @@ export default class StudentsList extends BaseComponent {
 
   render() {
     const { $$students } = this.props
-    const studentRows = $$students ? $$students.map(($$student, index) =>
+    const students = $$students && $$students.get('students') ? $$students.get('students').valueSeq() : [];
+    const studentRows = students.map(($$student) =>
       <tr key={$$student.get('id')}>
         <td>{$$student.get('id')}</td>
         <td><Link to={'/test/students/' + $$student.get('id')}>{$$student.get('first_name')} {$$student.get('last_name')}</Link></td>
       </tr>
-    ) : '';
+    );
 
     return (
       <table className="table">

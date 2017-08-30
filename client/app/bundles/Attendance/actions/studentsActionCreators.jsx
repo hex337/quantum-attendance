@@ -1,6 +1,9 @@
 import requestsManager from './requestsManager';
 import * as actionTypes from '../constants/studentsConstants';
 
+import { normalize } from 'normalizr';
+import { studentSchema } from '../store/schema';
+
 const url = '/members.json'
 
 export function setIsFetching() {
@@ -49,7 +52,12 @@ export function fetchStudents() {
     return (
       requestsManager
         .fetchEntities(url)
-        .then(res => dispatch(fetchStudentsSuccess(res.data)))
+        .then(res => {
+          const dataToNormalize = { "students": res.data };
+          const normalizedData = normalize(dataToNormalize, studentSchema);
+          console.log(normalizedData.entities);
+          dispatch(fetchStudentsSuccess(normalizedData.entities));
+        })
         .catch(error => dispatch(fetchStudentsFailure(error)))
     );
   };

@@ -12,7 +12,9 @@ class StudentsScreen extends BaseComponent {
     data: PropTypes.shape({
       isFetchingStudent: PropTypes.boolean,
       isSavingStudent: PropTypes.boolean,
-      $$students: PropTypes.arrayOf(studentPropType),
+      $$students: PropTypes.shape({
+        students: PropTypes.objectOf(PropTypes.shape(studentPropType)),
+      }),
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
@@ -25,11 +27,12 @@ class StudentsScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
+    let students = data.get('$$students');
 
     return (
       <div>
         <div className="container">
-          <StudentsList $$students={data.get('$$students')} />
+          <StudentsList $$students={students} />
         </div>
       </div>
     );

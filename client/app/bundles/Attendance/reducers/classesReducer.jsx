@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import * as actionTypes from '../constants/classesConstants';
 
 export const $$initialState = Immutable.fromJS({
-  $$classes: [],
+  $$classes: {},
   fetchClassError: null,
   submitClassError: null,
   isFetching: false,
@@ -15,7 +15,7 @@ export default function classesReducer($$state = $$initialState, action = null) 
 
   switch(type) {
     case actionTypes.FETCH_CLASSES_SUCCESS: {
-      return $$state.merge({
+      return $$state.mergeDeep({
         $$classes: classes,
         fetchClassError: null,
         isFetching: false
