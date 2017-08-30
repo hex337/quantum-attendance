@@ -1,6 +1,9 @@
 import requestsManager from './requestsManager';
 import * as actionTypes from '../constants/classesConstants';
 
+import { normalize } from 'normalizr';
+import { clsSchema } from '../store/schema';
+
 const url = '/meetings.json'
 
 export function setIsFetching() {
@@ -49,7 +52,11 @@ export function fetchClasses() {
     return (
       requestsManager
         .fetchEntities(url)
-        .then(res => dispatch(fetchClassesSuccess(res.data)))
+        .then((res) => {
+          const dataToNormalize = { "classes": res.data };
+          const normalizedData = normalize(dataToNormalize, clsSchema);
+          dispatch(fetchClassesSuccess(normalizedData.entities));
+        })
         .catch(error => dispatch(fetchClassesFailure(error)))
     );
   };

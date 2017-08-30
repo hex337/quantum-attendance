@@ -7,15 +7,15 @@ import 'moment-timezone';
 
 export default class ClassesList extends BaseComponent {
   static propTypes = ClassesListPropTypes;
-
   constructor(props, context) {
     super(props, context);
     this.state = {};
   }
 
   render() {
-    const { $$classes } = this.props;
-    const clsRows = $$classes ? $$classes.map(($$cls, index) =>
+    const { $$classes } = this.props
+    const classes = $$classes && $$classes.get('classes') ? $$classes.get('classes').valueSeq() : [];
+    const clsRows = classes.map(($$cls) =>
       <tr key={$$cls.get('id')}>
         <td><Link to={'/test/classes/' + $$cls.get('id')}>{$$cls.get('meeting_type').get('name')}</Link></td>
         {/* August 30, 2017 15:44 */}
@@ -23,7 +23,7 @@ export default class ClassesList extends BaseComponent {
         <td>{$$cls.get('member_count')}</td>
         <td>{$$cls.get('comment')}</td>
       </tr>
-    ) : '';
+    );
 
     return (
       <table className="table">

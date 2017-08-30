@@ -4,6 +4,8 @@ import thunkMiddleware from 'redux-thunk';
 
 import reducers, { initialStates } from '../reducers';
 
+import * as schema from './schema';
+
 export default (props, railsContext) => {
   const initialClasses = props.classes;
   const initialStudents = props.students;
@@ -20,7 +22,7 @@ export default (props, railsContext) => {
   });
 
   const finalCreateStore = compose(
-    applyMiddleware(thunkMiddleware)
+    applyMiddleware(thunkMiddleware.withExtraArgument({ schema }))
   )(createStore);
 
   return finalCreateStore(reducer, initialState);
