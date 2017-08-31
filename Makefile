@@ -8,6 +8,9 @@ default: test
 compose: #: Bring up the app with all dependencies and run in the background
 	docker-compose up -d
 
+start: #: Bring the app and its dependencies up
+	docker-compose up
+
 stop: #: Bring down the app and all dependencies
 	docker-compose stop
 
