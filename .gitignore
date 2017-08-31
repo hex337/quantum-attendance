@@ -40,3 +40,6 @@ node_modules
 # IDE
 *.iml
 .idea
+
+# Handle the jest output dirs
+/client/jest_*
