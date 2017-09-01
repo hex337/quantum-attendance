@@ -1,11 +1,13 @@
 import React from "react";
 import { mount } from "enzyme";
-import Immutable from 'immutable';
+import Immutable, { fromJS } from 'immutable';
+import { Provider } from 'react-redux'
 import StudentsList from "./StudentsList";
 
 describe("StudentsList", () => {
   let props;
   let mountedStudentsList;
+
   const studentsList = () => {
     if (!mountedStudentsList) {
       mountedStudentsList = mount(
@@ -17,9 +19,10 @@ describe("StudentsList", () => {
 
   beforeEach(() => {
     props = {
-      $$students: {
+      $$students: fromJS({
         students: Immutable.Map(),
-      }
+        belts: Immutable.Map(),
+      }),
     };
     mountedStudentsList = undefined;
   });

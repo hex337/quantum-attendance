@@ -1,6 +1,6 @@
 import React from "react";
 import { mount } from "enzyme";
-import Immutable from 'immutable';
+import Immutable, { fromJS } from 'immutable';
 import ClassesList from "./ClassesList";
 
 describe("ClassesList", () => {
@@ -17,7 +17,9 @@ describe("ClassesList", () => {
 
   beforeEach(() => {
     props = {
-      $$classes: Immutable.List()
+      $$classes: fromJS({
+        classes: Immutable.Map()
+      })
     };
     mountedClassesList = undefined;
   });
