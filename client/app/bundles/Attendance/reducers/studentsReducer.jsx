@@ -3,7 +3,10 @@ import Immutable from 'immutable';
 import * as actionTypes from '../constants/studentsConstants';
 
 export const $$studentsInitialState = Immutable.fromJS({
-  $$students: {},
+  $$students: {
+    students: {},
+    belts: {},
+  },
   fetchStudentError: null,
   submitStudentError: null,
   isFetchingStudent: false,
@@ -15,7 +18,7 @@ export default function studentsReducer($$state = $$studentsInitialState, action
 
   switch(type) {
     case actionTypes.FETCH_STUDENTS_SUCCESS: {
-      return $$state.merge({
+      return $$state.mergeDeep({
         $$students: students,
         fetchStudentError: null,
         isFetchingStudent: false

@@ -55,7 +55,6 @@ export function fetchStudents() {
         .then(res => {
           const dataToNormalize = { "students": res.data };
           const normalizedData = normalize(dataToNormalize, studentSchema);
-          console.log(normalizedData.entities);
           dispatch(fetchStudentsSuccess(normalizedData.entities));
         })
         .catch(error => dispatch(fetchStudentsFailure(error)))

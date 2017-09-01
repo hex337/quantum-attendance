@@ -1,27 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import BaseComponent from '../../BaseComponent';
-import Immutable from 'immutable';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 import { Link } from 'react-router';
 
-export const studentPropTypes = {
-  id: PropTypes.number.isRequired,
-  belt_id: PropTypes.number.isRequired,
-  comment: PropTypes.string,
-  first_name: PropTypes.string.isRequired,
-  last_name: PropTypes.string.isRequired,
-}
+import StudentsListPropTypes from './PropTypes';
 
 export default class StudentsList extends BaseComponent {
-  static propTypes = {
-    $$students: PropTypes.shape({
-      students: PropTypes.objectOf(PropTypes.shape(studentPropTypes)),
-    }),
-  };
-
+  static propTypes = StudentsListPropTypes;
   constructor(props, context) {
     super(props, context);
-
     this.state = {};
   }
 

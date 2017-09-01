@@ -3,7 +3,9 @@ import Immutable from 'immutable';
 import * as actionTypes from '../constants/classesConstants';
 
 export const $$initialState = Immutable.fromJS({
-  $$classes: {},
+  $$classes: {
+    classes: {}
+  },
   fetchClassError: null,
   submitClassError: null,
   isFetching: false,
