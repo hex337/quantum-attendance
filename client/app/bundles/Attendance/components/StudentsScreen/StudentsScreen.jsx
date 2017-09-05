@@ -2,18 +2,21 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import BaseComponent from '../../components/BaseComponent';
-import StudentsList, { studentPropType } from './StudentsList/StudentsList';
+import StudentsList from './StudentsList/StudentsList';
+import { StudentPropType, BeltPropType } from './StudentsList/PropTypes';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 class StudentsScreen extends BaseComponent {
   static propTypes = {
     actions: PropTypes.shape({
-      fetchStudents: PropTypes.function,
-    }).isRequired,
-    data: PropTypes.shape({
-      isFetchingStudent: PropTypes.boolean,
-      isSavingStudent: PropTypes.boolean,
-      $$students: PropTypes.shape({
-        students: PropTypes.objectOf(PropTypes.shape(studentPropType)),
+      fetchStudents: PropTypes.func,
+    }),
+    data: ImmutablePropTypes.contains({
+      isFetchingStudent: PropTypes.bool,
+      isSavingStudent: PropTypes.bool,
+      $$students: ImmutablePropTypes.contains({
+        students: ImmutablePropTypes.mapOf(StudentPropType),
+        belts: ImmutablePropTypes.mapOf(BeltPropType),
       }),
     }).isRequired,
     location: PropTypes.object.isRequired,

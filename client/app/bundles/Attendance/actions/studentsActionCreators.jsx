@@ -18,10 +18,13 @@ export function setIsSaving() {
   };
 }
 
-export function fetchStudentsSuccess(data) {
+export function fetchStudentsSuccess(res) {
+  const dataToNormalize = { "students": res.data };
+  const normalizedData = normalize(dataToNormalize, studentSchema);
+
   return {
     type: actionTypes.FETCH_STUDENTS_SUCCESS,
-    students: data,
+    students: normalizedData.entities,
   };
 }
 
@@ -53,10 +56,7 @@ export function fetchStudents() {
       requestsManager
         .fetchEntities(url)
         .then(res => {
-          const dataToNormalize = { "students": res.data };
-          const normalizedData = normalize(dataToNormalize, studentSchema);
-          console.log(normalizedData.entities);
-          dispatch(fetchStudentsSuccess(normalizedData.entities));
+          dispatch(fetchStudentsSuccess(res));
         })
         .catch(error => dispatch(fetchStudentsFailure(error)))
     );

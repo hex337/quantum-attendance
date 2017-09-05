@@ -64,7 +64,10 @@ students.each do |student|
   member = Member.create_with(is_active: true).find_or_create_by(first_name: student[:first_name], last_name: student[:last_name])
   if student[:last_name] == "Evans"
     member.is_teacher = true
+  else
+    member.is_teacher = false
   end
+  member.is_kid = false
   member.belt = Belt.find_by_name(student[:belt])
   member.school = School.find_by_name(student[:school])
   member.save

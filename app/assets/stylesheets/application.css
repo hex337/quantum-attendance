@@ -94,9 +94,6 @@ div.member-tile-container:hover {
   cursor: pointer;
 }
 
-div.belt-tile-container {
-}
-
 svg.belt-image.white .belt-main {
     fill: #fff;
     stroke: black;
