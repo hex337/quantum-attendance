@@ -30,9 +30,6 @@ export default class StudentsList extends BaseComponent {
       </tr>
     );
 
-    console.log("rows:");
-    console.log(studentRows);
-
     return (
       <div>
         <table className="table">

@@ -13,9 +13,9 @@ export default class ClassesList extends BaseComponent {
   }
 
   render() {
-    const { $$attendance } = this.props
-    const classes = $$attendance && $$attendance.get('classes') ? $$attendance.get('classes').valueSeq() : [];
-    const clsRows = classes.map(($$cls) =>
+    const { classes } = this.props
+    const classesSeq = classes.valueSeq();
+    const clsRows = classesSeq.map(($$cls) =>
       <tr key={$$cls.get('id')}>
         <td><Link to={'/test/classes/' + $$cls.get('id')}>{$$cls.get('meeting_type').get('name')}</Link></td>
         {/* August 30, 2017 15:44 */}

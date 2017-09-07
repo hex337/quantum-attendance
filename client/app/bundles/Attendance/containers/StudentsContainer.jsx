@@ -8,7 +8,7 @@ import StudentsScreen from '../components/StudentsScreen/StudentsScreen';
 import * as studentsActionCreators from '../actions/studentsActionCreators';
 
 function select(state) {
-  return { data: state.$$attendance };
+  return { data: state.$$attendance.get("$$attendance").get("students") };
 }
 
 class StudentsContainer extends BaseComponent {

@@ -16,8 +16,6 @@ export default function attendanceReducer($$state = $$initialState, action = nul
 
   switch(type) {
     case classesActionTypes.FETCH_CLASSES_SUCCESS: {
-      console.log("fetch classes success");
-      console.log(entities);
       return $$state.merge({
         $$attendance: {
           classes: entities.classes
@@ -53,7 +51,7 @@ export default function attendanceReducer($$state = $$initialState, action = nul
     }
 
     case classesActionTypes.SUBMIT_CLASS_FAILURE: {
-      console.log("ERROR: " + error);
+      console.error("Error submitting class: " + error);
       return $$state.merge({
       });
     }
@@ -68,7 +66,7 @@ export default function attendanceReducer($$state = $$initialState, action = nul
     }
 
     case studentsActionTypes.FETCH_STUDENTS_FAILURE: {
-      console.log("Error fetching students: " + error);
+      console.error("Error fetching students: " + error);
       return $$state.merge({
       });
     }
@@ -96,7 +94,7 @@ export default function attendanceReducer($$state = $$initialState, action = nul
     }
 
     case studentsActionTypes.SUBMIT_STUDENT_FAILURE: {
-      console.log("Submit student error: " + error);
+      console.error("Submit student error: " + error);
       return $$state.merge({
       });
     }

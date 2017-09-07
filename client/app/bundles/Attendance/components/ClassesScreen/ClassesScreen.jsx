@@ -26,13 +26,12 @@ class ClassesScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    let attendance = data.get('$$attendance');
-    console.log(attendance.get('classes'));
+    let classes = data;
 
     return (
       <div>
         <div className="container">
-          <ClassesList $$attendance={attendance} />
+          <ClassesList classes={classes} />
         </div>
       </div>
     );
