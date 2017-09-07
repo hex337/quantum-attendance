@@ -16,9 +16,9 @@ export default class StudentsList extends BaseComponent {
   }
 
   render() {
-    const { $$students } = this.props
-    const students = $$students && $$students.get('students') ? $$students.get('students').valueSeq() : [];
-    const belts = $$students && $$students.get('belts') ? $$students.get('belts') : {};
+    const { $$attendance } = this.props
+    const students = $$attendance && $$attendance.get('students') ? $$attendance.get('students').valueSeq() : [];
+    const belts = $$attendance && $$attendance.get('belts') ? $$attendance.get('belts') : {};
 
     const studentRows = students.map(($$student) =>
       <tr key={$$student.get('id')}>

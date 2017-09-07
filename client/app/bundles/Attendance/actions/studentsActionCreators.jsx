@@ -6,25 +6,13 @@ import { studentSchema } from '../store/schema';
 
 const url = '/members.json'
 
-export function setIsFetching() {
-  return {
-    type: actionTypes.SET_IS_FETCHING,
-  };
-}
-
-export function setIsSaving() {
-  return {
-    type: actionTypes.SET_IS_SAVING,
-  };
-}
-
 export function fetchStudentsSuccess(res) {
   const dataToNormalize = { "students": res.data };
   const normalizedData = normalize(dataToNormalize, studentSchema);
 
   return {
     type: actionTypes.FETCH_STUDENTS_SUCCESS,
-    students: normalizedData.entities,
+    entities: normalizedData.entities,
   };
 }
 
@@ -51,7 +39,6 @@ export function submitStudentFailure(error) {
 
 export function fetchStudents() {
   return (dispatch) => {
-    dispatch(setIsFetching());
     return (
       requestsManager
         .fetchEntities(url)
@@ -65,7 +52,6 @@ export function fetchStudents() {
 
 export function submitStudent(student) {
   return (dispatch) => {
-    dispatch(setIsSaving());
     return (
       requestsManager
         .submitEntity(url, { student })

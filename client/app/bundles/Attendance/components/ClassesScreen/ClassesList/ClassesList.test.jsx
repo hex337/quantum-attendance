@@ -17,7 +17,7 @@ describe("ClassesList", () => {
 
   beforeEach(() => {
     props = {
-      $$classes: fromJS({
+      $$attendance: fromJS({
         classes: Immutable.Map()
       })
     };

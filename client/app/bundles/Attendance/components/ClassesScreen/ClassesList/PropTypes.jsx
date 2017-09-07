@@ -15,7 +15,7 @@ const ClassPropType = ImmutablePropTypes.contains({
 });
 
 const ClassesListPropTypes = {
-  $$classes: ImmutablePropTypes.contains({
+  $$attendance: ImmutablePropTypes.contains({
     classes: ImmutablePropTypes.mapOf(ClassPropType),
   }).isRequired,
 };

@@ -19,7 +19,7 @@ describe("StudentsList", () => {
 
   beforeEach(() => {
     props = {
-      $$students: fromJS({
+      $$attendance: fromJS({
         students: Immutable.Map(),
         belts: Immutable.Map(),
       }),

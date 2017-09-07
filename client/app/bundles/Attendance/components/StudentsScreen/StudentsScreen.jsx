@@ -14,7 +14,7 @@ class StudentsScreen extends BaseComponent {
     data: ImmutablePropTypes.contains({
       isFetchingStudent: PropTypes.bool,
       isSavingStudent: PropTypes.bool,
-      $$students: ImmutablePropTypes.contains({
+      $$attendance: ImmutablePropTypes.contains({
         students: ImmutablePropTypes.mapOf(StudentPropType),
         belts: ImmutablePropTypes.mapOf(BeltPropType),
       }),
@@ -30,12 +30,12 @@ class StudentsScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    let students = data.get('$$students');
+    let attendance = data.get('$$attendance');
 
     return (
       <div>
         <div className="container">
-          <StudentsList $$students={students} />
+          <StudentsList $$attendance={attendance} />
         </div>
       </div>
     );

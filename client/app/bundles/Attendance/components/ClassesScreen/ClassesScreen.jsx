@@ -11,9 +11,7 @@ class ClassesScreen extends BaseComponent {
       fetchClasses: PropTypes.function,
     }).isRequired,
     data: PropTypes.shape({
-      isFetching: PropTypes.boolean,
-      isSaving: PropTypes.boolean,
-      $$classes: PropTypes.shape({
+      $$attendance: PropTypes.shape({
         classes: PropTypes.objectOf(PropTypes.shape(classPropTypes)),
       }),
     }).isRequired,
@@ -28,12 +26,13 @@ class ClassesScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    let classes = data.get('$$classes');
+    let attendance = data.get('$$attendance');
+    console.log(attendance.get('classes'));
 
     return (
       <div>
         <div className="container">
-          <ClassesList $$classes={classes} />
+          <ClassesList $$attendance={attendance} />
         </div>
       </div>
     );
