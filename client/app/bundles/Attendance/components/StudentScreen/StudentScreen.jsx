@@ -1,26 +1,34 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
-import { studentPropTypes } from '../StudentsScreen/StudentsList/StudentsList';
+import { BeltPropType, StudentPropType } from '../StudentsScreen/StudentsList/PropTypes';
 
 import BaseComponent from '../BaseComponent';
 
 export default class StudentScreen extends BaseComponent {
   static propTypes = {
-    actions: PropTypes.object.isRequired,
+    actions: PropTypes.shape({
+      fetchStudent: PropTypes.func,
+    }).isRequired,
     data: PropTypes.shape({
-      $$students: PropTypes.shape({
-        students: PropTypes.objectOf(PropTypes.shape(studentPropTypes)),
+      $$attendance: ImmutablePropTypes.contains({
+        students: ImmutablePropTypes.mapOf(StudentPropType),
+        belts: ImmutablePropTypes.mapOf(BeltPropType),
       }),
     }).isRequired,
     location: PropTypes.object.isRequired,
-    params: PropTypes.object.isRequired,
+    params: PropTypes.shape({
+      studentId: PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   componentDidMount() {
     // ensure that we have the student we want to view in the store
-    const { fetchStudents } = this.props.actions;
-    fetchStudents();
+    const { fetchStudent } = this.props.actions;
+    const { studentId } = this.props.params;
+
+    fetchStudent(studentId);
   }
 
   render() {
