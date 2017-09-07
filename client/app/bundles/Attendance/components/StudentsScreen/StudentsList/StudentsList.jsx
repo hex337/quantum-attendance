@@ -16,11 +16,9 @@ export default class StudentsList extends BaseComponent {
   }
 
   render() {
-    const { $$students } = this.props
-    const students = $$students && $$students.get('students') ? $$students.get('students').valueSeq() : [];
-    const belts = $$students && $$students.get('belts') ? $$students.get('belts') : {};
+    const { students, belts } = this.props
 
-    const studentRows = students.map(($$student) =>
+    const studentRows = students.valueSeq().map(($$student) =>
       <tr key={$$student.get('id')}>
         <td>
           <BeltIcon width={30} height={24} name={belts.get($$student.get("belt").toString()).get("name")} id={$$student.get("belt")} />
@@ -29,9 +27,6 @@ export default class StudentsList extends BaseComponent {
         <td><Link to={'/test/students/' + $$student.get('id')}>{$$student.get('first_name')} {$$student.get('last_name')}</Link></td>
       </tr>
     );
-
-    console.log("rows:");
-    console.log(studentRows);
 
     return (
       <div>

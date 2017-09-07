@@ -14,10 +14,6 @@ const ClassPropType = ImmutablePropTypes.contains({
   meeting_type: MeetingTypePropType.isRequired
 });
 
-const ClassesListPropTypes = {
-  $$classes: ImmutablePropTypes.contains({
-    classes: ImmutablePropTypes.mapOf(ClassPropType),
-  }).isRequired,
-};
+const ClassesListPropTypes = ImmutablePropTypes.mapOf(ClassPropType).isRequired;
 
 export default ClassesListPropTypes;

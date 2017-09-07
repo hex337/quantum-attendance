@@ -7,12 +7,9 @@ import reducers, { initialStates } from '../reducers';
 import * as schema from './schema';
 
 export default (props, railsContext) => {
-  const initialClasses = props.classes;
-  const initialStudents = props.students;
-  const { $$classesState, $$studentsState } = initialStates;
+  const { $$attendanceState, railsContextState } = initialStates;
   const initialState = {
-    classes: $$classesState,
-    students: $$studentsState,
+    $$attendance: $$attendanceState,
     railsContext,
   };
 
