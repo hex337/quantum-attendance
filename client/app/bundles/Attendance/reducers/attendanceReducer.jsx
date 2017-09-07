@@ -5,9 +5,9 @@ import * as studentsActionTypes from '../constants/studentsConstants';
 
 export const $$initialState = Immutable.fromJS({
   $$attendance: {
-    belts: {},
-    classes: {},
-    students: {},
+    belts: Immutable.Map(),
+    classes: Immutable.Map(),
+    students: Immutable.Map(),
   },
 });
 
@@ -16,7 +16,7 @@ export default function attendanceReducer($$state = $$initialState, action = nul
 
   switch(type) {
     case classesActionTypes.FETCH_CLASSES_SUCCESS: {
-      return $$state.merge({
+      return $$state.mergeDeep({
         $$attendance: {
           classes: entities.classes
         },

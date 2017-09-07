@@ -18,11 +18,9 @@ export const StudentPropType = ImmutablePropTypes.contains({
   is_kid: PropTypes.bool.isRequired,
 });
 
-const StudentsListPropTypes = {
-  $$attendance: ImmutablePropTypes.contains({
-    students: ImmutablePropTypes.mapOf(StudentPropType),
-    belts: ImmutablePropTypes.mapOf(BeltPropType),
-  }).isRequired,
-};
+const StudentsListPropTypes = PropTypes.shape({
+  students: ImmutablePropTypes.mapOf(StudentPropType).isRequired,
+  belts: ImmutablePropTypes.mapOf(BeltPropType).isRequired,
+}).isRequired;
 
 export default StudentsListPropTypes;

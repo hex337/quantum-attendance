@@ -19,10 +19,8 @@ describe("StudentsList", () => {
 
   beforeEach(() => {
     props = {
-      $$attendance: fromJS({
-        students: Immutable.Map(),
-        belts: Immutable.Map(),
-      }),
+      students: Immutable.Map(),
+      belts: Immutable.Map(),
     };
     mountedStudentsList = undefined;
   });
