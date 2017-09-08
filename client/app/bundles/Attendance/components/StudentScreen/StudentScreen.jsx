@@ -53,7 +53,7 @@ export default class StudentScreen extends BaseComponent {
             <div>
               Student id: <strong>{studentId}</strong>.
             </div>
-            <div>
+            <div className="student-name">
               {student.get('first_name')} {student.get('last_name')}
             </div>
           </div>
