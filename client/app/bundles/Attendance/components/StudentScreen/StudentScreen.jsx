@@ -12,10 +12,8 @@ export default class StudentScreen extends BaseComponent {
       fetchStudent: PropTypes.func,
     }).isRequired,
     data: PropTypes.shape({
-      $$attendance: ImmutablePropTypes.contains({
-        students: ImmutablePropTypes.mapOf(StudentPropType),
-        belts: ImmutablePropTypes.mapOf(BeltPropType),
-      }),
+      students: ImmutablePropTypes.mapOf(StudentPropType).isRequired,
+      belts: ImmutablePropTypes.mapOf(BeltPropType).isRequired,
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.shape({
@@ -27,31 +25,39 @@ export default class StudentScreen extends BaseComponent {
     // ensure that we have the student we want to view in the store
     const { fetchStudent } = this.props.actions;
     const { studentId } = this.props.params;
+    const { data } = this.props;
+    const { students } = data;
 
-    fetchStudent(studentId);
+    // Only fetch the student if we don't already have them.
+    if (typeof students.get(studentId) == 'undefined') {
+      fetchStudent(studentId);
+    }
   }
 
   render() {
     const { data, actions, location, params } = this.props;
-    let studentId = ('studentId' in params) ? params.studentId : '';
-    let $$students = data.get('$$students');
+    const { belts, students } = data;
+    let studentId = params.studentId;
+    let student = students.get(studentId);
 
-    //if ('students' in $$students && studentId in $$students.get('students')) {
-    //}
-
-    let student = $$students.get('students').get(studentId);
-
+    // This isn't great, we should probably have some kind of message
+    // if the student isn't found. But that would only happen if you
+    // manually type in the url and use an id that doesn't exist.
     return (
       <div>
-        <div className="container">
-          A whole bunch of students and stuff goes here.
-        </div>
-        <div>
-          Student id: <strong>{studentId}</strong>.
-        </div>
-        <div>
-          {student.get('first_name')} {student.get('last_name')}
-        </div>
+        { student &&
+          <div>
+            <div className="container">
+              A whole bunch of students and stuff goes here.
+            </div>
+            <div>
+              Student id: <strong>{studentId}</strong>.
+            </div>
+            <div>
+              {student.get('first_name')} {student.get('last_name')}
+            </div>
+          </div>
+        }
       </div>
     );
   }

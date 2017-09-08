@@ -49,7 +49,7 @@ class MembersController < ApplicationController
 
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @member }
+      format.json { render json: @member.to_json(include: :belt) }
     end
   end
 

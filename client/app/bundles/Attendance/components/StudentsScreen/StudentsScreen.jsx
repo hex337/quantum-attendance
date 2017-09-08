@@ -12,10 +12,8 @@ class StudentsScreen extends BaseComponent {
       fetchStudents: PropTypes.func,
     }),
     data: PropTypes.shape({
-      $$attendance: ImmutablePropTypes.contains({
-        students: ImmutablePropTypes.mapOf(StudentPropType),
-        belts: ImmutablePropTypes.mapOf(BeltPropType),
-      }),
+      students: ImmutablePropTypes.mapOf(StudentPropType),
+      belts: ImmutablePropTypes.mapOf(BeltPropType),
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
