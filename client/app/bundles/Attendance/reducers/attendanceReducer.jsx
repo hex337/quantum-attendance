@@ -65,6 +65,15 @@ export default function attendanceReducer($$state = $$initialState, action = nul
       });
     }
 
+    case studentsActionTypes.FETCH_STUDENT_SUCCESS: {
+      return $$state.mergeDeep({
+        $$attendance: {
+          students: entities.students,
+          belts: entities.belts,
+        }
+      });
+    }
+
     case studentsActionTypes.FETCH_STUDENTS_FAILURE: {
       console.error("Error fetching students: " + error);
       return $$state.merge({

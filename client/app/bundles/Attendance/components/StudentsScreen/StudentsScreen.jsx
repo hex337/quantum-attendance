@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import BaseComponent from '../../components/BaseComponent';
 import StudentsList from './StudentsList/StudentsList';
-import { StudentPropType, BeltPropType } from './StudentsList/PropTypes';
+import { BeltPropType, StudentPropType } from './StudentsList/PropTypes';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 class StudentsScreen extends BaseComponent {
@@ -12,10 +12,8 @@ class StudentsScreen extends BaseComponent {
       fetchStudents: PropTypes.func,
     }),
     data: PropTypes.shape({
-      $$attendance: ImmutablePropTypes.contains({
-        students: ImmutablePropTypes.mapOf(StudentPropType),
-        belts: ImmutablePropTypes.mapOf(BeltPropType),
-      }),
+      students: ImmutablePropTypes.mapOf(StudentPropType),
+      belts: ImmutablePropTypes.mapOf(BeltPropType),
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
