@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import BaseComponent from '../../components/BaseComponent';
-import { ClassPropType, ClassTypePropType } from '../ClassesScreen/ClassesList/PropTypes';
+import { ClassPropType, MeetingTypePropType } from '../ClassesScreen/ClassesList/PropTypes';
 
 export default class ClassScreen extends BaseComponent {
   static propTypes = {
@@ -12,7 +12,7 @@ export default class ClassScreen extends BaseComponent {
     }).isRequired,
     data: PropTypes.shape({
       classes: ImmutablePropTypes.mapOf(ClassPropType).isRequired,
-      class_types: ImmutablePropTypes.mapOf(ClassTypePropType).isRequired,
+      meeting_types: ImmutablePropTypes.mapOf(MeetingTypePropType).isRequired,
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.shape({
@@ -24,8 +24,7 @@ export default class ClassScreen extends BaseComponent {
     const { fetchClass } = this.props.actions;
     const { classId } = this.props.params;
     const { data } = this.props;
-    const { classes } = data;
-    console.log(classes);
+    const { classes, meeting_types } = data;
 
     // only fetch the class if we don't already have it
     if (typeof classes.get(classId) == 'undefined') {
@@ -38,7 +37,6 @@ export default class ClassScreen extends BaseComponent {
     const { classes, class_types } = data;
     let classId = params.classId;
     let cls = classes.get(classId);
-    console.log(cls);
 
     return (
       <div>
@@ -51,7 +49,7 @@ export default class ClassScreen extends BaseComponent {
               Class id: <strong>{classId}</strong>.
             </div>
             <div>
-              Member Count: {cls.get('member_count')}
+              Member Count: <span className="member_count">{cls.get('member_count')}</span>
             </div>
           </div>
         }
