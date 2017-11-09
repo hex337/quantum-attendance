@@ -4,17 +4,17 @@ import { Link } from 'react-router';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import BaseComponent from '../../components/BaseComponent';
-import ClassesList, { classPropTypes } from './ClassesList/ClassesList';
+import ClassesList from './ClassesList/ClassesList';
+import { ClassPropType, MeetingTypePropType } from './ClassesList/PropTypes';
 
 class ClassesScreen extends BaseComponent {
   static propTypes = {
     actions: PropTypes.shape({
       fetchClasses: PropTypes.func,
     }).isRequired,
-    data: ImmutablePropTypes.contains({
-      $$attendance: ImmutablePropTypes.contains({
-        classes: PropTypes.objectOf(PropTypes.shape(classPropTypes)),
-      }),
+    data: PropTypes.shape({
+      classes: ImmutablePropTypes.mapOf(ClassPropType),
+      meeting_types: ImmutablePropTypes.mapOf(MeetingTypePropType),
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.object.isRequired,
@@ -27,12 +27,12 @@ class ClassesScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    let classes = data;
+    let { classes, meeting_types } = data;
 
     return (
       <div>
         <div className="container">
-          <ClassesList classes={classes} />
+          <ClassesList classes={classes} meeting_types={meeting_types} />
         </div>
       </div>
     );

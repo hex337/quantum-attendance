@@ -21,7 +21,8 @@ export function fetchStudentSuccess(res) {
   const normalizedData = normalize(dataToNormalize, studentSchema);
 
   return {
-    type: actionTypes.FETCH_STUDENT_SUCCESS,
+    // use the same action as the plural since the results are in the same format
+    type: actionTypes.FETCH_STUDENTS_SUCCESS,
     entities: normalizedData.entities,
   };
 }

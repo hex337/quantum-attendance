@@ -7,6 +7,7 @@ export const $$initialState = Immutable.fromJS({
   $$attendance: {
     belts: Immutable.Map(),
     classes: Immutable.Map(),
+    meeting_types: Immutable.Map(),
     students: Immutable.Map(),
   },
 });
@@ -18,7 +19,8 @@ export default function attendanceReducer($$state = $$initialState, action = nul
     case classesActionTypes.FETCH_CLASSES_SUCCESS: {
       return $$state.mergeDeep({
         $$attendance: {
-          classes: entities.classes
+          classes: entities.classes,
+          meeting_types: entities.meeting_types,
         },
       });
     }
@@ -57,15 +59,6 @@ export default function attendanceReducer($$state = $$initialState, action = nul
     }
 
     case studentsActionTypes.FETCH_STUDENTS_SUCCESS: {
-      return $$state.mergeDeep({
-        $$attendance: {
-          students: entities.students,
-          belts: entities.belts,
-        }
-      });
-    }
-
-    case studentsActionTypes.FETCH_STUDENT_SUCCESS: {
       return $$state.mergeDeep({
         $$attendance: {
           students: entities.students,
