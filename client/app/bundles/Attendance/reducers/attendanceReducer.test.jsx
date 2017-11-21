@@ -1,5 +1,6 @@
 import attendanceReducer from './attendanceReducer';
 import * as studentActions from '../actions/studentsActionCreators';
+import * as classActions from '../actions/classesActionCreators';
 
 const fakeStudents = {
   data: [
@@ -30,6 +31,21 @@ const fakeStudents = {
   ]
 };
 
+const fakeClasses = {
+  data: [
+    {
+      id: 1,
+      meeting_type: {
+        id: 1,
+        name: 'Advanced',
+      },
+      met: 'asdf',
+      member_count: 1,
+      comment: ''
+    }
+  ]
+};
+
 describe('attendanceReducer', () => {
   describe('FETCH_STUDENTS', () => {
     let state;
@@ -46,6 +62,24 @@ describe('attendanceReducer', () => {
       expect(state.get('$$attendance').get('belts').size).toEqual(1)
 
       expect(state.get('$$attendance').get('belts').get("1").get("name")).toEqual("white")
+    });
+  });
+
+  describe('FETCH_CLASSES', () => {
+    let state;
+
+    beforeEach(() => {
+      state = attendanceReducer(
+        undefined,
+        classActions.fetchClassesSuccess(fakeClasses)
+      );
+    });
+
+    it('should normalize the class correctly', () => {
+      expect(state.get('$$attendance').get('classes').size).toEqual(1)
+      expect(state.get('$$attendance').get('meeting_types').size).toEqual(1)
+
+      expect(state.get('$$attendance').get('meeting_types').get('1').get('name')).toEqual('Advanced')
     });
   });
 });

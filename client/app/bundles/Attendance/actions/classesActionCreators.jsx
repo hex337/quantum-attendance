@@ -6,6 +6,17 @@ import { clsSchema } from '../store/schema';
 
 const url = '/meetings.json'
 
+export function fetchClassSuccess(res) {
+  const dataToNormalize = { "classes": [res.data] };
+  const normalizedData = normalize(dataToNormalize, clsSchema);
+
+  return {
+    // We use the same action since the result object looks the same
+    type: actionTypes.FETCH_CLASSES_SUCCESS,
+    entities: normalizedData.entities,
+  };
+}
+
 export function fetchClassesSuccess(res) {
   const dataToNormalize = { "classes": res.data };
   const normalizedData = normalize(dataToNormalize, clsSchema);
@@ -13,6 +24,13 @@ export function fetchClassesSuccess(res) {
   return {
     type: actionTypes.FETCH_CLASSES_SUCCESS,
     entities: normalizedData.entities,
+  };
+}
+
+export function fetchClassFailure(error) {
+  return {
+    type: actionTypes.FETCH_CLASS_FAILURE,
+    error,
   };
 }
 
@@ -48,6 +66,21 @@ export function fetchClasses() {
         .catch(error => dispatch(fetchClassesFailure(error)))
     );
   };
+}
+
+export function fetchClass(id) {
+  const classUrl = "/meetings/" + id.toString() + ".json";
+
+  return (dispatch) => {
+    return (
+      requestsManager
+        .fetchEntities(classUrl)
+        .then(res => {
+          dispatch(fetchClassSuccess(res));
+        })
+        .catch(error => dispatch(fetchClassFailure(error)))
+    );
+  }
 }
 
 export function submitClass(cls) {

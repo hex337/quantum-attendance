@@ -8,7 +8,12 @@ import ClassScreen from '../components/ClassScreen/ClassScreen';
 import * as classesActionCreators from '../actions/classesActionCreators';
 
 function select(state) {
-  return { data: state.$$attendance.classes };
+  return {
+    data: {
+      classes: state.$$attendance.get("$$attendance").get("classes"),
+      class_types: state.$$attendance.get("$$attendance").get("class_types"),
+    },
+  };
 }
 
 class ClassContainer extends BaseComponent {

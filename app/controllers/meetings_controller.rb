@@ -14,6 +14,10 @@ class MeetingsController < ApplicationController
   # GET /meetings/1
   # GET /meetings/1.json
   def show
+    respond_to do |format|
+      format.html { render :show }
+      format.json { render json: @meeting.to_json({:include => :meeting_type, :methods => :member_count}) }
+    end
   end
 
   # GET /meetings/new
