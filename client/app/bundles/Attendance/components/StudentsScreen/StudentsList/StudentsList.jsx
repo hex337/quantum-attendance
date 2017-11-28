@@ -18,7 +18,7 @@ export default class StudentsList extends BaseComponent {
   render() {
     const { students, belts } = this.props
 
-    const studentRows = students.valueSeq().map(($$student) =>
+    const studentRows = students.map(($$student) =>
       <tr key={$$student.get('id')}>
         <td>
           <BeltIcon width={30} height={24} name={belts.get($$student.get("belt").toString()).get("name")} id={$$student.get("belt")} />

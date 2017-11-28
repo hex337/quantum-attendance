@@ -19,8 +19,10 @@ export default function attendanceReducer($$state = $$initialState, action = nul
     case classesActionTypes.FETCH_CLASSES_SUCCESS: {
       return $$state.mergeDeep({
         $$attendance: {
+          belts: entities.belts,
           classes: entities.classes,
           meeting_types: entities.meeting_types,
+          students: entities.students,
         },
       });
     }

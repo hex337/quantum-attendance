@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import BaseComponent from '../../components/BaseComponent';
+import StudentsList from '../StudentsScreen/StudentsList/StudentsList';
 import { ClassPropType, MeetingTypePropType } from '../ClassesScreen/ClassesList/PropTypes';
+import { BeltPropType, StudentPropType } from '../StudentsScreen/StudentsList/PropTypes';
 
 export default class ClassScreen extends BaseComponent {
   static propTypes = {
@@ -11,8 +13,10 @@ export default class ClassScreen extends BaseComponent {
       fetchClass: PropTypes.func,
     }).isRequired,
     data: PropTypes.shape({
+      belts: ImmutablePropTypes.mapOf(BeltPropType).isRequired,
       classes: ImmutablePropTypes.mapOf(ClassPropType).isRequired,
       meeting_types: ImmutablePropTypes.mapOf(MeetingTypePropType).isRequired,
+      students: ImmutablePropTypes.mapOf(StudentPropType).isRequired,
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.shape({
@@ -24,7 +28,7 @@ export default class ClassScreen extends BaseComponent {
     const { fetchClass } = this.props.actions;
     const { classId } = this.props.params;
     const { data } = this.props;
-    const { classes, meeting_types } = data;
+    const { belts, classes, meeting_types, students } = data;
 
     // only fetch the class if we don't already have it
     if (typeof classes.get(classId) == 'undefined') {
@@ -34,22 +38,30 @@ export default class ClassScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    const { classes, class_types } = data;
+    const { belts, classes, class_types, students } = data;
     let classId = params.classId;
     let cls = classes.get(classId);
+    let studentsToShow = [];
+
+    if (cls) {
+      studentsToShow = cls.get("students").map(id => students.get(id.toString())).valueSeq();
+    }
 
     return (
       <div>
         { cls &&
           <div className="container">
             <div>
-              A whole bunch of classes and stuff goes here.
-            </div>
-            <div>
               Class id: <strong>{classId}</strong>.
             </div>
             <div>
               Member Count: <span className="member_count">{cls.get('member_count')}</span>
+            </div>
+            <div>
+              <strong>Students in this class:</strong>
+            </div>
+            <div className="student-list">
+              <StudentsList students={studentsToShow} belts={belts} />
             </div>
           </div>
         }

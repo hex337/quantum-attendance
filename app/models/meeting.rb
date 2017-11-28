@@ -43,4 +43,14 @@ class Meeting < ActiveRecord::Base
       end
     end
   end
+
+  def as_json(options)
+    json = super(options)
+
+    if json.key?("members")
+      json["students"] = json.delete("members")
+    end
+
+    json
+  end
 end

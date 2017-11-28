@@ -10,8 +10,10 @@ import * as classesActionCreators from '../actions/classesActionCreators';
 function select(state) {
   return {
     data: {
+      belts: state.$$attendance.get("$$attendance").get("belts"),
       classes: state.$$attendance.get("$$attendance").get("classes"),
-      class_types: state.$$attendance.get("$$attendance").get("class_types"),
+      meeting_types: state.$$attendance.get("$$attendance").get("meeting_types"),
+      students: state.$$attendance.get("$$attendance").get("students"),
     },
   };
 }

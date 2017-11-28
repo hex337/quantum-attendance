@@ -26,7 +26,7 @@ class StudentsScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    let students = data.students;
+    let students = data.students.valueSeq();
     let belts = data.belts;
 
     return (

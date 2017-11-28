@@ -19,7 +19,7 @@ describe("StudentsList", () => {
 
   beforeEach(() => {
     props = {
-      students: Immutable.Map(),
+      students: Immutable.Map().valueSeq(),
       belts: Immutable.Map(),
     };
     mountedStudentsList = undefined;
