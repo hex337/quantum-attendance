@@ -19,11 +19,10 @@ export default class StudentsList extends BaseComponent {
     const { students, belts } = this.props
 
     const studentRows = students.map(($$student) =>
-      <tr key={$$student.get('id')}>
+      <tr key={"student-row-" + $$student.get('id')}>
         <td>
           <BeltIcon width={30} height={24} name={belts.get($$student.get("belt").toString()).get("name")} id={$$student.get("belt")} />
         </td>
-        <td>{$$student.get('id')}</td>
         <td><Link to={'/test/students/' + $$student.get('id')}>{$$student.get('first_name')} {$$student.get('last_name')}</Link></td>
       </tr>
     );
@@ -33,9 +32,8 @@ export default class StudentsList extends BaseComponent {
         <table className="table">
           <thead>
             <tr>
-              <th>belt</th>
-              <th>id</th>
-              <th>name</th>
+              <th>Rank</th>
+              <th>Name</th>
             </tr>
           </thead>
           <tbody>

@@ -51,6 +51,9 @@ class Meeting < ActiveRecord::Base
       json["students"] = json.delete("members")
     end
 
+    json["met_long_form"] = self.met.to_s(:long)
+    json["pretty_name"] = self.pretty_name
+
     json
   end
 end

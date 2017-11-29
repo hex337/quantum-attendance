@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImmutablePropTypes from 'react-immutable-proptypes';
+import Moment from 'react-moment';
+import 'moment-timezone';
 
 import BaseComponent from '../../components/BaseComponent';
 import StudentsList from '../StudentsScreen/StudentsList/StudentsList';
@@ -38,28 +40,43 @@ export default class ClassScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    const { belts, classes, class_types, students } = data;
+    const { belts, classes, meeting_types, students } = data;
     let classId = params.classId;
     let cls = classes.get(classId);
     let studentsToShow = [];
+    let clsInfo = [];
+    let meetingType = undefined;
 
     if (cls) {
       studentsToShow = cls.get("students").map(id => students.get(id.toString())).valueSeq();
+      meetingType = meeting_types.get(cls.get('meeting_type_id').toString());
+
+      clsInfo = [
+        { label: "School", val: cls.get('school').get('name') },
+        { label: "Class Type", val: meetingType.get('name') },
+        { label: "Met", val: cls.get('met_long_form') },
+        { label: "Comment", val: cls.get('comment') },
+      ];
     }
 
     return (
       <div>
         { cls &&
-          <div className="container">
-            <div>
-              Class id: <strong>{classId}</strong>.
+          <div>
+            <div className="page-header">
+              <h1>
+                {cls.get('pretty_name')}
+              </h1>
             </div>
-            <div>
-              Member Count: <span className="member_count">{cls.get('member_count')}</span>
-            </div>
-            <div>
-              <strong>Students in this class:</strong>
-            </div>
+            <dl className="dl-horizontal">
+              { clsInfo.reduce((acc, item, ndx) => {
+                  return acc.concat([
+                    <dt key={"dt-cls-screen-" + item.label}><strong>{item.label}:</strong></dt>,
+                    <dd key={"dd-cls-screen-" + item.val}>{item.val}</dd>
+                  ]);
+                }, [])
+              }
+            </dl>
             <div className="student-list">
               <StudentsList students={studentsToShow} belts={belts} />
             </div>
