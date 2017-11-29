@@ -10,6 +10,8 @@ export const meetingTypeEntity = new schema.Entity('meeting_types');
 
 export const clsEntity = new schema.Entity('classes', {
   meeting_type: meetingTypeEntity,
+  instructor: studentEntity,
+  assistants: new schema.Array(studentEntity),
   students: new schema.Array(studentEntity),
 });
 

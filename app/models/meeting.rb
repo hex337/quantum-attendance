@@ -47,8 +47,16 @@ class Meeting < ActiveRecord::Base
   def as_json(options)
     json = super(options)
 
-    if json.key?("members")
-      json["students"] = json.delete("members")
+    if json.key?("meeting_members")
+      # we want to segment out the members of this meeting by the role they had
+      # 1. Pull out the "members" field
+      mmems = json.delete("meeting_members")
+      # 2. Split the members by the role
+      by_role = mmems.group_by { |mm| mm["role_id"] }
+
+      json["instructor"] = by_role[Role.teacher_role_id].first["member"]
+      json["assistants"] = by_role.fetch(Role.assistant_role_id, []).collect { |mm| mm["member"] }
+      json["students"] = by_role.fetch(Role.student_role_id, []).collect { |mm| mm["member"] }
     end
 
     json["met_long_form"] = self.met.to_s(:long)

@@ -16,7 +16,24 @@ class MeetingsController < ApplicationController
   def show
     respond_to do |format|
       format.html { render :show }
-      format.json { render json: @meeting.as_json({:include => {:meeting_type => {}, :members => { :include => :belt }, :school => {}}, :methods => :member_count}) }
+      format.json { render json: @meeting.as_json(
+        {
+          :include => {
+            :meeting_type => {},
+            :meeting_members => {
+              :include => {
+                :member => {
+                  :include => {
+                    :belt => {}
+                  }
+                }
+              }
+            },
+            :school => {}
+          },
+          :methods => :member_count
+        })
+      }
     end
   end
 

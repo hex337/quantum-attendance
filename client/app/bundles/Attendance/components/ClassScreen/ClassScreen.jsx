@@ -15,10 +15,10 @@ export default class ClassScreen extends BaseComponent {
       fetchClass: PropTypes.func,
     }).isRequired,
     data: PropTypes.shape({
-      belts: ImmutablePropTypes.mapOf(BeltPropType).isRequired,
+      belts: ImmutablePropTypes.mapOf(BeltPropType),
       classes: ImmutablePropTypes.mapOf(ClassPropType).isRequired,
       meeting_types: ImmutablePropTypes.mapOf(MeetingTypePropType).isRequired,
-      students: ImmutablePropTypes.mapOf(StudentPropType).isRequired,
+      students: ImmutablePropTypes.mapOf(StudentPropType),
     }).isRequired,
     location: PropTypes.object.isRequired,
     params: PropTypes.shape({
@@ -29,13 +29,9 @@ export default class ClassScreen extends BaseComponent {
   componentDidMount() {
     const { fetchClass } = this.props.actions;
     const { classId } = this.props.params;
-    const { data } = this.props;
-    const { belts, classes, meeting_types, students } = data;
 
-    // only fetch the class if we don't already have it
-    if (typeof classes.get(classId) == 'undefined') {
-      fetchClass(classId);
-    }
+    // Always fetch since we don't know if we have everything we need.
+    fetchClass(classId);
   }
 
   render() {
@@ -44,24 +40,40 @@ export default class ClassScreen extends BaseComponent {
     let classId = params.classId;
     let cls = classes.get(classId);
     let studentsToShow = [];
+    let assistantsToShow = [];
     let clsInfo = [];
     let meetingType = undefined;
+    let assistantsDiv = '';
+    let instructor = undefined;
 
-    if (cls) {
+    if (cls && students) {
       studentsToShow = cls.get("students").map(id => students.get(id.toString())).valueSeq();
+      assistantsToShow = cls.get("assistants").map(id => students.get(id.toString())).valueSeq();
       meetingType = meeting_types.get(cls.get('meeting_type_id').toString());
+      instructor = students.get(cls.get("instructor").toString())
 
       clsInfo = [
         { label: "School", val: cls.get('school').get('name') },
         { label: "Class Type", val: meetingType.get('name') },
+        { label: "Taught By", val: instructor.get('first_name') + ' ' + instructor.get('last_name') },
         { label: "Met", val: cls.get('met_long_form') },
         { label: "Comment", val: cls.get('comment') },
       ];
+
+      if (cls.get("assistants").size > 0) {
+        assistantsDiv = 
+          <div>
+            <h3>
+              Assistants:
+            </h3>
+            <StudentsList students={assistantsToShow} belts={belts} />
+          </div>;
+      }
     }
 
     return (
       <div>
-        { cls &&
+        { cls && students &&
           <div>
             <div className="page-header">
               <h1>
@@ -77,6 +89,9 @@ export default class ClassScreen extends BaseComponent {
                 }, [])
               }
             </dl>
+            <h3>
+              Students:
+            </h3>
             <div className="student-list">
               <StudentsList students={studentsToShow} belts={belts} />
             </div>
