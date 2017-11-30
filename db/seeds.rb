@@ -93,12 +93,12 @@ meeting_types.each do |type|
 
   # add instructor
   inst = Member.find_by_first_name("Rachel")
-  ir = Role.find_by_name("Teacher")
+  ir = Role.teacher_role
   mm = MeetingMember.find_or_create_by(meeting_id: meeting.id, member_id: inst.id, role_id: ir.id, belt_id: inst.belt.id)
   mm.save
 
   stu = Member.find_by_last_name("Hernandez")
-  sr = Role.find_by_name("Student")
-  mm = MeetingMember.find_or_create_by(meeting_id: meeting.id, member_id: stu.id, role_id: ir.id, belt_id: stu.belt.id)
+  sr = Role.student_role
+  mm = MeetingMember.find_or_create_by(meeting_id: meeting.id, member_id: stu.id, role_id: sr.id, belt_id: stu.belt.id)
   mm.save
 end

@@ -41,7 +41,8 @@ const fakeClasses = {
       },
       met: 'asdf',
       member_count: 1,
-      comment: ''
+      comment: '',
+      students: fakeStudents["data"],
     }
   ]
 };
@@ -75,9 +76,11 @@ describe('attendanceReducer', () => {
       );
     });
 
-    it('should normalize the class correctly', () => {
+    it('should normalize the classes correctly', () => {
       expect(state.get('$$attendance').get('classes').size).toEqual(1)
       expect(state.get('$$attendance').get('meeting_types').size).toEqual(1)
+      expect(state.get('$$attendance').get('students').size).toEqual(2)
+      expect(state.get('$$attendance').get('belts').size).toEqual(1)
 
       expect(state.get('$$attendance').get('meeting_types').get('1').get('name')).toEqual('Advanced')
     });

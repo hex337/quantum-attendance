@@ -26,14 +26,21 @@ class StudentsScreen extends BaseComponent {
 
   render() {
     const { data, actions, location, params } = this.props;
-    let students = data.students;
-    let belts = data.belts;
+    const { students, belts } = data;
+
+    let studentsToShow = [];
+
+    if (students) {
+      studentsToShow = students.valueSeq();
+    }
 
     return (
       <div>
-        <div className="container">
-          <StudentsList students={students} belts={belts} />
-        </div>
+        { students &&
+          <div className="container">
+            <StudentsList students={studentsToShow} belts={belts} />
+          </div>
+        }
       </div>
     );
   }

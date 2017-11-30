@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :members
 
   resources :meeting_members
+  get 'meeting_members/for_member/:member_id', controller: :meeting_members, action: :for_member
 
   resources :belts
 

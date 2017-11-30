@@ -7,6 +7,15 @@ class MeetingMembersController < ApplicationController
     @meeting_members = MeetingMember.all
   end
 
+  def for_member
+    meeting_members = MeetingMember.meetings_for_member(params[:member_id]).include(:meeting)
+    @meetings = meeting_members.collect { |mm| mm.meeting }
+
+    respond_to do |format|
+      format.json { render json: @meetings.to_json(include: :meeting_type) }
+    end
+  end
+
   # GET /meeting_members/1
   # GET /meeting_members/1.json
   def show
