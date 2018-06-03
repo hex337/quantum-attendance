@@ -17,7 +17,7 @@
         - if current_date != meeting.met.strftime("%a %b %d, %Y")
           - current_date = meeting.met.strftime("%a %b %d, %Y")
           %tr
-            %td{:colspan => "5", :style="font-weight: bold"}= current_date
+            %td{:colspan => "5", :style => "font-weight: bold"}= current_date
         - else
           %tr
             %td= link_to meeting.meeting_type.name, meeting_path(meeting)
