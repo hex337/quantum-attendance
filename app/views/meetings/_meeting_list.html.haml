@@ -12,7 +12,7 @@
         %th= t '.actions', :default => t("helpers.actions")
     %tbody
       %tr
-        %td{:colspan => "5", :style="font-weight: bold"}= current_date
+        %td{:colspan => "5", :style => "font-weight: bold"}= current_date
       - @meetings.each do |meeting|
         - if current_date != meeting.met.strftime("%a %b %d, %Y")
           - current_date = meeting.met.strftime("%a %b %d, %Y")
