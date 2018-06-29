@@ -18,15 +18,14 @@
           - current_date = meeting.met.strftime("%a %b %d, %Y")
           %tr
             %td{:colspan => "5", :style => "font-weight: bold"}= current_date
-        - else
-          %tr
-            %td= link_to meeting.meeting_type.name, meeting_path(meeting)
-            %td= meeting.met.in_time_zone('America/Los_Angeles').to_s(:long) if meeting.met
-            %td= meeting.members.count - 1
-            %td= meeting.comment
-            %td
-              = link_to t('.edit', :default => t("helpers.links.edit")), edit_meeting_path(meeting), :class => 'btn btn-default btn-xs'
-              = link_to t('.destroy', :default => t("helpers.links.destroy")), meeting_path(meeting), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger btn-xs'
+        %tr
+          %td= link_to meeting.meeting_type.name, meeting_path(meeting)
+          %td= meeting.met.in_time_zone('America/Los_Angeles').to_s(:long) if meeting.met
+          %td= meeting.members.count - 1
+          %td= meeting.comment
+          %td
+            = link_to t('.edit', :default => t("helpers.links.edit")), edit_meeting_path(meeting), :class => 'btn btn-default btn-xs'
+            = link_to t('.destroy', :default => t("helpers.links.destroy")), meeting_path(meeting), :method => :delete, :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) }, :class => 'btn btn-danger btn-xs'
 
 :javascript
   $(document).ready(function() {
