@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170415000346) do
+ActiveRecord::Schema.define(version: 20161213062944) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "belts", force: true do |t|
+  create_table "belts", force: :cascade do |t|
     t.string   "name"
     t.text     "comment"
     t.boolean  "is_active"
@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20170415000346) do
     t.datetime "updated_at"
   end
 
-  create_table "meeting_members", force: true do |t|
+  create_table "meeting_members", force: :cascade do |t|
     t.integer  "meeting_id"
     t.integer  "member_id"
     t.integer  "role_id"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20170415000346) do
   add_index "meeting_members", ["member_id"], name: "index_meeting_members_on_member_id", using: :btree
   add_index "meeting_members", ["role_id"], name: "index_meeting_members_on_role_id", using: :btree
 
-  create_table "meeting_types", force: true do |t|
+  create_table "meeting_types", force: :cascade do |t|
     t.string   "name"
     t.text     "comment"
     t.boolean  "is_active"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 20170415000346) do
     t.datetime "updated_at"
   end
 
-  create_table "meetings", force: true do |t|
+  create_table "meetings", force: :cascade do |t|
     t.integer  "meeting_type_id"
     t.datetime "met"
     t.text     "comment"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 20170415000346) do
   add_index "meetings", ["meeting_type_id"], name: "index_meetings_on_meeting_type_id", using: :btree
   add_index "meetings", ["met"], name: "index_meetings_on_met", using: :btree
 
-  create_table "members", force: true do |t|
+  create_table "members", force: :cascade do |t|
     t.string   "first_name"
     t.string   "last_name"
     t.integer  "belt_id"
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(version: 20170415000346) do
   add_index "members", ["belt_id"], name: "index_members_on_belt_id", using: :btree
   add_index "members", ["school_id"], name: "index_members_on_school_id", using: :btree
 
-  create_table "roles", force: true do |t|
+  create_table "roles", force: :cascade do |t|
     t.string   "name"
     t.text     "comment"
     t.boolean  "is_active"
@@ -84,7 +84,7 @@ ActiveRecord::Schema.define(version: 20170415000346) do
     t.datetime "updated_at"
   end
 
-  create_table "schools", force: true do |t|
+  create_table "schools", force: :cascade do |t|
     t.string   "name"
     t.text     "comment"
     t.boolean  "is_active"
