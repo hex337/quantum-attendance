@@ -179,7 +179,7 @@ class HomeController < ApplicationController
 
     member_counts.sort_by { |key, row| row[:total] }
 
-    @members_and_counts = member_counts
+    @members_and_counts = member_counts.sort_by { |key, row| row[:total] }
   end
 
   def people_per_class
