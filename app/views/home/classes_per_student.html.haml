@@ -15,13 +15,19 @@
     %thead
       %tr
         %th Student
-        %th # Classes
+        %th{ style: "text-align:center"} Total
+        %th{ style: "text-align:center"} Taught
+        %th{ style: "text-align:center"} Assisted
+        %th{ style: "text-align:center"} Took
     %tbody
-      - @members_and_counts.each do |tuple|
+      - @members_and_counts.each do |key, row|
         %tr
           %td
-            = link_to tuple[:member].full_name, member_path(tuple[:member])
-          %td{ style: "text-align:center"}= tuple[:count]
+            = link_to row[:member].full_name, member_path(row[:member])
+          %td{ style: "text-align:center"}= row[:total]
+          %td{ style: "text-align:center"}= row[Role.teacher_role_id]
+          %td{ style: "text-align:center"}= row[Role.assistant_role_id]
+          %td{ style: "text-align:center"}= row[Role.student_role_id]
 
 :javascript
   $(document).ready(function() {

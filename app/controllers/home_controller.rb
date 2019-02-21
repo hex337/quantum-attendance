@@ -148,18 +148,38 @@ class HomeController < ApplicationController
     days = @days = params[:days] || 7
     school_statement = current_school ? "AND meetings.school_id = #{current_school.id}" : ''
 
+    #query = MeetingMember.find_by_sql("
+    #  SELECT meeting_members.member_id, count(*)
+    #  FROM meeting_members
+    #  JOIN meetings ON meeting_members.meeting_id = meetings.id
+    #  WHERE meetings.met > (NOW() - INTERVAL '#{days}' DAY)
+    #  #{school_statement}
+    #  GROUP BY meeting_members.member_id
+    #  ORDER BY count(*) DESC
+    #")
+
     query = MeetingMember.find_by_sql("
-      SELECT meeting_members.member_id, count(*)
+      SELECT meeting_members.member_id, meeting_members.role_id, count(*)
       FROM meeting_members
       JOIN meetings ON meeting_members.meeting_id = meetings.id
       WHERE meetings.met > (NOW() - INTERVAL '#{days}' DAY)
       #{school_statement}
-      GROUP BY meeting_members.member_id
+      GROUP BY meeting_members.member_id, meeting_members.role_id
       ORDER BY count(*) DESC
     ")
 
-    memberAndCounts = query.collect{|row| { member: Member.find_by_id(row.member_id), count: row.count}}
-    @members_and_counts = memberAndCounts
+    member_counts = {}
+
+    query.each do |row|
+      member_counts[row.member_id] = { member: Member.find_by_id(row.member_id), total: 0, Role.student_role.id => 0, Role.teacher_role.id => 0, Role.assistant_role.id => 0 } unless member_counts.key?(row.member_id)
+
+      member_counts[row.member_id][row.role_id] = row.count
+      member_counts[row.member_id][:total] += row.count
+    end
+
+    member_counts.sort_by { |key, row| row[:total] }
+
+    @members_and_counts = member_counts
   end
 
   def people_per_class
