@@ -177,9 +177,7 @@ class HomeController < ApplicationController
       member_counts[row.member_id][:total] += row.count
     end
 
-    member_counts.sort_by { |key, row| row[:total] }
-
-    @members_and_counts = member_counts.sort_by { |key, row| row[:total] }
+    @members_and_counts = member_counts.sort_by { |key, row| row[:total] }.reverse
   end
 
   def people_per_class
