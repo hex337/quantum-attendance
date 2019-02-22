@@ -11,7 +11,7 @@
       %input#submit.btn.btn-primary{:type => 'submit', :value => 'Generate Report'}
 
 .container
-  %table.table.table-condensed
+  %table.table.table-striped.tablesorter#members-table
     %thead
       %tr
         %th Student
@@ -39,4 +39,8 @@
       window.location.href = url;
       return false;
     });
+  });
+
+  $(document).ready(function() {
+    $("#members-table").tablesorter();
   });
