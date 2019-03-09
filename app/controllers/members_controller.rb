@@ -41,7 +41,7 @@ class MembersController < ApplicationController
   # GET /members/1
   # GET /members/1.json
   def show
-    if params.has_key?(:meetings_to_show)
+    if params.key?(:meetings_to_show)
       session[:meetings_to_show] = params[:meetings_to_show]
     end
 

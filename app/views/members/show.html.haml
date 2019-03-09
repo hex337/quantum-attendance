@@ -61,13 +61,16 @@
     %tr
       %th= model_class.human_attribute_name(:meeting_type_id)
       %th= model_class.human_attribute_name(:met)
+      %th Role
       %th Num Students
       %th= model_class.human_attribute_name(:comment)
   %tbody
     - @member.meetings.order("met DESC").limit(@meetings_to_show).each do |meeting|
+      - mm = MeetingMember.where(member_id: @member.id, meeting_id: meeting.id).first
       %tr
         %td= link_to meeting.meeting_type.name, meeting_path(meeting)
         %td= meeting.met.in_time_zone('America/Los_Angeles').to_s(:long) if meeting.met
+        %td= mm.role.name
         %td= meeting.members.count
         %td= meeting.comment
 
