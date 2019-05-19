@@ -2,6 +2,15 @@
   %h1 Students per Class
 
 .container
+  .form-group
+    #datetimepicker.input-append.from_date
+      %label{"for" => "from_date"}
+        From:
+        %input#from_date.form-control{:data => {:format => "MM/dd/yyyy"}, :type => "date-local", :value => "#{(DateTime.now - 7.days).in_time_zone('America/Los_Angeles').strftime(date_format)}"}
+    #datetimepicker.input-append.to_date
+      %label{"for" => "to_date"}
+        To:
+        %input#to_date.form-control{:data => {:format => "MM/dd/yyyy"}, :type => "date-local", :value => "#{(DateTime.now).in_time_zone('America/Los_Angeles').strftime(date_format)}"}
   .form-inline
     .form-group
       %label{ "for" => "days" }
@@ -31,7 +40,9 @@
     $("#submit").click(function(event) {
       event.preventDefault();
       var url = window.location.protocol + "//" + window.location.host + window.location.pathname + "?" +
-        "days=" + String($("#days").val());
+        "days=" + String($("#days").val()) +
+        "&from_date=" + $("#from_date").val() +
+        "&to_date=" + $("#to_date").val();
 
       window.location.href = url;
       return false;
