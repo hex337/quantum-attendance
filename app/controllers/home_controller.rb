@@ -1,3 +1,4 @@
+require File.join(Rails.root, 'lib', 'date_parsing')
 require 'csv'
 
 class HomeController < ApplicationController
@@ -145,8 +146,12 @@ class HomeController < ApplicationController
   end
 
   def classes_per_student
+    # grab from and to date, otherwise use days
+    from_date = params[:from_date] || nil
+    to_date = params[:to_date] || nil
     days = @days = params[:days] || 7
     school_statement = current_school ? "AND meetings.school_id = #{current_school.id}" : ''
+    date_clause = ''
 
     #query = MeetingMember.find_by_sql("
     #  SELECT meeting_members.member_id, count(*)
@@ -158,11 +163,19 @@ class HomeController < ApplicationController
     #  ORDER BY count(*) DESC
     #")
 
+    if from_date.present? && to_date.present?
+      parsed_from = DateParsing.parseInputString(from_date)
+      parsed_to = DateParsing.parseInputString(to_date)
+      date_clause = "meetings.met >= '#{parsed_from.to_s(:db)}' AND meetings.met < '#{parsed_to.to_s(:db)}'"
+    else
+      date_clause = "meetings.met > (NOW() - INTERVAL '#{days}' DAY)"
+    end
+
     query = MeetingMember.find_by_sql("
       SELECT meeting_members.member_id, meeting_members.role_id, count(*)
       FROM meeting_members
       JOIN meetings ON meeting_members.meeting_id = meetings.id
-      WHERE meetings.met > (NOW() - INTERVAL '#{days}' DAY)
+      WHERE #{date_clause}
       #{school_statement}
       GROUP BY meeting_members.member_id, meeting_members.role_id
       ORDER BY count(*) DESC
@@ -181,14 +194,25 @@ class HomeController < ApplicationController
   end
 
   def people_per_class
+    from_date = params[:from_date] || nil
+    to_date = params[:to_date] || nil
     days = @days = params[:days] || 7
     school_statement = current_school ? "AND meetings.school_id = #{current_school.id}" : ''
+    date_clause = ''
+
+    if from_date.present? && to_date.present?
+      parsed_from = DateParsing.parseInputString(from_date)
+      parsed_to = DateParsing.parseInputString(to_date)
+      date_clause = "meetings.met >= '#{parsed_from.to_s(:db)}' AND meetings.met < '#{parsed_to.to_s(:db)}'"
+    else
+      date_clause = "meetings.met > (NOW() - INTERVAL '#{days}' DAY)"
+    end
 
     query = MeetingMember.find_by_sql("
       SELECT meeting_members.meeting_id, count(*)
       FROM meeting_members
       JOIN meetings ON meeting_members.meeting_id = meetings.id
-      WHERE meetings.met > (NOW() - INTERVAL '#{days}' DAY)
+      WHERE #{date_clause}
       #{school_statement}
       GROUP BY meeting_members.meeting_id
       ORDER BY count(*) DESC
