@@ -44,6 +44,19 @@ class Member < ActiveRecord::Base
     name
   end
 
+  # Priority for oldest
+  def age_role_to_str
+    if is_teen
+      'teen'
+    elsif is_kid
+      'kid'
+    elsif is_quark
+      'quark'
+    else
+      'adult'
+    end
+  end
+
   def meetings_for_last_30_days
     meetings = MeetingMember.meetings_for_member(self)
 
