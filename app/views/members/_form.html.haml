@@ -27,8 +27,18 @@
   .form-group
     .checkbox
       %label
+        = f.check_box :is_quark, :class => 'check_box'
+        Is Quark
+  .form-group
+    .checkbox
+      %label
         = f.check_box :is_kid, :class => 'check_box'
         Is Kid
+  .form-group
+    .checkbox
+      %label
+        = f.check_box :is_teen, :class => 'check_box'
+        Is Teen
   .form-actions
     = f.submit nil, :class => 'btn btn-primary'
     = link_to t('.cancel', :default => t("helpers.links.cancel")), |

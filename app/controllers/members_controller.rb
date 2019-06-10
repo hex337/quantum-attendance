@@ -97,7 +97,7 @@ class MembersController < ApplicationController
   # DELETE /members/1.json
   # We don't want to support this for now.
   def destroy
-    #@member.destroy
+    # @member.destroy
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
       format.json { head :no_content }
@@ -105,13 +105,14 @@ class MembersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_member
-      @member = Member.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the allowed list through.
-    def member_params
-      params.require(:member).permit(:first_name, :last_name, :belt_id, :school_id, :comment, :is_active, :is_teacher, :is_kid)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_member
+    @member = Member.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the allowed list through.
+  def member_params
+    params.require(:member).permit(:first_name, :last_name, :belt_id, :school_id, :comment, :is_active, :is_teacher, :is_quark, :is_kid, :is_teen)
+  end
 end

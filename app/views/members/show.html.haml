@@ -33,9 +33,19 @@
         %dd= @member.is_teacher
         %dt
           %strong
+            = model_class.human_attribute_name(:is_quark)
+            \:
+        %dd= @member.is_quark
+        %dt
+          %strong
             = model_class.human_attribute_name(:is_kid)
             \:
         %dd= @member.is_kid
+        %dt
+          %strong
+            = model_class.human_attribute_name(:is_teen)
+            \:
+        %dd= @member.is_teen
     .col-md-6
       .container-fluid
         .row

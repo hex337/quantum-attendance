@@ -9,7 +9,7 @@
       %th= model_class.human_attribute_name(:comment)
       %th= model_class.human_attribute_name(:is_active)
       %th= model_class.human_attribute_name(:is_teacher)
-      %th= model_class.human_attribute_name(:is_kid)
+      %th Age Role
       %th= t '.actions', :default => t("helpers.actions")
   %tbody
     - @members.each do |member|
@@ -20,7 +20,7 @@
         %td= member.comment
         %td= member.is_active
         %td= member.is_teacher
-        %td= member.is_kid
+        %td= member.age_role_to_str
         %td
           = link_to t('.edit', :default => t("helpers.links.edit")), edit_member_path(member), :class => 'btn btn-default'
 
