@@ -93,7 +93,7 @@ class MeetingsController < ApplicationController
     end
 
     if Rails.env.production?
-      Keen.publish_batch(:attendance => events)
+      # Keen.publish_batch(:attendance => events)
     end
 
     respond_to do |format|
@@ -186,7 +186,7 @@ class MeetingsController < ApplicationController
       events << mm.to_keen_props
     end
 
-    Keen.publish_batch(:attendance => events)
+    # Keen.publish_batch(:attendance => events)
 
     @meeting.met = meeting_params[:date]
     @meeting.meeting_type_id = meeting_params[:meeting_type]
