@@ -111,33 +111,4 @@
       .type('metric')
       .data({'result': #{@member.meetings_for_previous_30_days.length}})
       .render();
-
-    var client = new Keen({
-      projectId: "#{ENV['KEEN_PROJECT_ID']}",
-      readKey: "#{ENV['KEEN_READ_KEY']}"
-    });
-
-    var classTypes = new Keen.Dataviz()
-      .el("#class-types")
-      .height(175)
-      .title("Class Types Last 60 Days")
-      .type('pie')
-      .prepare();
-
-    client
-      .query('count', {
-        event_collection: 'attendance',
-        timeframe: 'this_60_days',
-        group_by: 'meeting.meeting_type.name',
-        filters: [
-          {
-            "operator": "eq",
-            "property_name": "member.id",
-            "property_value": #{@member.id}
-          }
-        ],
-      })
-      .then(function(res) {
-        classTypes.data(res).render();
-      });
   });
