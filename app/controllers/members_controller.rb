@@ -95,9 +95,8 @@ class MembersController < ApplicationController
 
   # DELETE /members/1
   # DELETE /members/1.json
-  # We don't want to support this for now.
   def destroy
-    # @member.destroy
+    @member.destroy
     respond_to do |format|
       format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
       format.json { head :no_content }
