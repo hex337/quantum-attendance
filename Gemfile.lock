@@ -114,7 +114,7 @@ GEM
     puma (3.12.2)
     quiet_safari (1.0.0)
       railties (>= 3.1.0)
-    rack (1.6.11)
+    rack (1.6.12)
     rack-test (0.6.3)
       rack (>= 1.0)
     rails (4.2.8)
