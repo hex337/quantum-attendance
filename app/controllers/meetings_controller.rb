@@ -65,18 +65,16 @@ class MeetingsController < ApplicationController
 
     memberIds = meeting_params[:students].split(",")
     assistIds = meeting_params[:assistants].split(",")
-    studentRole = Role.student_role
-    instructorRole = Role.teacher_role
-    assistantRole = Role.assistant_role
+    student_role = Role.student_role
+    instructor_role = Role.teacher_role
+    assistant_role = Role.assistant_role
 
     # Create an array of tuples, role to member to then add.
     students = Member.find(memberIds)
     assistants = Member.find(assistIds)
     instructor = Member.find(meeting_params[:instructor])
 
-    mmembs = students.collect {|mem| [studentRole, mem]} + assistants.collect {|mem| [assistantRole, mem]} + [instructor].collect {|mem| [instructorRole, mem]}
-
-    events = []
+    mmembs = students.collect {|mem| [student_role, mem]} + assistants.collect {|mem| [assistant_role, mem]} + [instructor].collect {|mem| [instructor_role, mem]}
 
     mmembs.each do |mmem|
       puts mmem.inspect
@@ -89,11 +87,6 @@ class MeetingsController < ApplicationController
       })
 
       mm.save
-      events << mm.to_keen_props
-    end
-
-    if Rails.env.production?
-      # Keen.publish_batch(:attendance => events)
     end
 
     respond_to do |format|
@@ -110,25 +103,25 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
-    instructorId = @meeting.instructor.id
-    studentRole = Role.student_role
-    instructorRole = Role.teacher_role
-    assistantRole = Role.assistant_role
+    instructor_id = @meeting.instructor.id
+    student_role = Role.student_role
+    instructor_role = Role.teacher_role
+    assistant_role = Role.assistant_role
 
     currentStudentIds = []
     currentAssistantIds = []
 
     @meeting.meeting_members.each do |mm|
       case mm.role_id
-      when studentRole.id
+      when student_role.id
         currentStudentIds << mm.member_id
-      when assistantRole.id
+      when assistant_role.id
         currentAssistantIds << mm.member_id
       end
     end
 
     currentMemberIds = @meeting.meeting_members.collect{|mm| mm.member_id}
-    currentMemberIds.delete(instructorId)
+    currentMemberIds.delete(instructor_id)
 
     studentIds = meeting_params[:students].split(",").collect{|id| id.to_i}
     assistantIds = meeting_params[:assistants].split(",").collect{|id| id.to_i}
@@ -145,13 +138,18 @@ class MeetingsController < ApplicationController
     MeetingMember.delete(mmStudentIds) unless mmStudentIds.empty?
     MeetingMember.delete(mmAssistantIds) unless mmAssistantIds.empty?
 
-    if meeting_params[:instructor].to_i != instructorId
+    if meeting_params[:instructor].to_i != instructor_id
+      # delete old instructor
+      mm_instructor_id = @meeting.meeting_members.select{|mm| mm.member_id == instructor_id}.collect{|mm| mm.id}
+      MeetingMember.delete(mm_instructor_id)
+
+      # add new one
       instructor = Member.find_by_id(meeting_params[:instructor])
       instMeetingMem = MeetingMember.new({
         meeting: @meeting,
         member: instructor,
         belt: instructor.belt,
-        role: instructorRole,
+        role: instructor_role,
       })
 
       instMeetingMem.save
@@ -161,17 +159,16 @@ class MeetingsController < ApplicationController
 
     if !studentsToAdd.empty?
       Member.find(studentsToAdd).each do |mem|
-        mmembs << [studentRole, mem]
+        mmembs << [student_role, mem]
       end
     end
 
     if !assistantsToAdd.empty?
       Member.find(assistantsToAdd).each do |mem|
-        mmembs << [assistantRole, mem]
+        mmembs << [assistant_role, mem]
       end
     end
 
-    events = []
     mmembs.each do |mmem|
       role, member = mmem
 
@@ -183,10 +180,7 @@ class MeetingsController < ApplicationController
       })
 
       mm.save
-      events << mm.to_keen_props
     end
-
-    # Keen.publish_batch(:attendance => events)
 
     @meeting.met = meeting_params[:date]
     @meeting.meeting_type_id = meeting_params[:meeting_type]
