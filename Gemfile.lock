@@ -111,7 +111,7 @@ GEM
       mini_portile2 (~> 2.4.0)
     pg (0.21.0)
     public_suffix (3.0.3)
-    puma (3.12.3)
+    puma (3.12.4)
     quiet_safari (1.0.0)
       railties (>= 3.1.0)
     rack (1.6.12)
