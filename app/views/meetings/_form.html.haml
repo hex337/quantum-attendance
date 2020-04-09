@@ -12,7 +12,10 @@
   .form-group
     = f.label :instructor
     %select#instructor.form-control{:name => "meeting[instructor]"}
-      = options_for_select(@inst_for_select, @meeting.instructor.id)
+      - if @meeting.instructor.is_a?(Member)
+        = options_for_select(@inst_for_select, @meeting.instructor.id)
+      - else
+        = options_for_select(@inst_for_select)
   .form-group
     = f.label :met
     = f.datetime_local_field :met, {:type => "datetime-local", :data => {:format => "MM/dd/yyyy hh:mm PP"}, :class => "form-control"}
