@@ -103,7 +103,7 @@ class MeetingsController < ApplicationController
   # PATCH/PUT /meetings/1
   # PATCH/PUT /meetings/1.json
   def update
-    instructor_id = @meeting.instructor.id
+    instructor_id = @meeting.instructor.is_a?(Member) ? @meeting.instructor.id : nil
     student_role = Role.student_role
     instructor_role = Role.teacher_role
     assistant_role = Role.assistant_role
@@ -121,7 +121,7 @@ class MeetingsController < ApplicationController
     end
 
     currentMemberIds = @meeting.meeting_members.collect{|mm| mm.member_id}
-    currentMemberIds.delete(instructor_id)
+    currentMemberIds.delete(instructor_id) if instructor_id
 
     studentIds = meeting_params[:students].split(",").collect{|id| id.to_i}
     assistantIds = meeting_params[:assistants].split(",").collect{|id| id.to_i}
@@ -139,9 +139,11 @@ class MeetingsController < ApplicationController
     MeetingMember.delete(mmAssistantIds) unless mmAssistantIds.empty?
 
     if meeting_params[:instructor].to_i != instructor_id
-      # delete old instructor
-      mm_instructor_id = @meeting.meeting_members.select{|mm| mm.member_id == instructor_id}.collect{|mm| mm.id}
-      MeetingMember.delete(mm_instructor_id)
+      if instructor_id
+        # delete old instructor
+        mm_instructor_id = @meeting.meeting_members.select{|mm| mm.member_id == instructor_id}.collect{|mm| mm.id}
+        MeetingMember.delete(mm_instructor_id)
+      end
 
       # add new one
       instructor = Member.find_by_id(meeting_params[:instructor])
@@ -157,13 +159,13 @@ class MeetingsController < ApplicationController
 
     mmembs = []
 
-    if !studentsToAdd.empty?
+    unless studentsToAdd.empty?
       Member.find(studentsToAdd).each do |mem|
         mmembs << [student_role, mem]
       end
     end
 
-    if !assistantsToAdd.empty?
+    unless assistantsToAdd.empty?
       Member.find(assistantsToAdd).each do |mem|
         mmembs << [assistant_role, mem]
       end
