@@ -17,7 +17,10 @@
   %dt
     %strong
       Instructor:
-  %dd= link_to @meeting.instructor&.full_name, @meeting.instructor
+  - if @meeting.instructor.is_a?(Member)
+    %dd= link_to @meeting.instructor&.full_name, @meeting.instructor
+  - else
+    %dd No Instructor
   %dt
     %strong
       Teaching Assistants:
