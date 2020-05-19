@@ -91,7 +91,7 @@
       });
     });
 
-    window.mem.addMembers([#{@students.collect{|mm| "{id:" + mm.member.id.to_s + ", value: \"" + mm.member.full_name + "\"}"}.join(',').html_safe}]);
+    window.mem.addMembers([#{@students.collect{|mm| "{id:" + mm.member.id.to_s + ", value: \"" + mm.member.full_name + " (" + mm.member.school.name + ") - " + mm.member.belt.name + "\"}"}.join(',').html_safe}]);
 
     $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
       window.mem.addMember(item);
@@ -99,7 +99,7 @@
       $(".typeahead").typeahead("val", "");
     });
 
-    window.assist.addAssistants([#{@assistants.collect{|mm| "{id:" + mm.member.id.to_s + ", value: \"" + mm.member.full_name + "\"}"}.join(',').html_safe}]);
+    window.assist.addAssistants([#{@assistants.collect{|mm| "{id:" + mm.member.id.to_s + ", value: \"" + mm.member.full_name + " (" + mm.member.school.name + ") - " + mm.member.belt.name + "\"}"}.join(',').html_safe}]);
 
     $("#find-student .typeahead").on('typeahead:selected', function(evt, item) {
       window.mem.addMember(item);

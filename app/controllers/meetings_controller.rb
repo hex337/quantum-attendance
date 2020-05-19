@@ -22,7 +22,8 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/new
   def new
-    @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
+    # @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
+    @instructors = Member.active.where(is_teacher: true).order(:first_name)
     @inst_for_select = @instructors.collect{|inst| [inst.full_name, inst.id]}
     @members = Member.for_school(@_current_school)
     @meeting = Meeting.new
@@ -30,8 +31,9 @@ class MeetingsController < ApplicationController
 
   # GET /meetings/1/edit
   def edit
-    @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
-    @inst_for_select = @instructors.collect{|inst| [inst.full_name, inst.id]}
+    # @instructors = Member.for_school(@_current_school).active.where(is_teacher: true).order(:first_name)
+    @instructors = Member.active.where(is_teacher: true).order(:first_name)
+    @inst_for_select = @instructors.collect{ |inst| [inst.full_name, inst.id] }
     @students = @meeting.students
     @assistants = @meeting.assistants
     @meeting[:met] = @meeting[:met].in_time_zone('America/Los_Angeles')
@@ -210,13 +212,14 @@ class MeetingsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_meeting
-      @meeting = Meeting.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def meeting_params
-      params.require(:meeting).permit(:meeting_type, :date, :instructor, :assistants, :students, :comment)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_meeting
+    @meeting = Meeting.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def meeting_params
+    params.require(:meeting).permit(:meeting_type, :date, :instructor, :assistants, :students, :comment)
+  end
 end

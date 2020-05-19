@@ -36,7 +36,7 @@
       Students:
   %dd
     - @meeting.students.each do |mm|
-      = link_to mm.member.full_name, mm.member
+      = link_to "#{mm.member.full_name} (#{mm.member.school.name}) - #{mm.member.belt.name}", mm.member
       %br
   %dt
     %strong
