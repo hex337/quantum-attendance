@@ -37,6 +37,11 @@
 
             #assistants-select-container
               %h4 Add Assistants:
+              .dataset-selector{:style => "padding-bottom: 3px"}
+                .checkbox
+                  %label
+                    = check_box_tag "use_all_schools, 1, false
+                    Use All Schools
 
               .find-input
                 %input{:type => "text", :class => "typeahead form-control", :placeholder => "Find an Assistant"}
@@ -259,12 +264,27 @@
       $('.typeahead').typeahead('val', '');
     });
 
+    var useAllSchoolsBox = $("#use_all_schools");
     var assistMembers = [#{Member.members_for_typeahead(@_current_school).map{|mem| mem.to_json}.join(",").html_safe}];
+    var assistAllMembers = [#{Member.members_for_typeahead().map{|mem| mem.to_json}.join(",").html_safe}];
 
     var assistEngine = new Bloodhound({
       datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value', 'belt'),
       queryTokenizer: Bloodhound.tokenizers.whitespace,
       local: assistMembers
+    });
+
+    useAllStudentsBox.change(function() {
+      if ($(this).is(":checked")) {
+        assistEngine.clear();
+        assistEngine.add(assistAllMembers);
+        console.log("Assistant Search: updated to have all members.");
+      }
+      else {
+        assistEngine.clear();
+        assistEngine.add(assistMembers);
+        console.log("Assistant Search: updated to only have current school's members.");
+      }
     });
 
     $('#assistants-select-container .typeahead').typeahead({
