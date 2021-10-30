@@ -60,7 +60,7 @@ class HomeController < ApplicationController
       INNER JOIN meeting_types ON (meetings.meeting_type_id = meeting_types.id)
       INNER JOIN roles ON (meeting_members.role_id = roles.id)
       INNER JOIN belts ON (meeting_members.belt_id = belts.id)
-      INNER JOIN schools ON (meetings.school_id = schools.id)
+      INNER JOIN schools ON (members.school_id = schools.id)
       WHERE meetings.met >= '#{startTime}' AND meetings.met < '#{endTime}' #{school_clause}
     ")
 
@@ -76,7 +76,7 @@ class HomeController < ApplicationController
         time = row.attributes["class_date"]
         date = DateTime.parse(time.to_s).in_time_zone('America/Los_Angeles')
         formattedDate = date.strftime("%Y-%m-%d %H:%M")
-        vals = row.attributes.values
+        vals = row.attributes.values.delete_if {|ele| ele.blank? }
         vals[5] = formattedDate
         csv << vals
       end
