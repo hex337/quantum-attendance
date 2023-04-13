@@ -76,6 +76,7 @@ GEM
     erubis (2.7.0)
     execjs (2.8.1)
     ffi (1.15.5)
+    fileutils (1.7.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
     haml (6.1.1)
@@ -244,6 +245,7 @@ DEPENDENCIES
   coffee-rails
   dotenv-rails
   erb2haml
+  fileutils
   haml
   jbuilder (~> 2.0)
   jquery-rails
