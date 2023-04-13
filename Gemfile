@@ -9,7 +9,7 @@ gem 'rails', '5.2.8'
 # Use sqlite3 as the database for Active Record
 gem 'pg', '~> 0.21'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+# gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer',  platforms: :ruby
 
