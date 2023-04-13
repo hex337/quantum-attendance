@@ -1,4 +1,4 @@
-class AddForeignKeyIndexes < ActiveRecord::Migration
+class AddForeignKeyIndexes < ActiveRecord::Migration[4.2]
   def change
     add_index :meetings, :meeting_type_id
     add_index :members, :belt_id

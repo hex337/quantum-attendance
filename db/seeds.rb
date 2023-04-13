@@ -46,36 +46,41 @@ students = [
     first_name: "Alex",
     last_name: "Kleissner",
     school: "Seattle",
-    belt: "high yellow"
+    belt: "high yellow",
+    is_teacher: false,
   },
   {
     first_name: "Tony",
     last_name: "Evans",
     school: "Seattle",
-    belt: "red"
+    belt: "red",
+    is_teacher: true,
   },
   {
     first_name: "Derrick",
     last_name: "Louie",
     school: "Seattle",
-    belt: "high white"
+    belt: "high white",
+    is_teacher: false,
   },
   {
     first_name: "Anthony",
     last_name: "Hernandez",
     school: "San Francisco",
-    belt: "high yellow"
+    belt: "high yellow",
+    is_teacher: false,
   },
   {
     first_name: "Rachael",
     last_name: "Evans",
     school: "San Francisco",
-    belt: "black"
+    belt: "black",
+    is_teacher: true,
   }
 ]
 
 students.each do |student|
-  member = Member.create_with(is_active: true).find_or_create_by(first_name: student[:first_name], last_name: student[:last_name])
+  member = Member.create_with(is_active: true, is_teacher: student[:is_teacher]).find_or_create_by(first_name: student[:first_name], last_name: student[:last_name])
   member.belt = Belt.find_by_name(student[:belt])
   member.school = School.find_by_name(student[:school])
   member.save
