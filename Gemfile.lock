@@ -1,5 +1,5 @@
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     actioncable (5.2.8)
       actionpack (= 5.2.8)
@@ -132,6 +132,7 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.14.3-x86_64-linux)
       racc (~> 1.4)
+    openssl (3.1.0)
     pg (0.21.0)
     public_suffix (5.0.1)
     puma (6.2.1)
@@ -248,6 +249,7 @@ DEPENDENCIES
   jquery-rails
   jquery-tablesorter
   keen
+  openssl
   pg (~> 0.21)
   puma
   quiet_safari

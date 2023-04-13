@@ -1,6 +1,7 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 ruby '2.7.8'
 
+gem "openssl"
 gem "sassc-rails"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '5.2.8'
