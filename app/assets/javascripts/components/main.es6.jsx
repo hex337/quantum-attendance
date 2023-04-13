@@ -1,4 +1,4 @@
-var Main = React.createClass({
+var Main = React.Component({
   render() {
     return (
       <div>

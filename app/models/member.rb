@@ -1,4 +1,4 @@
-class Member < ActiveRecord::Base
+class Member < ApplicationRecord
   belongs_to :belt
   belongs_to :school
   has_many :meeting_members

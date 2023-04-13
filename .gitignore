@@ -16,6 +16,8 @@ pickle-email-*.html
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
 
+public/assets/*
+
 ## Environment normalisation:
 /.bundle
 /vendor/bundle

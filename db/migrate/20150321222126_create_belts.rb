@@ -1,4 +1,4 @@
-class CreateBelts < ActiveRecord::Migration
+class CreateBelts < ActiveRecord::Migration[4.2]
   def change
     create_table :belts do |t|
       t.string :name

@@ -1,4 +1,4 @@
-var Header = React.createClass({
+var Header = React.Component({
   render() {
     return (
       <div>

@@ -1,4 +1,4 @@
-class Role < ActiveRecord::Base
+class Role < ApplicationRecord
   STUDENT = "Student"
   TEACHER = "Teacher"
   ASSISTANT = "Teaching Assistant"
