@@ -1,2 +1,2 @@
-class School < ActiveRecord::Base
+class School < ApplicationRecord
 end

@@ -1,4 +1,4 @@
-class Meeting < ActiveRecord::Base
+class Meeting < ApplicationRecord
   default_scope { order("met DESC") }
 
   scope :met_between, ->(start_time, end_time) { where("met >= ? AND met < ?", end_time, start_time) }

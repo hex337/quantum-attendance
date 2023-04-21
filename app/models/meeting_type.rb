@@ -1,3 +1,3 @@
-class MeetingType < ActiveRecord::Base
+class MeetingType < ApplicationRecord
   has_many :meetings
 end

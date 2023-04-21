@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   before_action :check_school
-  before_filter :authenticate
+  before_action :authenticate
 
   def current_school
     @_current_school ||= session[:current_school_id] && School.find(session[:current_school_id])
