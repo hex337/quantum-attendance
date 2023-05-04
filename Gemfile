@@ -1,13 +1,13 @@
 source 'https://rubygems.org'
-ruby '2.7.8'
+ruby '3.1.4'
 
 gem "fileutils"
 gem "openssl"
 gem "sassc-rails"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.8'
+gem 'rails', '6.1.7.3'
 # Use sqlite3 as the database for Active Record
-gem 'pg', '~> 0.21'
+gem 'pg'
 # Use Uglifier as compressor for JavaScript assets
 # gem 'uglifier', '>= 1.3.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
