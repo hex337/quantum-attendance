@@ -136,7 +136,7 @@ GEM
     openssl (3.1.0)
     pg (0.21.0)
     public_suffix (5.0.1)
-    puma (6.2.1)
+    puma (6.3.1)
       nio4r (~> 2.0)
     quiet_safari (1.0.0)
       railties (>= 3.1.0)
