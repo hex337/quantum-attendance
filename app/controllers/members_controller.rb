@@ -3,6 +3,8 @@ class MembersController < ApplicationController
   MEMBERS_LIMIT_DEFAULT = 50
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
+  skip_before_action :verify_authenticity_token
+
   # GET /members
   # GET /members.json
   def index
