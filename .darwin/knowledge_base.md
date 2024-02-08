@@ -1,0 +1,17 @@
+- Uses Rails framework
+- Uses PostgreSQL as the database
+- Uses ActiveRecord for ORM
+- Uses Haml for views
+- Uses React for some components
+- Uses Bootstrap for styling
+- Uses FontAwesome for icons
+- Uses HTTP Basic Authentication in production environment
+- Has models for Belt, MeetingType, Member, Meeting, MeetingMember, Role, School
+- Has controllers for each model and HomeController
+- Has views for each model and home
+- Has helpers for each model and application
+- Has tests for models, controllers, and helpers
+- Has database migrations for each model
+- Has routes for each model and some custom routes
+- Uses session for storing current school
+- Uses environment variables for authentication credentials
