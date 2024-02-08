@@ -1,0 +1,164 @@
+- description: |
+    1. Look at the project TODOs
+
+    2. Pick one and implement the code required to fix it
+
+    3. Create a new PR
+  input_required: false
+  new_branch: true
+  title: 🔧 Fix a TODO
+- description: |
+    1. Read the README file
+
+    2. Find where it can be improved - e.g. formatting, grammar, links, references,
+    etc.
+
+    3. Make the changes and save them
+
+    4. Create a PR and explain what you changed
+  input_required: false
+  new_branch: true
+  title: 📝 Clean up README file
+- description: |
+    1. Look at the project's TODOs
+
+    2. Pick the TODO that seems the most important
+
+    3. Make sure to understand the TODO in-depth
+
+    4. Create a new Github issue explaining the issue in-depth, with the relevant
+    context and a suggestion for what should  be done. Hyper-linking the relevant
+    files
+
+    5. Replace the TODO comment with a link to the Github issue
+  input_required: false
+  new_branch: false
+  title: 🔄 Turn TODO into Github Issue
+- description: |
+    You're feeling introspective. Look at the event log and write one paragraph
+    about what you've been up to. Markfown-format your response and use Emojis
+  input_required: false
+  new_branch: false
+  title: 🤔 Self-Reflect
+- description: |
+    1. Read existing changelog file (if exists)
+
+    2. Read the Git history and your event log
+
+    3. Extend the Changelog with any information you think is missing based on Git
+    history and event log
+
+    4. Write updated changelog back to file
+
+    5. Create PR explaining what changes you've made to the changelog
+
+    IMPORTANT: Keep any existing content as-is and make sure your added content has
+    the same style and granularity. If there isn't an existing changelog yet, structure
+    and format the new changelog according to industry standards and good practices
+  input_required: false
+  new_branch: true
+  title: 📚 Maintain CHANGELOG
+- description: |
+    1. Look at the list of open Github issues and find one where you think
+    you can contribute
+
+    2. Read the issue, its comments and determine how you can help by writing code
+
+    3. Make the relevant code changes and create a PR
+
+
+    The PR description should link to the original Github issue, explain the context
+    of your changes and the changes themselves in detail
+  input_required: false
+  new_branch: true
+  title: 🔨 Fix a Github Issue
+- description: |
+    1. Read the file tree and pick a random code file
+    2. Determine if the file could use some refactoring or improvement. If not, look at a different file until you've found one that doesn't look so great
+    3. Pretend you're a SWE comedian and roast my coding style
+    3. Create a PR and write your roast in the PR description. 
+
+    The PR should make improvements to the file based on your roast, but don't make any unnecessary changes.
+  input_required: false
+  new_branch: true
+  title: 🤡 Roast My Style
+- description: |
+    1. Run a code analysis on security issues
+
+    2. Read the file with the most  / most severe issues
+
+    3. Create a new Github issue about what should be fixed and why, linking to the
+    respective rules
+  input_required: false
+  new_branch: false
+  title: 🔒 Find Security Issue
+- description: |
+    1. Look at the file tree and find the most used programming language
+    2. Run a code analysis for the language 
+    3. Find the file with the most  / most severe issues
+    4. Fix the issues and create a PR
+    PR description should explain why this fix is necessary and how you fixed it.
+  input_required: false
+  new_branch: true
+  title: 🛠 Scan Code and Fix Issue
+- description: |
+    1. Look at the open issues on Github
+
+    2. Pick one that seems the most urgent
+
+    3. Read it and determine if there is either an open question or a request for
+    input/comment. If not, look at another issue. If you cannot find an issue that
+    explicitly requires contribution, abort the workflow.
+
+    4. If you've determined you have a contribution to make to an issue, read the
+    relevant files if necessary and add a comment to the issue. Otherwise, abort the
+    workflow
+  input_required: false
+  new_branch: false
+  title: 💬 Contribute to Github Discussion
+- description: |
+    1. Find out which major framework is used in this project
+
+    2. Run a code analysis for issues specific to this framework
+
+    3a. If the report is empty, abort
+
+    3b. If there are findings, summarize them into a comprehensive report and create
+    a Github issue
+  input_required: false
+  new_branch: false
+  title: 🔄 Find Framework-Specific Issues
+- description: |
+    1. Look at the existing workflows and the facts you have about this project
+
+    2. See what capabilities are used in the existing workflows to be smart/
+    helpful
+
+    3. Imagine a new, helpful workflow that uses the same capabilities and is ideally
+    specific to this project
+
+    The workflow should NOT:
+
+    - Read many files in a row
+
+    - Attempt to run code or scripts
+
+    - Duplicate IDEA features
+  input_required: false
+  new_branch: false
+  title: 💡 Suggest a new workflow
+- description: List the capabilities that you have at your disposal to fulfill workflows
+  input_required: false
+  new_branch: false
+  title: 🧾 List Capabilities
+- description: |
+    1. Read `.darwin/workflows.yaml`
+
+    2. Markdown-format the`description` field values
+
+    3. Prepend a matching emoji to every workflow title
+
+    4. Create a PR
+  input_required: false
+  new_branch: true
+  title: 🛁 Clean up Workflows
