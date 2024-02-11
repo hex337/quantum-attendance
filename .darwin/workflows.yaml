@@ -89,20 +89,3 @@
   labels: []
   new_branch: false
   title: "\U0001F4AC Contribute to Github Discussion"
-- description: '1. Read `.darwin/workflows.yaml`
-
-
-    2. Markdown-format the`description` field values
-
-
-    3. Prepend a matching emoji to every workflow title
-
-
-    4. Create a PR
-
-    '
-  id: clean-up-workflows
-  input_required: false
-  labels: []
-  new_branch: true
-  title: "\U0001F6C1 Clean up Workflows"
