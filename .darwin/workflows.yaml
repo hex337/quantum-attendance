@@ -89,37 +89,6 @@
   labels: []
   new_branch: false
   title: "\U0001F4AC Contribute to Github Discussion"
-- description: '1. Look at the existing workflows and the facts you have about this
-    project
-
-
-    2. See what capabilities are used in the existing workflows to be smart/
-
-    helpful
-
-
-    3. Imagine a new, helpful workflow that uses the same capabilities and is ideally
-
-    specific to this project
-
-
-    The workflow should NOT:
-
-
-    - Read many files in a row
-
-
-    - Attempt to run code or scripts
-
-
-    - Duplicate IDEA features
-
-    '
-  id: suggest-a-new-workflow
-  input_required: false
-  labels: []
-  new_branch: false
-  title: "\U0001F4A1 Suggest a new workflow"
 - description: List the capabilities that you have at your disposal to fulfill workflows
   id: list-capabilities
   input_required: false
