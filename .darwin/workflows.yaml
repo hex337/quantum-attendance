@@ -17,35 +17,6 @@
   labels: []
   new_branch: true
   title: "\U0001F4DD Clean up README file"
-- description: '1. Read existing changelog file (if exists)
-
-
-    2. Read the Git history and your event log
-
-
-    3. Extend the Changelog with any information you think is missing based on Git
-
-    history and event log
-
-
-    4. Write updated changelog back to file
-
-
-    5. Create PR explaining what changes you''ve made to the changelog
-
-
-    IMPORTANT: Keep any existing content as-is and make sure your added content has
-
-    the same style and granularity. If there isn''t an existing changelog yet, structure
-
-    and format the new changelog according to industry standards and good practices
-
-    '
-  id: maintain-changelog
-  input_required: false
-  labels: []
-  new_branch: true
-  title: "\U0001F4DA Maintain CHANGELOG"
 - description: '1. Look at the list of open Github issues and find one where you think
 
     you can contribute
