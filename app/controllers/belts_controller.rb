@@ -28,7 +28,7 @@ class BeltsController < ApplicationController
 
     respond_to do |format|
       if @belt.save
-        format.html { redirect_to @belt, notice: 'Belt was successfully created.' }
+        format.html { redirect_to belt_url(@belt), notice: 'Belt was successfully created.' }
         format.json { render :show, status: :created, location: @belt }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class BeltsController < ApplicationController
   def update
     respond_to do |format|
       if @belt.update(belt_params)
-        format.html { redirect_to @belt, notice: 'Belt was successfully updated.' }
+        format.html { redirect_to belt_url(@belt), notice: 'Belt was successfully updated.' }
         format.json { render :show, status: :ok, location: @belt }
       else
         format.html { render :edit }
@@ -64,7 +64,7 @@ class BeltsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_belt
-      @belt = Belt.find(params[:id])
+      @belt = current_user.belts.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
