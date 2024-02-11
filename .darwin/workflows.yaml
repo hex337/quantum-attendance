@@ -17,30 +17,6 @@
   labels: []
   new_branch: true
   title: "\U0001F4DD Clean up README file"
-- description: '1. Look at the project''s TODOs
-
-
-    2. Pick the TODO that seems the most important
-
-
-    3. Make sure to understand the TODO in-depth
-
-
-    4. Create a new Github issue explaining the issue in-depth, with the relevant
-
-    context and a suggestion for what should  be done. Hyper-linking the relevant
-
-    files
-
-
-    5. Replace the TODO comment with a link to the Github issue
-
-    '
-  id: turn-todo-into-github-issue
-  input_required: false
-  labels: []
-  new_branch: false
-  title: "\U0001F504 Turn TODO into Github Issue"
 - description: 'You''re feeling introspective. Look at the event log and write one
     paragraph
 
