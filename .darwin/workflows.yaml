@@ -89,12 +89,6 @@
   labels: []
   new_branch: false
   title: "\U0001F4AC Contribute to Github Discussion"
-- description: List the capabilities that you have at your disposal to fulfill workflows
-  id: list-capabilities
-  input_required: false
-  labels: []
-  new_branch: false
-  title: "\U0001F9FE List Capabilities"
 - description: '1. Read `.darwin/workflows.yaml`
 
 
