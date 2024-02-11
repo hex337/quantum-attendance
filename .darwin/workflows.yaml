@@ -17,17 +17,6 @@
   labels: []
   new_branch: true
   title: "\U0001F4DD Clean up README file"
-- description: 'You''re feeling introspective. Look at the event log and write one
-    paragraph
-
-    about what you''ve been up to. Markfown-format your response and use Emojis
-
-    '
-  id: self-reflect
-  input_required: false
-  labels: []
-  new_branch: false
-  title: "\U0001F914 Self-Reflect"
 - description: '1. Read existing changelog file (if exists)
 
 
