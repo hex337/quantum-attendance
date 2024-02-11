@@ -39,22 +39,6 @@
   labels: []
   new_branch: true
   title: "\U0001F528 Fix a Github Issue"
-- description: '1. Run a code analysis on security issues
-
-
-    2. Read the file with the most  / most severe issues
-
-
-    3. Create a new Github issue about what should be fixed and why, linking to the
-
-    respective rules
-
-    '
-  id: find-security-issue
-  input_required: false
-  labels: []
-  new_branch: false
-  title: "\U0001F512 Find Security Issue"
 - description: "1. Look at the file tree and find the most used programming language\n\
     2. Run a code analysis for the language \n3. Find the file with the most  / most\
     \ severe issues\n4. Fix the issues and create a PR\nPR description should explain\
