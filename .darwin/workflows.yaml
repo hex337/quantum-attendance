@@ -39,15 +39,6 @@
   labels: []
   new_branch: true
   title: "\U0001F528 Fix a Github Issue"
-- description: "1. Look at the file tree and find the most used programming language\n\
-    2. Run a code analysis for the language \n3. Find the file with the most  / most\
-    \ severe issues\n4. Fix the issues and create a PR\nPR description should explain\
-    \ why this fix is necessary and how you fixed it.\n"
-  id: scan-code-and-fix-issue
-  input_required: false
-  labels: []
-  new_branch: true
-  title: "\U0001F6E0 Scan Code and Fix Issue"
 - description: '1. Look at the open issues on Github
 
 
@@ -73,3 +64,13 @@
   labels: []
   new_branch: false
   title: "\U0001F4AC Contribute to Github Discussion"
+- description: "1. Look at the file tree and find the most used programming language\n\
+    2. Run a code analysis for the language \n3. Find the file with the most  / most\
+    \ severe issues. Make sure there isn't already a Github issue/PR for this, otherwise\
+    \ pick a different file\n4. Fix the issues and create a PR\nPR description should\
+    \ explain why this fix is necessary and how you fixed it.\n"
+  id: scan-code-and-fix-issue
+  input_required: false
+  labels: []
+  new_branch: true
+  title: "\U0001F6E0 Scan Code and Fix Issue"
