@@ -39,17 +39,6 @@
   labels: []
   new_branch: true
   title: "\U0001F528 Fix a Github Issue"
-- description: "1. Read the file tree and pick a random code file\n2. Determine if\
-    \ the file could use some refactoring or improvement. If not, look at a different\
-    \ file until you've found one that doesn't look so great\n3. Pretend you're a\
-    \ SWE comedian and roast my coding style\n3. Create a PR and write your roast\
-    \ in the PR description. \n\nThe PR should make improvements to the file based\
-    \ on your roast, but don't make any unnecessary changes.\n"
-  id: roast-my-style
-  input_required: false
-  labels: []
-  new_branch: true
-  title: "\U0001F921 Roast My Style"
 - description: '1. Run a code analysis on security issues
 
 
