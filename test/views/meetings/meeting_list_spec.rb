@@ -9,7 +9,7 @@ RSpec.describe 'Meeting List View', type: :view do
 
       render partial: 'meetings/meeting_list', locals: { meetings: [meeting] }
 
-      expect(rendered).to include("5")
+      expect(rendered).to have_selector("td", text: "5")
     end
 
     it 'displays the correct count for a class with a teacher, assistants, and students' do
@@ -20,7 +20,7 @@ RSpec.describe 'Meeting List View', type: :view do
 
       render partial: 'meetings/meeting_list', locals: { meetings: [meeting] }
 
-      expect(rendered).to include("8")
+      expect(rendered).to have_selector("td", text: "8")
     end
   end
 end
