@@ -21,7 +21,7 @@
         %tr
           %td= link_to meeting.meeting_type.name, meeting_path(meeting)
           %td= meeting.met.in_time_zone('America/Los_Angeles').to_s(:long) if meeting.met
-          %td= meeting.members.count - 1
+          %td= meeting.members.where(role: 'student').count
           %td= meeting.comment
           %td
             = link_to t('.edit', :default => t("helpers.links.edit")), edit_meeting_path(meeting), :class => 'btn btn-default btn-xs'
