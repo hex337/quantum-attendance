@@ -43,36 +43,36 @@ end
 
 students = [
   {
-    first_name: "Alex",
-    last_name: "Kleissner",
+    first_name: "One",
+    last_name: "One",
     school: "Seattle",
     belt: "high yellow",
     is_teacher: false,
   },
   {
-    first_name: "Tony",
-    last_name: "Evans",
+    first_name: "Two",
+    last_name: "Two",
     school: "Seattle",
     belt: "red",
     is_teacher: true,
   },
   {
-    first_name: "Derrick",
-    last_name: "Louie",
+    first_name: "Three",
+    last_name: "Three",
     school: "Seattle",
     belt: "high white",
     is_teacher: false,
   },
   {
-    first_name: "Anthony",
-    last_name: "Hernandez",
+    first_name: "Four",
+    last_name: "Four",
     school: "San Francisco",
     belt: "high yellow",
     is_teacher: false,
   },
   {
-    first_name: "Rachael",
-    last_name: "Evans",
+    first_name: "Five",
+    last_name: "Five",
     school: "San Francisco",
     belt: "black",
     is_teacher: true,
@@ -93,9 +93,11 @@ meeting_types.each do |type|
 end
 
 school = School.find_by_name('San Francisco')
-teacher = Member.find_by_first_name('Rachael')
-alex = Member.find_by_first_name('Alex')
-anthony = Member.find_by_first_name('Anthony')
+teacher = Member.find_by_first_name('Five')
+one = Member.find_by_first_name('One')
+two = Member.find_by_first_name('Two')
+three = Member.find_by_first_name('Three')
+four = Member.find_by_first_name('Four')
 teacher_role = Role.find_by_name('Teacher')
 assistant_role = Role.find_by_name('Teaching Assistant')
 student_role = Role.find_by_name('Student')
@@ -105,6 +107,6 @@ meeting_types.each do |type|
   meeting.save
 
   MeetingMember.new(meeting: meeting, member: teacher, role: teacher_role, belt: teacher.belt).save
-  MeetingMember.new(meeting: meeting, member: anthony, role: assistant_role, belt: anthony.belt).save
-  MeetingMember.new(meeting: meeting, member: alex, role: student_role, belt: alex.belt).save
+  MeetingMember.new(meeting: meeting, member: two, role: assistant_role, belt: two.belt).save
+  MeetingMember.new(meeting: meeting, member: one, role: student_role, belt: one.belt).save
 end

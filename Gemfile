@@ -1,11 +1,10 @@
 source 'https://rubygems.org'
-ruby '2.7.8'
 
 gem "fileutils"
 gem "openssl"
 gem "sassc-rails"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '5.2.8'
+gem 'rails', '~> 6.0.0'
 # Use sqlite3 as the database for Active Record
 gem 'pg', '~> 0.21'
 # Use Uglifier as compressor for JavaScript assets
@@ -42,6 +41,7 @@ gem "haml"
 gem 'erb2haml', group: :development
 gem 'dotenv-rails', :groups => [:development, :test]
 gem 'rails_12factor', group: :production
+gem "listen", group: :development
 
 gem 'puma' # web server
 gem 'jquery-tablesorter'
