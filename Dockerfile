@@ -1,4 +1,4 @@
-FROM ruby:2.7
+FROM ruby:3.1
 
 RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 RUN mkdir /app
@@ -7,7 +7,7 @@ WORKDIR /app
 
 COPY Gemfile* /app/
 
-RUN gem install bundler && bundle install
+RUN gem install bundler && bundle install --with=development
 
 COPY . /app
 

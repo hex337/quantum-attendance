@@ -1,24 +1,31 @@
-default: &default
+development:
   adapter: postgresql
   host: db
   username: postgres
   password:
   pool: 5
   timeout: 5000
-
-development:
-  <<: *default
   database: quantum_attendance_dev
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
-  <<: *default
+  adapter: postgresql
+  host: db
+  username: postgres
+  password:
+  pool: 5
+  timeout: 5000
   database: quantum_attendance_test
 
 production:
-  <<: *default
+  adapter: postgresql
+  host: db
+  username: postgres
+  password:
+  pool: 5
+  timeout: 5000
   url: <%= ENV["DATABASE_URL"] %>
   database: quantum_attendance
   port: 5432
