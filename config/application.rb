@@ -10,6 +10,7 @@ module QuantumAttendance
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
+    config.assets.compile = false
     
     Rails.application.config.action_view.default_enforce_utf8 = false
     Rails.application.config.action_dispatch.use_cookies_with_metadata = true
