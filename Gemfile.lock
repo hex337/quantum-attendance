@@ -56,8 +56,6 @@ GEM
       minitest (~> 5.1)
       tzinfo (~> 1.1)
       zeitwerk (~> 2.2, >= 2.2.2)
-    addressable (2.8.6)
-      public_suffix (>= 2.0.2, < 6.0)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -112,9 +110,6 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-tablesorter (1.27.2)
       railties (>= 3.2)
-    keen (1.1.1)
-      addressable (~> 2.5)
-      multi_json (~> 1.12)
     less (2.6.0)
       commonjs (~> 0.2.7)
     less-rails (4.0.0)
@@ -136,7 +131,6 @@ GEM
     method_source (1.0.0)
     mini_mime (1.1.5)
     minitest (5.22.2)
-    multi_json (1.15.0)
     net-imap (0.4.10)
       date
       net-protocol
@@ -161,7 +155,6 @@ GEM
       racc (~> 1.4)
     openssl (3.2.0)
     pg (0.21.0)
-    public_suffix (5.0.4)
     puma (6.4.2)
       nio4r (~> 2.0)
     quiet_safari (1.0.0)
@@ -288,7 +281,6 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   jquery-tablesorter
-  keen
   listen
   openssl
   pg (~> 0.21)
@@ -303,6 +295,9 @@ DEPENDENCIES
   twitter-bootstrap-rails
   twitter-typeahead-rails
   will_paginate (~> 3.1)
+
+RUBY VERSION
+   ruby 3.1.4p223
 
 BUNDLED WITH
    2.5.6
