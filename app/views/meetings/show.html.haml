@@ -13,7 +13,7 @@
   %dt
     %strong
       Met:
-  %dd= @meeting.met.to_s(:long)
+  %dd= @meeting.met.in_time_zone("America/Los_Angeles").to_s(:long)
   %dt
     %strong
       Instructor:
