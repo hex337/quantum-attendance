@@ -7,11 +7,11 @@
     #datetimepicker.input-append.from_date
       %label{"for" => "from_date"}
         From:
-        %input#from_date.form-control{:data => {:format => "MM/dd/yyyy"}, :type => "date-local", :value => "#{(DateTime.now - 7.days).in_time_zone('America/Los_Angeles').strftime(date_format)}"}
+        %input#from_date.form-control{:data => {:format => "MM/dd/yyyy"}, :type => "date-local", :value => "#{(DateTime.now - 7.days).in_time_zone('Pacific Time (US & Canada)').strftime(date_format)}"}
     #datetimepicker.input-append.to_date
       %label{"for" => "to_date"}
         To:
-        %input#to_date.form-control{:data => {:format => "MM/dd/yyyy"}, :type => "date-local", :value => "#{(DateTime.now).in_time_zone('America/Los_Angeles').strftime(date_format)}"}
+        %input#to_date.form-control{:data => {:format => "MM/dd/yyyy"}, :type => "date-local", :value => "#{(DateTime.now).in_time_zone('Pacific Time (US & Canada)').strftime(date_format)}"}
   .form-inline
     .form-group
       %label{ "for" => "days" }

@@ -74,7 +74,7 @@ class HomeController < ApplicationController
         end
 
         time = row.attributes["class_date"]
-        date = DateTime.parse(time.to_s).in_time_zone('America/Los_Angeles')
+        date = DateTime.parse(time.to_s).in_time_zone('Pacific Time (US & Canada)')
         formattedDate = date.strftime("%Y-%m-%d %H:%M")
         vals = row.attributes.values.delete_if {|ele| ele.blank? }
         vals[5] = formattedDate

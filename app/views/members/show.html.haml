@@ -79,7 +79,7 @@
       - mm = MeetingMember.where(member_id: @member.id, meeting_id: meeting.id).first
       %tr
         %td= link_to meeting.meeting_type.name, meeting_path(meeting)
-        %td= meeting.met.in_time_zone('America/Los_Angeles').to_s(:long) if meeting.met
+        %td= meeting.met.to_s(:long) if meeting.met
         %td= mm.role.name
         %td= meeting.members.count
         %td= meeting.comment

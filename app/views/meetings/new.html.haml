@@ -25,7 +25,7 @@
               #datetimepicker.input-append.date
                 %label{"for" => "meeting-date"}
                   Class Time:
-                  %input#meeting-date.form-control{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now.in_time_zone('America/Los_Angeles').strftime(date_format)}"}
+                  %input#meeting-date.form-control{:data => {:format => "MM/dd/yyyy hh:mm PP"}, :type => "datetime-local", :value => "#{DateTime.now.in_time_zone('Pacific Time (US & Canada)').strftime(date_format)}"}
 
             .input-group
               %label

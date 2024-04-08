@@ -11,6 +11,9 @@ module QuantumAttendance
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.0
     config.assets.compile = false
+
+    # This will have the app show times in pacific time zone values
+    config.time_zone = 'Pacific Time (US & Canada)'
     
     Rails.application.config.action_view.default_enforce_utf8 = false
     Rails.application.config.action_dispatch.use_cookies_with_metadata = true

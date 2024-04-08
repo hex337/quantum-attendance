@@ -36,7 +36,7 @@ class MeetingsController < ApplicationController
     @inst_for_select = @instructors.collect{ |inst| [inst.full_name, inst.id] }
     @students = @meeting.students
     @assistants = @meeting.assistants
-    @meeting[:met] = @meeting[:met].in_time_zone('America/Los_Angeles')
+    @meeting[:met] = @meeting[:met].in_time_zone("Pacific Time (US & Canada)")
   end
 
   # POST /meetings
