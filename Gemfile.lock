@@ -154,7 +154,7 @@ GEM
     nokogiri (1.16.2-x86_64-linux)
       racc (~> 1.4)
     openssl (3.2.0)
-    pg (0.21.0)
+    pg (1.5.9)
     puma (6.4.2)
       nio4r (~> 2.0)
     quiet_safari (1.0.0)
@@ -283,7 +283,7 @@ DEPENDENCIES
   jquery-tablesorter
   listen
   openssl
-  pg (~> 0.21)
+  pg (~> 1.0)
   puma
   quiet_safari
   rails (~> 6.0.0)
