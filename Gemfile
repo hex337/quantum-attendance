@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Core gems
-ruby '3.1.4'
+ruby '3.2.6'
 gem 'rails', '~> 6.0.0'
 gem 'pg', '~> 0.21'
 gem 'puma' # web server
