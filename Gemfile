@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 # Core gems
 ruby '3.2.6'
-gem 'rails', '~> 6.1.0'
+gem 'rails', '~> 7.0.0'
 gem 'pg', '~> 1.0'
 gem 'puma' # web server
 gem 'sassc-rails'
