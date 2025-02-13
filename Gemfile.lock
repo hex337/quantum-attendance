@@ -170,7 +170,7 @@ GEM
     quiet_safari (1.0.0)
       railties (>= 3.1.0)
     racc (1.7.3)
-    rack (2.2.8.1)
+    rack (2.2.11)
     rack-test (2.1.0)
       rack (>= 1.3)
     rails (7.0.8.7)
